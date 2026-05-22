@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  --hope-ink: #131d49;
+  --hope-paper: #fff4e8;
+  --hope-blue: #103a93;
+  --hope-indigo: #061e62;
+  --hope-coral: #e3604a;
+  --hope-sun: #f4ba39;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--hope-paper);
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at 0 0, rgb(244 186 57 / 0.22), transparent 24rem),
+    radial-gradient(circle at 96% 4%, rgb(16 58 147 / 0.16), transparent 30rem),
+    var(--hope-paper);
+  color: var(--hope-ink);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+.hope-display {
+  font-family: var(--font-display), Impact, sans-serif;
+  letter-spacing: -0.04em;
+  line-height: 0.82;
+}
+
+.hope-pattern {
+  background-image:
+    radial-gradient(circle at center, transparent 0 7px, rgb(255 244 232 / 0.18) 8px 10px, transparent 11px),
+    repeating-radial-gradient(circle at center, transparent 0 24px, rgb(244 186 57 / 0.2) 25px 27px, transparent 28px 43px);
+  background-size: 58px 58px, 180px 180px;
+}
+
+.hope-spiral {
+  border: clamp(1rem, 3vw, 2rem) double rgb(244 186 57 / 0.65);
+  border-left-color: rgb(227 96 74 / 0.9);
+  border-radius: 50%;
+  animation: hope-turn 28s linear infinite;
+}
+
+.hope-focus:focus-visible {
+  outline: 3px solid #e3604a;
+  outline-offset: 4px;
+}
+
+@keyframes hope-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hope-spiral {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

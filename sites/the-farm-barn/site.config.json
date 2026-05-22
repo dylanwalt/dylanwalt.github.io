@@ -1,0 +1,18 @@
+{
+  "siteId": "the-farm-barn",
+  "displayName": "The Farm Barn",
+  "canonicalUrl": "https://thefarmbarn.co.za/",
+  "scrape": {
+    "startUrls": ["https://thefarmbarn.co.za/"],
+    "allowedDomains": ["thefarmbarn.co.za", "www.thefarmbarn.co.za"],
+    "maxPages": 18,
+    "maxAssets": 180
+  },
+  "build": {
+    "output": "sites/the-farm-barn/build",
+    "stack": "nextjs+tailwind+framer-motion"
+  },
+  "publish": {
+    "slug": "the-farm-barn"
+  }
+}

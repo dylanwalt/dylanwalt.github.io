@@ -1,0 +1,17 @@
+{
+  "siteId": "lawnpro",
+  "displayName": "LawnPro",
+  "canonicalUrl": "https://lawnpro.co.za/",
+  "scrape": {
+    "startUrls": ["https://lawnpro.co.za/"],
+    "allowedDomains": ["lawnpro.co.za", "www.lawnpro.co.za"],
+    "maxPages": 80
+  },
+  "build": {
+    "output": "sites/lawnpro/build",
+    "stack": "nextjs+tailwind+shadcn+framer-motion"
+  },
+  "publish": {
+    "slug": "lawnpro"
+  }
+}

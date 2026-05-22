@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #fbf4d9;
+  --paper: #fffaf0;
+  --forest: #123c1a;
+  --forest-deep: #07170b;
+  --moss: #2b7a2d;
+  --leaf: #63b730;
+  --sun: #ffc72d;
+  --bark: #372a18;
+  --clay: #a66932;
+}
+
+@theme inline {
+  --color-background: var(--paper);
+  --color-foreground: var(--forest);
+  --color-cream: var(--cream);
+  --color-paper: var(--paper);
+  --color-forest: var(--forest);
+  --color-forest-deep: var(--forest-deep);
+  --color-moss: var(--moss);
+  --color-leaf: var(--leaf);
+  --color-sun: var(--sun);
+  --color-bark: var(--bark);
+  --color-clay: var(--clay);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  border-color: color-mix(in srgb, var(--forest) 16%, transparent);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(255, 199, 45, .24), transparent 28rem),
+    var(--paper);
+  color: var(--forest);
+  font-family: Arial, var(--font-geist-sans), Helvetica, sans-serif;
+}
+
+::selection {
+  background: var(--sun);
+  color: var(--forest-deep);
+}
+
+.display {
+  font-family: "Arial Black", var(--font-geist-sans), Impact, sans-serif;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .24em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  background: currentColor;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  width: 2.35rem;
+}
+
+.sun-button {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, .42), transparent 42%),
+    var(--sun);
+  box-shadow: 0 14px 44px rgba(255, 199, 45, .25);
+  transition: background .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+
+.sun-button:hover {
+  box-shadow: 0 18px 60px rgba(255, 199, 45, .42);
+  transform: translateY(-2px);
+}
+
+.blade-grid {
+  background-image:
+    repeating-linear-gradient(112deg, rgba(255, 255, 255, .11) 0 1px, transparent 1px 36px),
+    linear-gradient(rgba(255, 255, 255, .08) 1px, transparent 1px);
+  background-size: auto, 100% 72px;
+  mask-image: linear-gradient(90deg, #000, rgba(0, 0, 0, .76), transparent);
+}
+
+.grass-glow {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255, 199, 45, .24), transparent 24rem),
+    radial-gradient(circle at 16% 88%, rgba(99, 183, 48, .23), transparent 29rem),
+    repeating-linear-gradient(115deg, rgba(247, 242, 205, .08) 0 1px, transparent 1px 18px);
+}
+
+.leaf-panel {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, .92), rgba(255, 249, 224, .84)),
+    repeating-linear-gradient(120deg, rgba(43, 122, 45, .1) 0 1px, transparent 1px 22px);
+  border: 1px solid rgba(255, 255, 255, .48);
+  backdrop-filter: blur(18px);
+}
+
+.soil-cut {
+  background:
+    linear-gradient(180deg, rgba(255, 199, 45, .08), transparent 24%),
+    radial-gradient(circle at 50% -8%, rgba(99, 183, 48, .42), transparent 30rem),
+    linear-gradient(180deg, #112617, #07170b);
+}
+
+.scan-line {
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 199, 45, .9), transparent);
+  filter: drop-shadow(0 0 18px rgba(255, 199, 45, .68));
+}
+
+.seed-field {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, .75), transparent 18rem),
+    radial-gradient(circle at 92% 12%, rgba(99, 183, 48, .25), transparent 20rem),
+    #f3e4ab;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .sun-button,
+  * {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+
+  .sun-button:hover {
+    transform: none;
+  }
+}

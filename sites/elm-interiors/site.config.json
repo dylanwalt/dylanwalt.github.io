@@ -1,0 +1,19 @@
+{
+  "siteId": "elm-interiors",
+  "displayName": "Elm Interiors",
+  "canonicalUrl": "https://www.elminteriors.co.za/",
+  "scrape": {
+    "startUrls": ["https://www.elminteriors.co.za/"],
+    "allowedDomains": ["www.elminteriors.co.za", "elminteriors.co.za"],
+    "assetDomains": ["static.wixstatic.com"],
+    "maxPages": 16,
+    "maxAssets": 120
+  },
+  "build": {
+    "output": "sites/elm-interiors/build",
+    "stack": "nextjs+tailwind+framer-motion"
+  },
+  "publish": {
+    "slug": "elm-interiors"
+  }
+}

@@ -1,0 +1,14 @@
+**/node_modules/
+**/.next/
+**/out/
+**/.turbo/
+**/.env*
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+pages-dist/
+sites/*/scraped/
+.codex/.vendor/
+.codex/skills/ui-ux-pro-max/
+.upstream/
+scratch/

@@ -1,0 +1,15 @@
+{
+  "siteId": "clevacado",
+  "displayName": "Clevacado",
+  "canonicalUrl": "",
+  "scrape": {
+    "startUrls": [],
+    "allowedDomains": [],
+    "maxPages": 0
+  },
+  "build": {
+    "output": "sites/clevacado/build",
+    "stack": ""
+  }
+}
+

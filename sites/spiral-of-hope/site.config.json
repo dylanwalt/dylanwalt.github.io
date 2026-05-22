@@ -1,0 +1,19 @@
+{
+  "siteId": "spiral-of-hope",
+  "displayName": "Spiral of Hope",
+  "canonicalUrl": "https://www.spiralofhope.co.za/",
+  "scrape": {
+    "startUrls": ["https://www.spiralofhope.co.za/"],
+    "allowedDomains": ["www.spiralofhope.co.za", "spiralofhope.co.za"],
+    "assetDomains": ["static.wixstatic.com"],
+    "maxPages": 18,
+    "maxAssets": 150
+  },
+  "build": {
+    "output": "sites/spiral-of-hope/build",
+    "stack": "nextjs+tailwind+framer-motion"
+  },
+  "publish": {
+    "slug": "spiral-of-hope"
+  }
+}
