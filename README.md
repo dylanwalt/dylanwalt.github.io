@@ -36,3 +36,6 @@ Build the GitHub Pages artifact locally with:
 ```bash
 node scripts/export-pages.mjs
 ```
+
+Raw `sites/*/scraped/` captures stay local by default; public rebuilds commit
+the implementation and curated assets used by each finished route.

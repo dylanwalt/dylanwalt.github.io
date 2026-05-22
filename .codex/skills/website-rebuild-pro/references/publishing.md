@@ -25,6 +25,10 @@ Prefer a static export when the finished site has no server-only dependency:
 5. Export every site into one Pages artifact and include a root index that links
    all published slugs.
 
+For public repositories, keep full `scraped/` captures local unless the user
+explicitly asks to publish them. Commit the implementation and only the curated
+public assets the rebuild actually needs.
+
 If a site needs server features, document that constraint and choose a host that
 supports it before promising a live URL.
 
