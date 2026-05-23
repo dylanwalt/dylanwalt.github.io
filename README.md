@@ -1,9 +1,10 @@
 # WEBSITE-REBUILD
 
-Workspace for rebuilding multiple websites with two workflows:
+Workspace for rebuilding multiple websites with a structured agent workflow and a
+premium rebuild standard.
 
 - **Website scraper agent**: collects a site’s pages/assets into `sites/<site>/scraped/`
-- **Website builder agent**: turns `scraped/` + `notes/` into a working site in `sites/<site>/build/`
+- **Website builder agent**: turns `scraped/` + `notes/` into a working, brand-aligned site in `sites/<site>/build/`
 
 ## Repo layout
 
@@ -12,17 +13,29 @@ Workspace for rebuilding multiple websites with two workflows:
   - `website-builder/` – build workflow + prompt/template
 - `sites/`
   - `<site>/`
-    - `site.config.json` – per-site config (urls, constraints, targets)
-    - `notes/` – requirements, decisions, TODOs
+    - `site.config.json` – per-site config (urls, constraints, targets, stack)
+    - `notes/` – requirements, brand brief, experience brief, design decisions
     - `scraped/` – downloaded pages/assets + extracted metadata
     - `build/` – generated/implemented website output
+- `.codex/skills/website-rebuild-pro/` – skill documentation and workflow for premium rebuilds
 - `scripts/` – helper scripts (optional)
 
-## Add a new site
+## Build workflow
 
-1. Create `sites/<site>/` (copy from `sites/clevacado/` as a starter)
-2. Fill in `sites/<site>/site.config.json`
-3. Run the scraper agent, then the builder agent for that site folder
+1. Create `sites/<site>/` using an existing site folder as a starter.
+2. Fill in `sites/<site>/site.config.json` with source URLs, scrape targets, and stack preferences.
+3. Run the scraper agent first to capture the source.
+4. Use the builder agent and the `website-rebuild-pro` skill to produce the rebuilt site.
+
+## Premium rebuild expectations
+
+This repo is designed for more than a straight clone. The rebuilt site should:
+
+- preserve source truth while elevating brand signal
+- use a deterministic design plan before implementation
+- source registry components when appropriate instead of rewriting fragile UI by hand
+- incorporate meaningful motion and clear reduced-motion fallbacks
+- avoid generic "AI slop" layouts, gradients, and card catalogs
 
 ## Publish rebuilds
 

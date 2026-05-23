@@ -16,6 +16,19 @@ first. A strong result is not a set of fashionable blocks. It is a sequence:
 
 Write the sequence into `notes/experience-brief.md` before implementation.
 
+## Taste-Skill mindset
+
+This rebuild should follow a strict aesthetic guardrail:
+
+- avoid AI slop: no default purple gradients, no boilerplate card catalogs,
+  no generic section naming, no weak orientation copy
+- require deterministic planning before code
+- enforce AIDA structure and a clear conversion path
+- use registry components selectively and audit them thoroughly
+- favor premium type, texture, spatial tension, and real subject matter
+
+If you are unsure whether a choice is safe, choose the more authored, brand-specific option.
+
 ## Brand Archaeology
 
 Extract source truth before redesign:
@@ -84,7 +97,7 @@ Write a motion map before implementation:
 | Layer | Purpose | Typical effect | Reduced motion |
 | --- | --- | --- | --- |
 | Hero | establish hierarchy | staged reveal, slow depth shift | opacity only |
-| Narrative | create sequence | one-time scroll reveal | static or fade |
+| Narrative | create sequence | scroll reveal, text/asset choreography | static or fade |
 | Product/proof | guide inspection | focus, highlight, count/progress if honest | static |
 | Interaction | confirm intent | hover/focus transform or color | color/focus only |
 
@@ -92,16 +105,21 @@ Prefer fewer coherent effects over many unrelated effects. Animate `transform`
 and `opacity` first. Use scroll-linked effects for a real narrative or progress
 relationship, not because the library can do it.
 
+Use GSAP + ScrollTrigger for pinning, scrubbing, and sequence-driven scroll paths.
+Use Framer Motion for entry, reveal, and interaction transitions. Use Lenis when
+smooth inertia-based scrolling elevates the experience.
+
 Do not let motion hide text, block input, trigger repeated large layout work, or
 make the page unusable with `prefers-reduced-motion`.
 
-## Asset And Performance Rules
+## Asset and Performance Rules
 
 - Use `next/image` for static or dimensioned images where practical.
 - Give fixed dimensions, aspect ratio, or fill constraints to visual assets.
 - Treat the hero image as a likely LCP candidate and keep it efficient.
 - Avoid shipping large unused galleries, video, shaders, or animation bundles.
 - Audit registry components before accepting their dependencies and file writes.
+- Prefer component registry sourcing when it reduces brittle custom animation code.
 
 ## QA Gate
 
