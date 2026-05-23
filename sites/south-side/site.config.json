@@ -15,5 +15,8 @@
   "build": {
     "output": "sites/south-side/build",
     "stack": "nextjs-tailwind-shadcn-framer"
+  },
+  "publish": {
+    "slug": "south-side"
   }
 }
