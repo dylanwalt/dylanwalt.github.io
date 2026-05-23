@@ -11,7 +11,7 @@ export function SiteFooter() {
           <div className="md:col-span-5">
             <Link href="/" className="inline-flex items-center gap-3">
               <Image
-                src="/port443/logo-color.png"
+                src="/port443/logo-shield-color.svg"
                 alt="Port443"
                 width={40}
                 height={40}
@@ -19,8 +19,8 @@ export function SiteFooter() {
               />
               <div className="leading-tight">
                 <div className="font-semibold text-foreground">Port443</div>
-                <div className="text-sm text-muted-foreground">
-                  Cyber security automation & integration
+                <div className="text-xs font-semibold tracking-[0.1em] text-[#0e6b54]">
+                  &lt; AUTOMATING CYBER DEFENSE &gt;
                 </div>
               </div>
             </Link>

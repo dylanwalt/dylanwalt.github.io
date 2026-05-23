@@ -4,15 +4,30 @@ import Image from "next/image"
 import Link from "next/link"
 import {
   ArrowRight,
+  Bot,
   Braces,
   CheckCircle2,
   Eye,
+  ExternalLink,
   Globe2,
   Layers3,
   Radar,
   ShieldCheck,
-  Waypoints,
 } from "lucide-react"
+
+function LinkedinIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  )
+}
 import {
   MotionConfig,
   motion,
@@ -28,24 +43,24 @@ import { SiteFooter } from "@/components/site/site-footer"
 const services = [
   {
     code: "01",
-    title: "Compliance and Governance",
+    title: "Control Attestation",
     description:
-      "Automated validation against vendor best practice and frameworks such as PCI, NIST, and CIS.",
+      "Automated validation against vendor best practice and frameworks such as PCI, NIST, and CIS — providing continuous, evidence-backed attestation of your security control posture.",
     icon: ShieldCheck,
   },
   {
     code: "02",
     title: "OneView",
     description:
-      "A single view of critical security, cloud, and network control information across the estate.",
+      "An independent, single source of truth extracted via API directly from source technologies — no manual intervention, no reinterpretation. OneView eliminates manual reporting overhead, consolidates prioritised alerts in one pane to reduce MTTD and MTTR, and trends your overall cyber security posture score with an intuitive RAG indicator. Fully aligned with ISO/IEC 27001:2022, NIST CSF, and CIS CSC governance requirements.",
     icon: Eye,
   },
   {
     code: "03",
-    title: "Community Defense",
+    title: "Custom Automation",
     description:
-      "Controls act in unison so indicators of compromise can trigger containment faster.",
-    icon: Waypoints,
+      "End-to-end automation delivered as SaaS — purpose-built to eliminate manual effort from high-frequency SOC activities. Every engagement follows a proven lifecycle: identify the use case for automation, define scope and integration points, build the automation against your existing toolset, and operate it as a managed service. Designed to free analyst capacity for proactive threat hunting and higher-value investigation work.",
+    icon: Bot,
   },
   {
     code: "04",
@@ -54,6 +69,13 @@ const services = [
       "Assess exposure, identify candidates for automation, and set a practical mitigation roadmap.",
     icon: Layers3,
   },
+]
+
+const customAutomationSteps = [
+  { step: "01", label: "Identify", detail: "Define the use case and the SOC workflow targeted for automation." },
+  { step: "02", label: "Scope", detail: "Map integration points, data sources, and boundaries of the automation." },
+  { step: "03", label: "Build", detail: "Develop and test the automation against your existing toolset and environment." },
+  { step: "04", label: "Operate", detail: "Run the automation as a managed SaaS service with ongoing support and refinement." },
 ]
 
 const proof = [
@@ -89,20 +111,29 @@ const loop = [
   },
 ]
 
-const insights = [
+const linkedInPosts = [
   {
-    date: "16 May 2023",
+    date: "May 2026",
+    title: "OneView: Independent, real-time visibility across your entire security estate — no manual aggregation required.",
+    excerpt: "Governance-grade data extracted via API directly from source technologies. Aligned with ISO/IEC 27001:2022, NIST CSF, and CIS CSC.",
+    href: "https://www.linkedin.com/company/port443-pty-ltd/posts/?feedView=all",
+  },
+  {
+    date: "May 2023",
     title: "Five things boards need to know about Incident Response",
+    excerpt: "Port443's Tony Walt covers the board-level IR essentials every executive needs to understand before a breach occurs.",
     href: "https://ventureburn.com/2023/05/five-things-boards-need-to-know-about-incident-response-ir/",
   },
   {
-    date: "15 May 2023",
+    date: "May 2023",
     title: "Iziko, backed by RMB Ventures, invest in Port443",
+    excerpt: "Strategic investment validates Port443's approach to automating cyber security across the Middle East and Africa.",
     href: "https://techfinancials.co.za/2023/05/15/iziko-backed-by-rmb-ventures-invest-in-port443-pty-ltd/",
   },
   {
-    date: "Port443 insight",
+    date: "Port443 Insight",
     title: "Introducing SOAR as a service",
+    excerpt: "How Port443 is making Security Orchestration, Automation, and Response accessible as a consumption-based managed service.",
     href: "https://www.port443.co.za/post/big-data-101-an-introduction-to-data-query-engines",
   },
 ]
@@ -117,7 +148,8 @@ export function HomeExperience() {
           <ControlLoop />
           <ServiceSequence />
           <RegionalStory />
-          <InsightStrip />
+          <VueitallBanner />
+          <LinkedInSection />
           <ContactStage />
         </main>
         <SiteFooter />
@@ -214,15 +246,20 @@ function HeroNav() {
       <nav className="flex items-center justify-between border-b border-white/15 pb-5">
         <Link href="/" className="flex items-center gap-3" aria-label="Port443 home">
           <Image
-            src="/port443/logo-white.png"
+            src="/port443/logo-shield-white.svg"
             alt=""
             width={46}
             height={46}
             className="size-11 object-contain"
           />
-          <span className="text-sm font-semibold uppercase tracking-[0.2em] text-white">
-            Port443
-          </span>
+          <div className="flex flex-col leading-none">
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-white">
+              Port443
+            </span>
+            <span className="mt-0.5 text-[9px] font-semibold tracking-[0.14em] text-[#a8ffce]">
+              &lt; AUTOMATING CYBER DEFENSE &gt;
+            </span>
+          </div>
         </Link>
         <div className="hidden items-center gap-7 text-sm text-white/72 md:flex">
           <Link className="transition hover:text-white" href="/about-us">
@@ -365,9 +402,9 @@ function ServiceSequence() {
             </h2>
           </div>
           <p className="max-w-xl text-lg leading-8 text-muted-foreground md:justify-self-end">
-            The source offering stays intact, but the path is clearer: validate
-            controls, unify the estate, coordinate defense, and bring in focused
-            consulting where it changes the result.
+            The source offering stays intact, but the path is clearer: attest
+            controls, unify the estate, automate SOC workflows, and bring in
+            focused consulting where it changes the result.
           </p>
         </Reveal>
         <div className="mt-4">
@@ -385,6 +422,16 @@ function ServiceSequence() {
                   <p className="max-w-xl leading-7 text-muted-foreground">
                     {service.description}
                   </p>
+                  {service.title === "Custom Automation" && (
+                    <ol className="mt-5 space-y-2">
+                      {customAutomationSteps.map((s) => (
+                        <li key={s.step} className="flex items-start gap-3 text-sm text-muted-foreground">
+                          <span className="mt-0.5 font-mono text-xs font-semibold text-[#0e6b54]">{s.step}</span>
+                          <span><span className="font-semibold text-foreground">{s.label}.</span> {s.detail}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  )}
                   {index < services.length - 1 ? null : (
                     <Link
                       href="/services"
@@ -443,37 +490,103 @@ function RegionalStory() {
   )
 }
 
-function InsightStrip() {
+function VueitallBanner() {
+  return (
+    <section className="border-y border-border bg-[#071018] py-10 md:py-14">
+      <Container>
+        <Reveal className="flex flex-col items-center gap-5 text-center md:flex-row md:items-center md:justify-between md:text-left">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#a8ffce]">
+              Platform SaaS
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold text-white md:text-3xl">
+              VueItAll — powered by Port443
+            </h2>
+            <p className="mt-2 max-w-xl text-white/68">
+              A security visibility platform that aggregates, correlates, and
+              presents your entire security estate in one place. Built on the
+              same API-first automation engine that underpins Port443's managed
+              services.
+            </p>
+          </div>
+          <a
+            href="https://www.vueitall.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex shrink-0 items-center gap-2 border border-[#a8ffce] px-5 py-3 text-sm font-semibold text-[#a8ffce] transition hover:bg-[#a8ffce] hover:text-[#071018] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a8ffce]"
+          >
+            Visit VueItAll
+            <ExternalLink className="size-4" aria-hidden="true" />
+          </a>
+        </Reveal>
+      </Container>
+    </section>
+  )
+}
+
+function LinkedInSection() {
   return (
     <section className="bg-background py-20 md:py-24">
       <Container>
-        <Reveal className="grid gap-5 md:grid-cols-[360px_1fr]">
+        <Reveal className="grid gap-5 border-b border-border pb-10 md:grid-cols-[360px_1fr] md:items-end">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0e6b54]">
-              Coverage and insight
+            <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#0e6b54]">
+              <LinkedinIcon className="size-4" />
+              LinkedIn
             </p>
             <h2 className="mt-4 text-4xl font-semibold tracking-normal">
-              Security decisions need context.
+              Latest from Port443.
             </h2>
           </div>
-          <div className="border-t border-border">
-            {insights.map((insight) => (
-              <a
-                key={insight.title}
-                href={insight.href}
-                target="_blank"
-                rel="noreferrer"
-                className="grid gap-2 border-b border-border py-6 transition hover:bg-muted/35 md:grid-cols-[150px_1fr_32px] md:items-center md:px-4"
-              >
-                <span className="text-sm text-muted-foreground">{insight.date}</span>
-                <span className="text-xl font-medium tracking-normal">
-                  {insight.title}
-                </span>
-                <ArrowRight className="size-4 text-accent" aria-hidden="true" />
-              </a>
-            ))}
+          <div className="md:text-right">
+            <a
+              href="https://www.linkedin.com/company/port443-pty-ltd/posts/?feedView=all"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition hover:text-foreground"
+            >
+              Follow on LinkedIn
+              <ExternalLink className="size-4" aria-hidden="true" />
+            </a>
           </div>
         </Reveal>
+        <div className="mt-4 grid gap-6 md:grid-cols-2">
+          {linkedInPosts.map((post) => (
+            <Reveal key={post.title}>
+              <a
+                href={post.href}
+                target="_blank"
+                rel="noreferrer"
+                className="group flex h-full flex-col gap-3 border border-border bg-background p-6 transition hover:border-[#0e6b54] hover:bg-[#f7faf6] md:p-8"
+              >
+                <span className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                  {post.date}
+                </span>
+                <h3 className="flex-1 text-lg font-semibold leading-6 tracking-normal group-hover:text-[#0e6b54]">
+                  {post.title}
+                </h3>
+                <p className="text-sm leading-6 text-muted-foreground">
+                  {post.excerpt}
+                </p>
+                <span className="flex items-center gap-2 text-sm font-semibold text-accent">
+                  Read more
+                  <ArrowRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
+                </span>
+              </a>
+            </Reveal>
+          ))}
+        </div>
+        <div className="mt-8 text-center">
+          <a
+            href="https://www.linkedin.com/company/port443-pty-ltd/posts/?feedView=all"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 border border-border px-6 py-3 text-sm font-semibold text-foreground transition hover:border-[#0e6b54] hover:text-[#0e6b54] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0e6b54]"
+          >
+            <LinkedinIcon className="size-4" />
+            View all posts on LinkedIn
+          </a>
+        </div>
       </Container>
     </section>
   )

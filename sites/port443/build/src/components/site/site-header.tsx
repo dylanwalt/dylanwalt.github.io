@@ -15,16 +15,19 @@ export function SiteHeader() {
       <Container className="flex h-16 items-center justify-between gap-4">
         <Link href="/" className="inline-flex items-center gap-3">
           <Image
-            src="/port443/logo-color.png"
+            src="/port443/logo-shield-color.svg"
             alt="Port443"
-            width={32}
+            width={34}
             height={34}
             className="h-[34px] w-auto object-contain"
             priority
           />
-          <span className="font-semibold tracking-tight text-foreground">
-            Port443
-          </span>
+          <div className="leading-none">
+            <div className="font-semibold tracking-tight text-foreground">Port443</div>
+            <div className="text-[9px] font-semibold tracking-[0.1em] text-[#0e6b54]">
+              &lt; AUTOMATING CYBER DEFENSE &gt;
+            </div>
+          </div>
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">

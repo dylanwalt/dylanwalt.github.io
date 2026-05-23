@@ -10,7 +10,7 @@ import { SiteHeader } from "@/components/site/site-header"
 export const metadata: Metadata = {
   title: "Services | Port443",
   description:
-    "Cyber security automations and integrations: Compliance & Governance, OneView, Community Defense, and Consulting.",
+    "Cyber security automations and integrations: Control Attestation, OneView, Custom Automation, and Consulting.",
 }
 
 const frameworks = [
@@ -71,7 +71,7 @@ export default function ServicesPage() {
           <Container className="py-14 md:py-20">
             <div className="max-w-2xl">
               <p className="text-sm font-semibold text-accent">
-                Compliance &amp; Governance
+                Control Attestation
               </p>
               <h2 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
                 Automated validations against frameworks and best practices
@@ -139,39 +139,44 @@ export default function ServicesPage() {
 
         <section className="border-b border-border bg-background">
           <Container className="py-14 md:py-20">
-            <p className="text-sm font-semibold text-accent">Community Defense</p>
+            <p className="text-sm font-semibold text-accent">Custom Automation</p>
             <h2 className="mt-2 max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">
-              Controls operating in unison enable rapid containment
+              Purpose-built SOC automation — delivered end-to-end as SaaS
             </h2>
             <p className="mt-4 max-w-3xl text-muted-foreground">
-              A framework to enhance posture without introducing additional
-              controls. When one control detects an indicator of compromise, other
-              controls can be triggered automatically to contain and remediate.
+              Designed to eliminate manual effort from high-frequency analyst tasks. Every
+              automation engagement follows a structured lifecycle — from identifying the right
+              use case through to ongoing managed operation — so your team can focus on proactive
+              threat hunting and higher-value investigation work.
             </p>
 
             <div className="mt-10 grid gap-6 lg:grid-cols-2">
               <div className="rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
-                <div className="text-lg font-semibold">Example</div>
+                <div className="text-lg font-semibold">Engagement lifecycle</div>
                 <ol className="mt-4 space-y-4 text-sm text-muted-foreground">
                   <li className="flex gap-3">
-                    <span className="mt-0.5 inline-flex size-6 items-center justify-center rounded-full bg-muted text-foreground">
-                      1
+                    <span className="mt-0.5 inline-flex size-6 items-center justify-center rounded-full bg-muted font-mono text-xs font-semibold text-foreground">
+                      01
                     </span>
-                    Identify similar emails and automatically quarantine/delete.
+                    <span><span className="font-semibold text-foreground">Identify.</span> Define the SOC workflow or use case targeted for automation and quantify the manual effort reduction opportunity.</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="mt-0.5 inline-flex size-6 items-center justify-center rounded-full bg-muted text-foreground">
-                      2
+                    <span className="mt-0.5 inline-flex size-6 items-center justify-center rounded-full bg-muted font-mono text-xs font-semibold text-foreground">
+                      02
                     </span>
-                    Initiate a &quot;Block URL&quot; policy on the firewall during
-                    investigation.
+                    <span><span className="font-semibold text-foreground">Scope.</span> Map integration points, data sources, control dependencies, and the boundaries of the automation.</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="mt-0.5 inline-flex size-6 items-center justify-center rounded-full bg-muted text-foreground">
-                      3
+                    <span className="mt-0.5 inline-flex size-6 items-center justify-center rounded-full bg-muted font-mono text-xs font-semibold text-foreground">
+                      03
                     </span>
-                    Restrict privileged access to critical systems until
-                    remediation is complete.
+                    <span><span className="font-semibold text-foreground">Build.</span> Develop, test, and validate the automation against your existing toolset and environment using API-first integrations.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="mt-0.5 inline-flex size-6 items-center justify-center rounded-full bg-muted font-mono text-xs font-semibold text-foreground">
+                      04
+                    </span>
+                    <span><span className="font-semibold text-foreground">Operate.</span> Run the automation as a managed SaaS service with ongoing monitoring, support, and continuous refinement.</span>
                   </li>
                 </ol>
               </div>
