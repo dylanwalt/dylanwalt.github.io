@@ -1,15 +1,17 @@
 {
   "siteId": "clevacado",
-  "displayName": "Clevacado",
-  "canonicalUrl": "",
+  "displayName": "ClevaCado",
+  "canonicalUrl": "https://dylanwalt.github.io/clevacado-site/",
   "scrape": {
-    "startUrls": [],
-    "allowedDomains": [],
-    "maxPages": 0
+    "startUrls": ["https://dylanwalt.github.io/clevacado-site/"],
+    "allowedDomains": ["dylanwalt.github.io"],
+    "maxPages": 1
   },
   "build": {
     "output": "sites/clevacado/build",
-    "stack": ""
+    "stack": "nextjs+tailwind+shadcn+framer-motion"
+  },
+  "publish": {
+    "slug": "clevacado"
   }
 }
-
