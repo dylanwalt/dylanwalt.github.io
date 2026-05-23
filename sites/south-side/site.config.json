@@ -1,0 +1,19 @@
+{
+  "siteId": "south-side-soda",
+  "displayName": "South Side Soda",
+  "canonicalUrl": "https://www.south-side.co.za/",
+  "scrape": {
+    "startUrls": [
+      "https://www.south-side.co.za/"
+    ],
+    "allowedDomains": [
+      "www.south-side.co.za",
+      "south-side.co.za"
+    ],
+    "maxPages": 50
+  },
+  "build": {
+    "output": "sites/south-side/build",
+    "stack": "nextjs-tailwind-shadcn-framer"
+  }
+}
