@@ -22,3 +22,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 - Hero section sourced from 21st.dev and uses `framer-motion`.
 - Design system guidance persisted under `sites/port443/notes/design-system/port443/MASTER.md`.
+- Rebuild plan documented in `sites/port443/notes/design-plan.md`.
