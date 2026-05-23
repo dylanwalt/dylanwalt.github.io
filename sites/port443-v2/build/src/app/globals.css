@@ -1,0 +1,206 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+}
+
+/* Brand palette — dark-first */
+:root {
+  --background: #030912;
+  --foreground: #f0f8f4;
+  --card: #0a1e2e;
+  --card-foreground: #f0f8f4;
+  --muted: #112233;
+  --muted-foreground: #7da8a0;
+  --accent: #a8ffce;
+  --accent-foreground: #030912;
+  --border: rgba(168, 255, 206, 0.12);
+  --ring: #a8ffce;
+  --radius: 0.125rem;
+
+  /* Extended brand tokens */
+  --green-bright: #a8ffce;
+  --green-active: #22c55e;
+  --green-dark: #0e6b54;
+  --navy-deep: #030912;
+  --navy-mid: #061321;
+  --navy-card: #0a1e2e;
+  --navy-surface: #0f2535;
+  --green-glow: rgba(168, 255, 206, 0.15);
+  --green-glow-strong: rgba(168, 255, 206, 0.28);
+}
+
+/* Light override for data/proof sections */
+.section-light {
+  --background: #f0f8f4;
+  --foreground: #030912;
+  --card: #ffffff;
+  --card-foreground: #030912;
+  --muted: #e2f0ea;
+  --muted-foreground: #3c5258;
+  --accent: #0e6b54;
+  --accent-foreground: #ffffff;
+  --border: #c8ddd5;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display), var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  }
+}
+
+/* ─── Hex Grid Background ─────────────────────────────── */
+.hex-grid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V50l28-16 28 16v34L28 100z' fill='none' stroke='rgba(168,255,206,0.04)' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 56px 100px;
+}
+
+/* ─── Circuit Grid Background ─────────────────────────── */
+.circuit-grid {
+  background-image:
+    linear-gradient(rgba(168, 255, 206, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 255, 206, 0.06) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* ─── Scan Line Overlay ───────────────────────────────── */
+.scan-lines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(168, 255, 206, 0.015) 2px,
+    rgba(168, 255, 206, 0.015) 4px
+  );
+  pointer-events: none;
+}
+
+/* ─── Green Glow ──────────────────────────────────────── */
+.glow-green {
+  box-shadow: 0 0 24px rgba(168, 255, 206, 0.18), 0 0 64px rgba(168, 255, 206, 0.08);
+}
+.glow-green-sm {
+  box-shadow: 0 0 12px rgba(168, 255, 206, 0.2);
+}
+.text-glow {
+  text-shadow: 0 0 28px rgba(168, 255, 206, 0.55);
+}
+
+/* ─── Keyframe Animations ─────────────────────────────── */
+@keyframes radar-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(1);    opacity: 0.5; }
+  70%  { transform: scale(1.18); opacity: 0; }
+  100% { transform: scale(1.18); opacity: 0; }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+@keyframes telemetry-scroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes status-ping {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.5); opacity: 0; }
+}
+@keyframes count-in {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+
+/* Radar elements */
+.radar-scan { animation: radar-spin 4s linear infinite; }
+.pulse-dot  { animation: blink 1.8s ease-in-out infinite; }
+.pulse-ring { animation: pulse-ring 2.4s ease-out infinite; }
+.status-ping { animation: status-ping 1.5s ease-out infinite; }
+
+/* Telemetry feed scrolls upward */
+.telemetry-track { animation: telemetry-scroll 18s linear infinite; }
+
+/* Ticker scrolls sideways */
+.ticker-track { animation: ticker-scroll 28s linear infinite; }
+
+/* Reduce motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  .radar-scan,
+  .pulse-dot,
+  .pulse-ring,
+  .status-ping,
+  .telemetry-track,
+  .ticker-track { animation: none !important; }
+}
+
+/* ─── Service section accent lines ───────────────────── */
+.service-line {
+  position: relative;
+}
+.service-line::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #a8ffce, transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.service-line:hover::before { opacity: 1; }
+
+/* ─── Posture ring animation ──────────────────────────── */
+.posture-ring-fill {
+  stroke-dasharray: 339.3;
+  stroke-dashoffset: 339.3;
+  transition: stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.posture-ring-fill.filled {
+  stroke-dashoffset: 31;
+}
+
+/* ─── Number count-up ─────────────────────────────────── */
+@keyframes num-reveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.num-reveal { animation: num-reveal 0.5s ease-out both; }
