@@ -1,0 +1,152 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+}
+
+/* ─── Port443 V4 — editorial palette (green accent) ────────── */
+:root {
+  --ink: #0a0e16;
+  --ink-2: #11151f;
+  --ink-3: #1a2030;
+  --ivory: #f7f6f2;
+  --ivory-2: #ffffff;
+  --ivory-3: #e7e5dc;
+  --green: #22c55e;
+  --green-soft: rgba(34, 197, 94, 0.14);
+  --green-bright: #a8ffce;
+  --green-deep: #0e6b54;
+  --forest: #0e6b54;
+  --rose: #fb7185;
+  --muted-on-ink: #8a93a4;
+  --muted-on-ivory: #5b6473;
+
+  --background: var(--ink);
+  --foreground: var(--ivory);
+  --card: var(--ink-2);
+  --card-foreground: var(--ivory);
+  --muted: var(--ink-2);
+  --muted-foreground: var(--muted-on-ink);
+  --accent: var(--green);
+  --accent-foreground: var(--ivory-2);
+  --border: var(--ink-3);
+  --ring: var(--green);
+  --radius: 0.125rem;
+}
+
+.section-light {
+  --background: var(--ivory);
+  --foreground: var(--ink);
+  --card: var(--ivory-2);
+  --card-foreground: var(--ink);
+  --muted: var(--ivory-3);
+  --muted-foreground: var(--muted-on-ivory);
+  --accent: var(--green);
+  --accent-foreground: var(--ivory-2);
+  --border: var(--ivory-3);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "kern" 1, "liga" 1, "ss01" 1;
+  }
+  html {
+    @apply font-sans;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+  code, .mono {
+    font-family: var(--font-mono), ui-monospace, monospace;
+  }
+  ::selection {
+    background: var(--green);
+    color: var(--ivory-2);
+  }
+}
+
+/* ─── Hairline grid background ──────────────────────────────── */
+.hairline-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 96px 96px;
+}
+
+.section-light .hairline-grid {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
+
+/* ─── Diagonal ticker hairline ──────────────────────────────── */
+.diagonal-rule {
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 6px,
+    currentColor 6px,
+    currentColor 7px
+  );
+  opacity: 0.18;
+}
+
+/* ─── Focus ring ────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+/* ─── Reduced motion safety ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Smooth scroll on the html, only when motion ok ────────── */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ─── Marquee-free framework rail (just spacing primitives) ─── */
+.rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+.rail > * {
+  background: var(--background);
+}
