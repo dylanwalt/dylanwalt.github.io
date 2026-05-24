@@ -14,6 +14,15 @@ Given a site folder (for example `sites/clevacado/`) and its `scraped/` + `notes
 
 ## Workflow
 
+0. **Industry research (mandatory pre-build).** Before grounding, produce
+   `notes/industry-inspiration.md` per
+   `.codex/skills/website-rebuild-pro/references/industry-research.md`:
+   - State the sector + sub-sector.
+   - Draft a long list of 25–30 candidate sites.
+   - Cut to 15 using the composition 5 award / 5 leader / 3 challenger /
+     2 adjacent.
+   - Audit each site against the per-site schema.
+   - Pick three ★ anchor references and three anti-patterns to break.
 1. Audit the source: confirm what content, imagery, and brand signals are available.
 2. Write or update `notes/experience-brief.md` with:
    - one-sentence experience thesis
@@ -21,7 +30,10 @@ Given a site folder (for example `sites/clevacado/`) and its `scraped/` + `notes
    - hero asset or scene
    - section sequence and conversion path
    - signature interaction and reduced-motion fallback
-3. Create a deterministic design plan before editing implementation:
+   - which three ★ anchors the experience responds to
+3. Create a deterministic design plan before editing implementation. Each of
+   the five decisions cites a sector anchor, an Apple design-language pattern,
+   or a source-brand constraint:
    - hero architecture
    - typography stack
    - component architecture
@@ -43,4 +55,10 @@ Given a site folder (for example `sites/clevacado/`) and its `scraped/` + `notes
 - If a stack or framework is not specified in `site.config.json`, pause and ask for it before continuing.
 - If the source contains weak hero media, use composited or generated visual assets that keep the brand subject present.
 - If using shadcn components, audit every registry item and only accept dependencies that are understood and needed.
+- The Apple design-language reference at
+  `.codex/skills/website-rebuild-pro/references/apple-design-language.md`
+  documents the canonical product-marketing motion vocabulary (scroll-scrubbed
+  sequences, pinned reveals, color-swatch cross-fades, sticky product subnav,
+  staged entrance reveals, magnetic CTAs, expand drawers). Borrow the
+  patterns, never the wordmark, typeface, or exact CTA color.
 

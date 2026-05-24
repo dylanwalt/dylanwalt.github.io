@@ -25,14 +25,22 @@ premium rebuild standard.
 1. Create `sites/<site>/` using an existing site folder as a starter.
 2. Fill in `sites/<site>/site.config.json` with source URLs, scrape targets, and stack preferences.
 3. Run the scraper agent first to capture the source.
-4. Use the builder agent and the `website-rebuild-pro` skill to produce the rebuilt site.
+4. **Run the industry-research step** before any design or build work. Produce
+   `sites/<site>/notes/industry-inspiration.md` containing 15 audited sector
+   sites and three ★ anchor references, per
+   `.codex/skills/website-rebuild-pro/references/industry-research.md`.
+5. Use the builder agent and the `website-rebuild-pro` skill to produce the
+   rebuilt site. The skill enforces Apple-grade design discipline via
+   `.codex/skills/website-rebuild-pro/references/apple-design-language.md`.
 
 ## Premium rebuild expectations
 
 This repo is designed for more than a straight clone. The rebuilt site should:
 
+- be grounded in a top-15 industry inspiration brief before any design plan is committed
+- borrow structural and behavioral patterns from the Apple design-language reference (scroll-pinned reveals, color-swatch cross-fades, sticky product subnav, staged entrance reveals, magnetic CTAs, expand drawers) translated through the source brand
 - preserve source truth while elevating brand signal
-- use a deterministic design plan before implementation
+- use a deterministic design plan before implementation, with every decision cited back to the brief or a named pattern
 - source registry components when appropriate instead of rewriting fragile UI by hand
 - incorporate meaningful motion and clear reduced-motion fallbacks
 - avoid generic "AI slop" layouts, gradients, and card catalogs
