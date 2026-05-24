@@ -1,34 +1,44 @@
-import type { Metadata } from "next";
-import { Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from "next"
+import { Fraunces, JetBrains_Mono, Manrope } from "next/font/google"
+import "./globals.css"
 
-const fontSans = Plus_Jakarta_Sans({
+const fontDisplay = Fraunces({
+  variable: "--font-display",
+  subsets: ["latin"],
+  axes: ["opsz"],
+})
+
+const fontSans = Manrope({
   variable: "--font-sans",
   subsets: ["latin"],
-});
+  weight: ["400", "500", "600", "700"],
+})
 
-const fontMono = Geist_Mono({
+const fontMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
-});
+  weight: ["400", "500"],
+})
 
 export const metadata: Metadata = {
-  title: "South Side Hard Soda | South Africa’s Original Hard Soda",
+  title: "South Side — Premium hard soda from South Africa",
   description:
-    "South Side Hard Soda is a premium hard soda range from South Africa with real fruit flavours, low sugar and a crisp vodka base.",
-};
+    "Vodka. Real fruit. Sparkling spring water. 5% ABV. 72 calories. Five flavours, made for the heat. Available at Pick n Pay, Spar, and Liquor City.",
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html
       lang="en"
-      className={`${fontSans.variable} ${fontMono.variable} h-full antialiased`}
+      className={`${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-[var(--ink)] text-[var(--cream)]">
+        {children}
+      </body>
     </html>
-  );
+  )
 }

@@ -9,112 +9,95 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
+  --font-display: var(--font-display);
   --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
+  --color-ring: var(--ring);
   --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-foreground: var(--accent-foreground);
   --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
+  --color-muted-foreground: var(--muted-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
+  --color-card-foreground: var(--card-foreground);
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ─── South Side V2 — editorial craft soda palette ───────────── */
 :root {
-  --background: #fbfcf8;
-  --foreground: #071018;
-  --card: #ffffff;
-  --card-foreground: #020617;
-  --popover: #ffffff;
-  --popover-foreground: #020617;
-  --primary: #071018;
-  --primary-foreground: #ffffff;
-  --secondary: #102c35;
-  --secondary-foreground: #ffffff;
-  --muted: #e7eee8;
-  --muted-foreground: #3c5258;
-  --accent: #0e6b54;
-  --accent-foreground: #ffffff;
-  --destructive: #dc2626;
-  --border: #ced8d1;
-  --input: #ced8d1;
-  --ring: #0e6b54;
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #020617;
-  --sidebar-primary: #0f172a;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e8ecf1;
-  --sidebar-accent-foreground: #020617;
-  --sidebar-border: #e2e8f0;
-  --sidebar-ring: #0f172a;
+  /* Foundations */
+  --ink: #0a1626;
+  --ink-2: #11203a;
+  --ink-3: #1d2f4d;
+  --cream: #f4eada;
+  --cream-2: #ffffff;
+  --cream-3: #e3d8b9;
+  --amber: #f8b75a;
+  --muted-on-ink: #93a1bb;
+  --muted-on-cream: #4f5a6e;
+
+  /* Per-flavour palette (set on parent via data-flavour) */
+  --flavour: #f8b75a;
+  --flavour-deep: #b07a26;
+  --flavour-soft: rgba(248, 183, 90, 0.16);
+  --flavour-label-tint: #ffffff;
+
+  /* Tailwind theme tokens */
+  --background: var(--ink);
+  --foreground: var(--cream);
+  --card: var(--ink-2);
+  --card-foreground: var(--cream);
+  --muted: var(--ink-2);
+  --muted-foreground: var(--muted-on-ink);
+  --accent: var(--flavour);
+  --accent-foreground: var(--ink);
+  --border: var(--ink-3);
+  --ring: var(--flavour);
+  --radius: 0.25rem;
 }
 
-.dark {
-  --background: #020617;
-  --foreground: #f8fafc;
-  --card: #0b1220;
-  --card-foreground: #f8fafc;
-  --popover: #0b1220;
-  --popover-foreground: #f8fafc;
-  --primary: #f8fafc;
-  --primary-foreground: #0f172a;
-  --secondary: #1e293b;
-  --secondary-foreground: #f8fafc;
-  --muted: #1e293b;
-  --muted-foreground: #cbd5e1;
-  --accent: #0369a1;
-  --accent-foreground: #ffffff;
-  --destructive: #dc2626;
-  --border: rgba(248, 250, 252, 0.12);
-  --input: rgba(248, 250, 252, 0.16);
-  --ring: #94a3b8;
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: #0b1220;
-  --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #0369a1;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #1e293b;
-  --sidebar-accent-foreground: #f8fafc;
-  --sidebar-border: rgba(248, 250, 252, 0.12);
-  --sidebar-ring: #94a3b8;
+.section-light {
+  --background: var(--cream);
+  --foreground: var(--ink);
+  --card: var(--cream-2);
+  --card-foreground: var(--ink);
+  --muted: var(--cream-3);
+  --muted-foreground: var(--muted-on-cream);
+  --accent: var(--flavour);
+  --accent-foreground: var(--ink);
+  --border: var(--cream-3);
+}
+
+/* ─── Per-flavour mods ──────────────────────────────────────── */
+[data-flavour="cranberry-raspberry"] {
+  --flavour: #c8324d;
+  --flavour-deep: #771a2e;
+  --flavour-soft: rgba(200, 50, 77, 0.18);
+  --flavour-label-tint: #fbe5e9;
+}
+[data-flavour="passion-fruit"] {
+  --flavour: #f5a623;
+  --flavour-deep: #8a5a07;
+  --flavour-soft: rgba(245, 166, 35, 0.18);
+  --flavour-label-tint: #fff4d6;
+}
+[data-flavour="mango-orange"] {
+  --flavour: #ff7d3a;
+  --flavour-deep: #93340b;
+  --flavour-soft: rgba(255, 125, 58, 0.18);
+  --flavour-label-tint: #ffe7d6;
+}
+[data-flavour="pineapple-coconut"] {
+  --flavour: #7fd1a4;
+  --flavour-deep: #2f6c4b;
+  --flavour-soft: rgba(127, 209, 164, 0.18);
+  --flavour-label-tint: #e9f7ef;
+}
+[data-flavour="lime-lemon"] {
+  --flavour: #cce652;
+  --flavour-deep: #5f7416;
+  --flavour-soft: rgba(204, 230, 82, 0.20);
+  --flavour-label-tint: #f5f9d6;
 }
 
 @layer base {
@@ -122,17 +105,76 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-[#071a2d] text-white;
+    @apply bg-background text-foreground;
+    font-feature-settings: "kern" 1, "liga" 1;
   }
   html {
     @apply font-sans;
   }
+  h1, h2, h3 {
+    font-family: var(--font-display), ui-serif, Georgia, serif;
+    letter-spacing: -0.025em;
+    font-variation-settings: "opsz" 144;
+  }
+  ::selection {
+    background: var(--flavour);
+    color: var(--ink);
+  }
 }
 
-.port-grid {
+/* ─── Hairline grid backdrop ────────────────────────────────── */
+.hairline-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(90deg, black, rgba(0, 0, 0, 0.72), transparent);
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 96px 96px;
+}
+.section-light .hairline-grid {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
+
+/* ─── Focus ring ────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--flavour);
+  outline-offset: 2px;
+}
+
+/* ─── Reduced motion safety ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ─── Breathe animation on the hero can ─────────────────────── */
+@keyframes can-breathe {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%      { transform: translate3d(0, -6px, 0) rotate(-0.4deg); }
+}
+.can-breathe {
+  animation: can-breathe 5.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .can-breathe { animation: none; }
+}
+
+/* ─── Display class helpers ─────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+}
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
 }
