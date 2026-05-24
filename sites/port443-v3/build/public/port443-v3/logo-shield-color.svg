@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Shield outer shape -->
+  <path d="M60 8 L100 24 L100 60 C100 84 82 100 60 112 C38 100 20 84 20 60 L20 24 Z"
+        stroke="#071018" stroke-width="4.5" stroke-linejoin="round" fill="none"/>
+  <!-- Inner shield accent line -->
+  <path d="M60 18 L92 31 L92 60 C92 79 76 93 60 103 C44 93 28 79 28 60 L28 31 Z"
+        stroke="#0e6b54" stroke-width="1.5" stroke-linejoin="round" fill="none" opacity="0.5"/>
+  <!-- Lock shackle (arc) -->
+  <path d="M44 54 L44 44 A16 16 0 0 1 76 44 L76 54"
+        stroke="#071018" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Lock body -->
+  <rect x="36" y="53" width="48" height="34" rx="5" fill="#071018"/>
+  <!-- Lock keyhole circle -->
+  <circle cx="60" cy="68" r="6" fill="#a8ffce"/>
+  <!-- Lock keyhole stem -->
+  <rect x="57" y="68" width="6" height="9" rx="2" fill="#a8ffce"/>
+</svg>
