@@ -9,10 +9,10 @@ import { cn, withBasePath } from "@/lib/utils"
 
 export const navLinks = [
   { label: "Platform", href: "/#oneview" },
-  { label: "The Loop", href: "/#loop" },
   { label: "Services", href: "/services/" },
   { label: "About", href: "/about-us/" },
   { label: "Insights", href: "/#insights" },
+  { label: "See OneView", href: "/#oneview" },
 ]
 
 export function SiteNav({ floating = true }: { floating?: boolean }) {
@@ -86,7 +86,7 @@ export function SiteFooter() {
             title="Platform"
             links={[
               { label: "OneView", href: "/#oneview" },
-              { label: "The Loop", href: "/#loop" },
+              { label: "Attestation", href: "/#loop" },
               { label: "Frameworks", href: "/#frameworks" },
             ]}
           />

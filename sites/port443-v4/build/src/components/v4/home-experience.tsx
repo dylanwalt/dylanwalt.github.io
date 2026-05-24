@@ -40,10 +40,21 @@ import { cn, withBasePath } from "@/lib/utils"
 
 const subnavLinks = [
   { label: "Platform", href: "#oneview" },
-  { label: "The Loop", href: "#loop" },
-  { label: "Services", href: "#services" },
+  { label: "Attestation", href: "#loop" },
   { label: "Frameworks", href: "#frameworks" },
   { label: "Insights", href: "#insights" },
+  { label: "See OneView", href: "#oneview" },
+]
+
+const heroBadges = [
+  "Live monitoring",
+  "API-first integration",
+  "Independent governance",
+  "Best Practice frameworks",
+  "Operational efficiency",
+  "Automation",
+  "Risk mitigation",
+  "Multi-regional",
 ]
 
 const proofItems = [
@@ -71,7 +82,7 @@ const highlights = [
     title: "Continuous control validation",
     body:
       "Evidence pulled live from your security estate via API. No spreadsheets, no compiled snapshots, no optimistic reporting.",
-    href: "#services",
+    href: "/services/",
   },
   {
     eyebrow: "02 — ONEVIEW",
@@ -85,14 +96,14 @@ const highlights = [
     title: "SOC automation as SaaS",
     body:
       "Identify → Scope → Build → Operate. Custom automation against your existing toolset, delivered as a managed service.",
-    href: "#services",
+    href: "/services/",
   },
   {
     eyebrow: "04 — CONSULTING",
     title: "Cyber Security Assessments",
     body:
       "Including information security policy and incident response policy definition and development.",
-    href: "#services",
+    href: "/services/",
   },
   {
     eyebrow: "05 — VUEITALL",
@@ -298,9 +309,7 @@ export function HomeExperience() {
           <HighlightsReel />
           <LoopNarrative />
           <OneViewBand />
-          <ServicesSwatch />
           <FrameworksRail />
-          <RegionalPresence />
           <ComparisonStrip />
           <InsightsFeed />
           <ContactStage />
@@ -378,7 +387,7 @@ function HeroSplit() {
             <Reveal delay={0.05}>
               <h1 className="mt-6 text-[clamp(2.5rem,6.4vw,5.25rem)] font-semibold leading-[1.02] tracking-[-0.025em]">
                 Port443.{" "}
-                <span className="text-[var(--green)]">
+                <span className="block mt-3 text-[clamp(1.125rem,2.2vw,1.875rem)] font-medium leading-[1.3] tracking-[-0.01em] text-[var(--green)]">
                   Enhancing the security posture through observability,
                   visibility and automated attestation.
                 </span>
@@ -393,19 +402,20 @@ function HeroSplit() {
             <Reveal delay={0.42}>
               <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
                 <PrimaryCTA href="#contact">Request a demo</PrimaryCTA>
-                <SecondaryCTA href="#oneview">See OneView</SecondaryCTA>
               </div>
             </Reveal>
             <Reveal delay={0.55}>
-              <div className="mt-12 flex items-center gap-3 text-[12px] uppercase tracking-[0.18em] text-[var(--muted-on-ink)]">
-                <span className="inline-flex items-center gap-2">
-                  <LiveDot reduceMotion={reduceMotion} />
-                  Live monitoring
-                </span>
-                <span className="text-[var(--ink-3)]">·</span>
-                <span>API-first integration</span>
-                <span className="text-[var(--ink-3)]">·</span>
-                <span>Independent governance</span>
+              <div className="mt-12 flex flex-wrap items-center gap-x-5 gap-y-3 text-[11.5px] uppercase tracking-[0.18em] text-[var(--muted-on-ink)]">
+                {heroBadges.map((label, i) => (
+                  <span key={label} className="inline-flex items-center gap-2">
+                    {i === 0 ? (
+                      <LiveDot reduceMotion={reduceMotion} />
+                    ) : (
+                      <span className="h-1.5 w-1.5 rounded-full bg-[var(--green)]" />
+                    )}
+                    {label}
+                  </span>
+                ))}
               </div>
             </Reveal>
           </div>
@@ -713,17 +723,11 @@ function HighlightsReel() {
     <section className="py-24 lg:py-32 border-b border-[var(--ink-3)]">
       <Container>
         <div className="grid lg:grid-cols-12 gap-10 items-end">
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-12">
             <Eyebrow>Core services</Eyebrow>
             <h2 className="mt-5 text-[clamp(2rem,4.5vw,3.75rem)] font-semibold tracking-[-0.025em] leading-[1.02]">
               Core services.
             </h2>
-          </div>
-          <div className="lg:col-span-5 lg:text-right">
-            <p className="text-[15px] text-[var(--muted-on-ink)] max-w-md lg:ml-auto">
-              Five capabilities, one operating model. Each card jumps to a
-              deeper section.
-            </p>
           </div>
         </div>
         <div className="mt-12 lg:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-px bg-[var(--ink-3)]">
@@ -743,7 +747,7 @@ function HighlightsReel() {
                 {h.body}
               </p>
               <a
-                href={h.href}
+                href={"external" in h && h.external ? h.href : withBasePath(h.href)}
                 {...("external" in h && h.external ? { target: "_blank", rel: "noreferrer" } : {})}
                 className="mt-auto inline-flex items-center gap-1.5 text-[13px] text-[var(--ivory)] group-hover:text-[var(--green)] transition-colors"
               >
@@ -783,7 +787,7 @@ function LoopNarrative() {
     return (
       <section id="loop" className="py-24 lg:py-32 border-b border-[var(--ink-3)]">
         <Container>
-          <Eyebrow>The Loop</Eyebrow>
+          <Eyebrow>Attestation</Eyebrow>
           <h2 className="mt-5 max-w-4xl text-[clamp(2rem,4.5vw,3.75rem)] font-semibold tracking-[-0.025em] leading-[1.02]">
             Attestation — automated.
           </h2>
@@ -806,7 +810,7 @@ function LoopNarrative() {
         <Container className="relative w-full">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6">
-              <Eyebrow>The Loop</Eyebrow>
+              <Eyebrow>Attestation</Eyebrow>
               <h2 className="mt-5 text-[clamp(2rem,4.5vw,3.75rem)] font-semibold tracking-[-0.025em] leading-[1.02]">
                 Attestation — automated.
               </h2>
@@ -1046,7 +1050,7 @@ function OneViewBand() {
                 "RAG posture score — trended weekly",
                 "MTTD and MTTR reduction, sourced from controls",
                 "Board-ready reporting with third-party independent governance",
-                "Independent of the technologies it observes",
+                "Single consolidated pane of glass highlighting all critical metrics and alerts",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--green)]" />
@@ -1056,113 +1060,12 @@ function OneViewBand() {
             </ul>
             <div className="mt-10 flex gap-6 items-center">
               <PrimaryCTA href="#contact">Request a demo</PrimaryCTA>
-              <SecondaryCTA href="#services" tone="dark">
-                See services
-              </SecondaryCTA>
             </div>
           </div>
           <div className="lg:col-span-7">
             <div className="bg-[var(--ink)] text-[var(--ivory)] rounded-[2px] p-6 lg:p-7 border border-[var(--ink-3)] shadow-[0_30px_60px_-30px_rgba(10,14,22,0.45)]">
               <OneViewSurface large />
             </div>
-          </div>
-        </div>
-      </Container>
-    </section>
-  )
-}
-
-/* ─── Services Swatch (color-swatch crossfade pattern) ────── */
-
-function ServicesSwatch() {
-  const [active, setActive] = useState<Service["id"]>("attestation")
-  const current = services.find((s) => s.id === active) ?? services[0]
-  const Icon = current.icon
-
-  return (
-    <section id="services" className="py-24 lg:py-32 border-b border-[var(--ink-3)]">
-      <Container>
-        <div className="grid lg:grid-cols-12 gap-12 items-end">
-          <div className="lg:col-span-7">
-            <Eyebrow>Services</Eyebrow>
-            <h2 className="mt-5 text-[clamp(2rem,4.5vw,3.75rem)] font-semibold tracking-[-0.025em] leading-[1.02]">
-              Four services. One operating model.
-            </h2>
-          </div>
-          <div className="lg:col-span-5">
-            <p className="text-[15px] text-[var(--muted-on-ink)] max-w-md">
-              Pick a service to read its scope. Each one is delivered against
-              the same Identify → Scope → Build → Operate lifecycle.
-            </p>
-          </div>
-        </div>
-        <div className="mt-12 lg:mt-16 grid lg:grid-cols-12 gap-px bg-[var(--ink-3)]">
-          <div className="lg:col-span-4 bg-[var(--ink)] flex flex-col">
-            {services.map((s) => (
-              <button
-                key={s.id}
-                onClick={() => setActive(s.id)}
-                className={cn(
-                  "text-left px-6 py-5 border-b border-[var(--ink-3)] last:border-b-0 transition-colors",
-                  active === s.id
-                    ? "bg-[var(--ink-2)] text-[var(--ivory)]"
-                    : "text-[var(--muted-on-ink)] hover:text-[var(--ivory)]",
-                )}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="mono text-[11px] tracking-[0.18em] text-[var(--green)]">
-                    {s.code}
-                  </span>
-                  {active === s.id && (
-                    <span className="mono text-[10px] tracking-[0.2em] text-[var(--green)]">
-                      ACTIVE
-                    </span>
-                  )}
-                </div>
-                <div className="mt-3 text-[18px] font-semibold tracking-[-0.02em]">
-                  {s.title}
-                </div>
-                <div className="mt-1 text-[13px] text-[var(--muted-on-ink)]">
-                  {s.sub}
-                </div>
-              </button>
-            ))}
-          </div>
-          <div className="lg:col-span-8 bg-[var(--ink)] p-7 lg:p-10 min-h-[420px]">
-            <motion.div
-              key={current.id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, ease: [0.22, 0.61, 0.36, 1] }}
-              className="h-full flex flex-col"
-            >
-              <div className="flex items-center gap-3 mono text-[11px] tracking-[0.2em] text-[var(--green)]">
-                <Icon className="h-4 w-4" />
-                {current.code} · {current.title.toUpperCase()}
-              </div>
-              <h3 className="mt-5 text-[clamp(1.5rem,2.6vw,2.25rem)] font-semibold tracking-[-0.02em] leading-[1.1]">
-                {current.title}.{" "}
-                <span className="text-[var(--muted-on-ink)]">{current.sub}</span>
-              </h3>
-              <p className="mt-5 max-w-2xl text-[15.5px] leading-[1.6] text-[var(--muted-on-ink)]">
-                {current.body}
-              </p>
-              <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-px bg-[var(--ink-3)]">
-                {current.capabilities.map((cap) => (
-                  <div
-                    key={cap}
-                    className="bg-[var(--ink)] px-4 py-4 text-[12.5px] mono text-[var(--muted-on-ink)]"
-                  >
-                    <Check className="h-3.5 w-3.5 text-[var(--green)] mb-2" />
-                    {cap}
-                  </div>
-                ))}
-              </div>
-              <div className="mt-auto pt-10 flex items-center gap-6">
-                <PrimaryCTA href="#contact">Talk to us about {current.title}</PrimaryCTA>
-                <SecondaryCTA href="/services/">Read the brief</SecondaryCTA>
-              </div>
-            </motion.div>
           </div>
         </div>
       </Container>
@@ -1212,51 +1115,6 @@ function FrameworksRail() {
           ))}
         </div>
       </Container>
-    </section>
-  )
-}
-
-/* ─── Regional Presence ───────────────────────────────────── */
-
-function RegionalPresence() {
-  return (
-    <section id="region" className="relative border-b border-[var(--ink-3)] overflow-hidden">
-      <div className="relative grid lg:grid-cols-12">
-        <div className="lg:col-span-7 relative min-h-[480px]">
-          <Image
-            src="/port443-v4/about-1.jpg"
-            alt="Regional presence"
-            fill
-            className="object-cover"
-            sizes="(min-width: 1024px) 60vw, 100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--ink)] via-transparent to-transparent" />
-        </div>
-        <div className="lg:col-span-5 p-8 lg:p-14 flex flex-col justify-center">
-          <Eyebrow>Region</Eyebrow>
-          <h2 className="mt-5 text-[clamp(1.75rem,3.5vw,2.75rem)] font-semibold tracking-[-0.025em] leading-[1.05]">
-            Operating across the Middle East and Africa.
-          </h2>
-          <p className="mt-5 text-[15px] leading-[1.6] text-[var(--muted-on-ink)] max-w-md">
-            Regional context, regional clocks, regional escalation paths. Port443
-            operates inside the time zones, language environments, and
-            regulatory landscapes its customers run in.
-          </p>
-          <div className="mt-9 grid grid-cols-2 gap-4 text-[13px]">
-            {[
-              { tag: "MEA", body: "Operating geography" },
-              { tag: "ZA", body: "South African registered entity" },
-              { tag: "EN/AR", body: "Customer-facing language" },
-              { tag: "SaaS", body: "Delivery model" },
-            ].map((r) => (
-              <div key={r.tag} className="border-t border-[var(--ink-3)] pt-3">
-                <div className="mono text-[11px] tracking-[0.2em] text-[var(--green)]">{r.tag}</div>
-                <div className="mt-1 text-[var(--muted-on-ink)]">{r.body}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
     </section>
   )
 }
@@ -1347,7 +1205,6 @@ function ComparisonStrip() {
         </div>
         <div className="mt-10 flex items-center gap-6">
           <PrimaryCTA href="#contact">Request a demo</PrimaryCTA>
-          <SecondaryCTA href="#services">See the four services</SecondaryCTA>
         </div>
       </Container>
     </section>

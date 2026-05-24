@@ -207,3 +207,41 @@ V4 inherits V3's architecture wholesale. Content + visual changes only:
   evidence rows).
 - **Logo**: new shield + padlock + circuit-trace SVGs (`logo-shield-white.svg`
   and `logo-shield-color.svg`) in `public/port443-v4/`.
+
+## V4 iterative refinements (post-review)
+
+User feedback on V4 applied in-place rather than spinning a new version:
+
+- **Hero subtitle**: green descriptive sentence reduced to ~½ the previous
+  scale and re-rendered as a calmer secondary line under the brand H1
+  ("Port443.")
+- **Hero CTAs**: `Request a demo` remains primary; `See OneView` removed
+  from the hero CTA row.
+- **Top nav**: `See OneView` added as a nav link on the right, next to
+  `Insights` (also reflected in the StickySubnav).
+- **Hero badge rail**: redesigned. Each item now gets a green dot indicator
+  (live for `Live monitoring`, static for the rest). Items expanded from 3
+  to 8: Live monitoring, API-first integration, Independent governance,
+  Best Practice frameworks, Operational efficiency, Automation, Risk
+  mitigation, Multi-regional.
+- **Core services header**: "Five capabilities, one operating model. Each
+  card jumps to a deeper section." subtitle removed; the H2 stands alone.
+- **The Loop section**: the "The Loop" eyebrow label removed and replaced
+  with "Attestation" (matching the H2 "Attestation — automated."). The
+  subnav and footer have also been updated.
+- **Services band removal**: the colour-swatch ServicesSwatch section
+  (previously labelled "Four services. One operating model.") was removed
+  from the page composition. The Core services highlights reel is now the
+  page's primary services representation; deeper detail lives on the
+  /services/ route.
+- **Region band removal**: the RegionalPresence section ("Operating across
+  the Middle East and Africa.") was removed from the page composition.
+  The page now flows directly from the comparison strip to the insights
+  feed without the MEA imagery break.
+- **OneView bullet rewording**: "Independent of the technologies it
+  observes" replaced with "Single consolidated pane of glass highlighting
+  all critical metrics and alerts."
+
+Architecture and palette decisions from the parent design plan remain
+unchanged. The result is shorter (9 sections → 7 sections), tighter, and
+more aligned with the actual Port443 service model.
