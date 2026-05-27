@@ -75,6 +75,7 @@ const highlights = [
     body:
       "Evidence pulled live from your security estate via API. No spreadsheets, no compiled snapshots, no optimistic reporting.",
     href: "/services/",
+    hideCta: true,
   },
   {
     eyebrow: "02 — ONEVIEW",
@@ -82,6 +83,7 @@ const highlights = [
     body:
       "Cross-control observability with prioritised alerts, overall cyber-security posture analysis, and third-party independent governance.",
     href: "#oneview",
+    hideCta: true,
   },
   {
     eyebrow: "03 — AUTOMATION",
@@ -89,6 +91,7 @@ const highlights = [
     body:
       "Identify → Scope → Build → Operate. Custom automation against your existing toolset, delivered as a managed service.",
     href: "/services/",
+    hideCta: true,
   },
   {
     eyebrow: "04 — CONSULTING",
@@ -658,14 +661,16 @@ function HighlightsReel() {
               <p className="text-[14px] leading-[1.55] text-[var(--muted-on-ink)]">
                 {h.body}
               </p>
-              <a
-                href={"external" in h && h.external ? h.href : withBasePath(h.href)}
-                {...("external" in h && h.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                className="mt-auto inline-flex items-center gap-1.5 text-[13px] text-[var(--ivory)] group-hover:text-[var(--green)] transition-colors"
-              >
-                {"external" in h && h.external ? "Visit vueITall" : "Read more"}
-                <ArrowRight className="h-3.5 w-3.5" />
-              </a>
+              {!("hideCta" in h && h.hideCta) && (
+                <a
+                  href={"external" in h && h.external ? h.href : withBasePath(h.href)}
+                  {...("external" in h && h.external ? { target: "_blank", rel: "noreferrer" } : {})}
+                  className="mt-auto inline-flex items-center gap-1.5 text-[13px] text-[var(--ivory)] group-hover:text-[var(--green)] transition-colors"
+                >
+                  {"external" in h && h.external ? "Visit vueITall" : "Read more"}
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </a>
+              )}
             </Reveal>
           ))}
         </div>

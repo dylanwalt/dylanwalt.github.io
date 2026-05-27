@@ -129,7 +129,6 @@ export function SiteFooter() {
           <FooterColumn
             title="Company"
             links={[
-              { label: "About", href: "/about-us/" },
               { label: "Insights", href: "/#insights" },
               { label: "vueITall", href: VUEITALL_URL },
             ]}
