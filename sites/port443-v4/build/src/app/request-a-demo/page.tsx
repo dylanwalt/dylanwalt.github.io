@@ -49,9 +49,9 @@ export default function RequestDemoPage() {
                     </div>
                     <a
                       className="mt-1 block text-[var(--ivory)] hover:text-[var(--green)]"
-                      href="mailto:hello@port443.co.za"
+                      href="mailto:info@port443.co.za"
                     >
-                      hello@port443.co.za
+                      info@port443.co.za
                     </a>
                   </div>
                   <div className="border-t border-[var(--ink-3)] pt-3">

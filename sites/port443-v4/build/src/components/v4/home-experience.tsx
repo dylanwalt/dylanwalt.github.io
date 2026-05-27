@@ -9,18 +9,7 @@ import {
   useRef,
   useState,
 } from "react"
-import {
-  Activity,
-  ArrowRight,
-  ArrowUpRight,
-  Bot,
-  Check,
-  ChevronDown,
-  Eye,
-  Layers3,
-  Minus,
-  ShieldCheck,
-} from "lucide-react"
+import { ArrowRight, ArrowUpRight, ChevronDown } from "lucide-react"
 import {
   MotionConfig,
   type MotionValue,
@@ -38,13 +27,16 @@ import { cn, withBasePath } from "@/lib/utils"
 
 /* ─── Brand Data ──────────────────────────────────────────── */
 
-const subnavLinks = [
-  { label: "Platform", href: "#oneview" },
+const subnavLinks: { label: string; href: string; external?: boolean }[] = [
+  { label: "OneView Platform", href: "#oneview" },
   { label: "Attestation", href: "#loop" },
   { label: "Frameworks", href: "#frameworks" },
   { label: "Insights", href: "#insights" },
-  { label: "See OneView", href: "#oneview" },
+  { label: "vueITall", href: "https://www.vueitall.com", external: true },
 ]
+
+const DEMO_MAILTO = "mailto:info@port443.co.za?subject=Request%20a%20demo"
+const LINKEDIN_URL = "https://www.linkedin.com/company/port443-pty-ltd"
 
 const heroBadges = [
   "Live monitoring",
@@ -115,71 +107,6 @@ const highlights = [
   },
 ]
 
-const services = [
-  {
-    id: "attestation",
-    code: "01",
-    title: "Control Attestation",
-    sub: "Continuous validation, no manual compilation.",
-    body:
-      "Automated validation against vendor best practice and frameworks including PCI-DSS, NIST CSF, and CIS. Evidence-backed attestation extracted directly via API — no spreadsheets, no optimistic reporting.",
-    icon: ShieldCheck,
-    capabilities: [
-      "PCI-DSS 4.0 aligned",
-      "NIST CSF 2.0 aligned",
-      "CIS v8 aligned",
-      "Vendor best-practice aligned",
-    ],
-  },
-  {
-    id: "oneview",
-    code: "02",
-    title: "OneView",
-    sub: "Single source of truth, independent and live.",
-    body:
-      "An independent, governance-grade dashboard that pulls directly from source technologies via API. Cross-control observability with prioritised alerts, overall cyber-security posture analysis, and third-party independent governance.",
-    icon: Eye,
-    capabilities: [
-      "RAG posture score",
-      "MTTD trend",
-      "MTTR trend",
-      "Board-ready reporting",
-    ],
-  },
-  {
-    id: "automation",
-    code: "03",
-    title: "Custom Automation",
-    sub: "Identify → Scope → Build → Operate.",
-    body:
-      "End-to-end SOC automation delivered as SaaS. Every engagement follows a proven lifecycle: identify the manual workflow to automate, scope the integration points, build against your existing toolset, and operate as a managed service. Frees analyst capacity for proactive threat hunting.",
-    icon: Bot,
-    capabilities: [
-      "Use-case design",
-      "API integration",
-      "SaaS operation",
-      "SOC optimisation",
-    ],
-  },
-  {
-    id: "consulting",
-    code: "04",
-    title: "Consulting",
-    sub: "Cyber Security Assessments.",
-    body:
-      "Cyber Security Assessments — including information security policy and incident response policy definition and development. Bridges security engineering and executive risk governance.",
-    icon: Layers3,
-    capabilities: [
-      "Cyber security assessment",
-      "Information security policy",
-      "Incident response policy",
-      "CISO advisory",
-    ],
-  },
-] as const
-
-type Service = (typeof services)[number]
-
 const frameworks = [
   { name: "PCI-DSS", version: "4.0", scope: "Payment & cardholder data" },
   { name: "NIST CSF", version: "2.0", scope: "Cyber-security framework" },
@@ -223,62 +150,42 @@ const loopStates = [
   },
 ] as const
 
-const comparisonRows = [
+const linkedinPosts = [
   {
-    label: "Continuous control attestation",
-    p443: "yes",
-    diy: "partial",
-    mssp: "no",
+    age: "2 months ago",
+    title: "Visibility complemented by observability — both are essential",
+    body:
+      "Visibility tells you what is happening: data collection, aggregation, and display across your environment.",
   },
   {
-    label: "Independent posture view",
-    p443: "yes",
-    diy: "partial",
-    mssp: "partial",
+    age: "6 months ago",
+    title: "Port443 — founding member of Techshed",
+    body:
+      "Port443 is proud to be one of the founding members of Techshed and we are looking forward to welcoming you to this special event.",
   },
   {
-    label: "Aligned with PCI · NIST · CIS · vendor best-practice",
-    p443: "yes",
-    diy: "depends",
-    mssp: "partial",
+    age: "7 months ago",
+    title: "Automating cyber security",
+    body:
+      "Without constant validation and remediation, controls drift, resulting in increased risk for the organization.",
   },
   {
-    label: "Identify → Scope → Build → Operate",
-    p443: "yes",
-    diy: "no",
-    mssp: "no",
+    age: "9 months ago",
+    title: "Port443 (Pty) Ltd turns 4",
+    body:
+      "A huge thank you to our incredible team and our valued clients for four years of trust and collaboration.",
   },
   {
-    label: "API-first integration",
-    p443: "yes",
-    diy: "depends",
-    mssp: "partial",
-  },
-  {
-    label: "MEA operating context",
-    p443: "yes",
-    diy: "no",
-    mssp: "no",
-  },
-  {
-    label: "Delivered as SaaS",
-    p443: "yes",
-    diy: "no",
-    mssp: "partial",
+    age: "11 months ago",
+    title: "Frequent control validation isn't a checkbox",
+    body:
+      "Frequent validation of controls isn't just a checkbox — it's a commitment to resilience, trust, and agility.",
   },
 ] as const
 
-const insights = [
+const pressArticles = [
   {
-    date: "May 2026",
-    title: "OneView: Governance-grade visibility. No manual aggregation required.",
-    body:
-      "API-first extraction directly from source technologies. Single source of truth aligned with NIST CSF, CIS CSC, and vendor best-practice baselines.",
-    href: "https://www.linkedin.com/company/port443-pty-ltd/posts/?feedView=all",
-    source: "LinkedIn",
-  },
-  {
-    date: "May 2023",
+    date: "Ventureburn · May 2023",
     title: "Five things boards need to know about incident response",
     body:
       "Board-level IR essentials: what executives must understand before a breach occurs.",
@@ -286,14 +193,14 @@ const insights = [
     source: "Ventureburn",
   },
   {
-    date: "Press",
-    title: "Port443 — automating cyber defence across the Middle East and Africa",
+    date: "TechFinancials · Coverage",
+    title: "Port443 — automating cyber security across the region",
     body:
-      "Coverage of Port443's regional positioning and the broader automation thesis in enterprise cyber.",
+      "Coverage of Port443's positioning and the broader automation thesis in enterprise cyber.",
     href: "https://www.techfinancials.co.za/",
     source: "TechFinancials",
   },
-]
+] as const
 
 /* ─── Root ────────────────────────────────────────────────── */
 
@@ -310,9 +217,9 @@ export function HomeExperience() {
           <LoopNarrative />
           <OneViewBand />
           <FrameworksRail />
-          <ComparisonStrip />
           <InsightsFeed />
-          <ContactStage />
+          <LinkedInPostsSection />
+          <PressSection />
         </main>
         <SiteFooter />
       </div>
@@ -357,12 +264,17 @@ function StickySubnav() {
           </Link>
           <nav className="hidden lg:flex items-center gap-6 text-[12.5px] text-[var(--muted-on-ink)]">
             {subnavLinks.map((link) => (
-              <a key={link.href} href={link.href} className="hover:text-[var(--ivory)]">
+              <a
+                key={link.label}
+                href={link.href}
+                {...(link.external ? { target: "_blank", rel: "noreferrer" } : {})}
+                className="hover:text-[var(--ivory)]"
+              >
                 {link.label}
               </a>
             ))}
           </nav>
-          <PrimaryCTA href="#contact" small>
+          <PrimaryCTA href={DEMO_MAILTO} small external>
             Request a demo
           </PrimaryCTA>
         </Container>
@@ -401,7 +313,7 @@ function HeroSplit() {
             </Reveal>
             <Reveal delay={0.42}>
               <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
-                <PrimaryCTA href="#contact">Request a demo</PrimaryCTA>
+                <PrimaryCTA href={DEMO_MAILTO}>Request a demo</PrimaryCTA>
               </div>
             </Reveal>
             <Reveal delay={0.55}>
@@ -1059,7 +971,7 @@ function OneViewBand() {
               ))}
             </ul>
             <div className="mt-10 flex gap-6 items-center">
-              <PrimaryCTA href="#contact">Request a demo</PrimaryCTA>
+              <PrimaryCTA href={DEMO_MAILTO}>Request a demo</PrimaryCTA>
             </div>
           </div>
           <div className="lg:col-span-7">
@@ -1083,7 +995,7 @@ function FrameworksRail() {
           <div className="lg:col-span-6">
             <Eyebrow>Frameworks</Eyebrow>
             <h2 className="mt-5 text-[clamp(1.5rem,3vw,2.5rem)] font-semibold tracking-[-0.025em] leading-[1.05]">
-              Aligned with the frameworks your auditors already ask about.
+              Aligned with industry respected Governance best practice frameworks.
             </h2>
           </div>
           <div className="lg:col-span-6 lg:text-right">
@@ -1119,99 +1031,7 @@ function FrameworksRail() {
   )
 }
 
-/* ─── Comparison Strip ────────────────────────────────────── */
-
-function ComparisonStrip() {
-  const cols = [
-    { id: "p443", label: "Port443", emphasis: true },
-    { id: "diy", label: "Build in-house", emphasis: false },
-    { id: "mssp", label: "Generic MSSP", emphasis: false },
-  ] as const
-
-  const cell = (state: string) => {
-    if (state === "yes")
-      return (
-        <span className="inline-flex items-center gap-2 text-[var(--green)]">
-          <Check className="h-3.5 w-3.5" /> Yes
-        </span>
-      )
-    if (state === "no")
-      return (
-        <span className="inline-flex items-center gap-2 text-[var(--muted-on-ink)]">
-          <Minus className="h-3.5 w-3.5" /> No
-        </span>
-      )
-    return (
-      <span className="inline-flex items-center gap-2 text-[var(--muted-on-ink)]">
-        <Activity className="h-3.5 w-3.5" /> {state[0].toUpperCase() + state.slice(1)}
-      </span>
-    )
-  }
-
-  return (
-    <section className="py-24 lg:py-32 border-b border-[var(--ink-3)]">
-      <Container>
-        <div className="grid lg:grid-cols-12 gap-10 items-end">
-          <div className="lg:col-span-7">
-            <Eyebrow>Compare</Eyebrow>
-            <h2 className="mt-5 text-[clamp(2rem,4.5vw,3.75rem)] font-semibold tracking-[-0.025em] leading-[1.02]">
-              Port443 vs. the obvious alternatives.
-            </h2>
-          </div>
-          <div className="lg:col-span-5">
-            <p className="text-[15px] text-[var(--muted-on-ink)] max-w-md">
-              Honest comparison. We say "partial" when something is partial. We
-              say "depends" when it depends on a decision the buyer hasn't made yet.
-            </p>
-          </div>
-        </div>
-        <div className="mt-12 lg:mt-14 border border-[var(--ink-3)] overflow-x-auto">
-          <table className="w-full text-[14px] min-w-[640px]">
-            <thead>
-              <tr className="bg-[var(--ink-2)]">
-                <th className="text-left p-5 font-medium text-[var(--muted-on-ink)] mono text-[11px] tracking-[0.18em]">
-                  Capability
-                </th>
-                {cols.map((c) => (
-                  <th
-                    key={c.id}
-                    className={cn(
-                      "text-left p-5 font-medium mono text-[11px] tracking-[0.18em]",
-                      c.emphasis ? "text-[var(--green)]" : "text-[var(--muted-on-ink)]",
-                    )}
-                  >
-                    {c.label.toUpperCase()}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {comparisonRows.map((row, i) => (
-                <tr
-                  key={row.label}
-                  className={cn(
-                    "border-t border-[var(--ink-3)]",
-                    i % 2 === 1 && "bg-[var(--ink-2)]/40",
-                  )}
-                >
-                  <td className="p-5 text-[var(--ivory)]">{row.label}</td>
-                  <td className="p-5">{cell(row.p443)}</td>
-                  <td className="p-5">{cell(row.diy)}</td>
-                  <td className="p-5">{cell(row.mssp)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="mt-10 flex items-center gap-6">
-          <PrimaryCTA href="#contact">Request a demo</PrimaryCTA>
-        </div>
-      </Container>
-    </section>
-  )
-}
-
-/* ─── Insights Feed ───────────────────────────────────────── */
+/* ─── Insights Feed (Port443 posts) ───────────────────────── */
 
 function InsightsFeed() {
   return (
@@ -1219,14 +1039,14 @@ function InsightsFeed() {
       <Container>
         <div className="grid lg:grid-cols-12 gap-10 items-end">
           <div className="lg:col-span-7">
-            <Eyebrow>Insights & press</Eyebrow>
+            <Eyebrow>Insights &amp; Press</Eyebrow>
             <h2 className="mt-5 text-[clamp(2rem,4.5vw,3.75rem)] font-semibold tracking-[-0.025em] leading-[1.02]">
-              What we wrote. What was written about us.
+              Port443 posts.
             </h2>
           </div>
           <div className="lg:col-span-5 lg:text-right">
             <a
-              href="https://www.linkedin.com/company/port443-pty-ltd/posts/?feedView=all"
+              href={LINKEDIN_URL}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 text-[14px] text-[var(--ivory)] hover:text-[var(--green)]"
@@ -1236,30 +1056,105 @@ function InsightsFeed() {
             </a>
           </div>
         </div>
-        <div className="mt-12 grid md:grid-cols-3 gap-px bg-[var(--ink-3)]">
-          {insights.map((post, i) => (
+      </Container>
+    </section>
+  )
+}
+
+/* ─── LinkedIn Posts ──────────────────────────────────────── */
+
+function LinkedInPostsSection() {
+  return (
+    <section className="py-20 lg:py-24 border-b border-[var(--ink-3)]">
+      <Container>
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <Eyebrow>LinkedIn · Latest 5</Eyebrow>
+            <h3 className="mt-5 font-semibold tracking-[-0.02em] text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.1]">
+              Most recent posts from @port443-pty-ltd.
+            </h3>
+          </div>
+          <a
+            href={LINKEDIN_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 text-[13.5px] text-[var(--ivory)] hover:text-[var(--green)]"
+          >
+            Open the LinkedIn feed
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </a>
+        </div>
+        <ol className="mt-10 border-t border-[var(--ink-3)]">
+          {linkedinPosts.map((post, i) => (
+            <li key={post.title} className="border-b border-[var(--ink-3)]">
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="group grid grid-cols-[auto_1fr_auto] gap-x-6 gap-y-3 items-baseline py-6 hover:bg-[var(--ink-2)]/40 transition-colors px-2 -mx-2"
+              >
+                <span className="mono text-[11px] tracking-[0.2em] text-[var(--green)] w-8">
+                  0{i + 1}
+                </span>
+                <div>
+                  <div className="text-[17px] font-medium tracking-[-0.015em] leading-[1.3] text-[var(--ivory)] group-hover:text-[var(--green)] transition-colors">
+                    {post.title}
+                  </div>
+                  <p className="mt-1.5 text-[13.5px] leading-[1.5] text-[var(--muted-on-ink)] max-w-2xl">
+                    {post.body}
+                  </p>
+                </div>
+                <span className="mono text-[11px] uppercase tracking-[0.18em] text-[var(--muted-on-ink)] whitespace-nowrap inline-flex items-center gap-1.5">
+                  {post.age}
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </Container>
+    </section>
+  )
+}
+
+/* ─── Press / Other Articles ──────────────────────────────── */
+
+function PressSection() {
+  return (
+    <section className="py-20 lg:py-24 border-b border-[var(--ink-3)]">
+      <Container>
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <Eyebrow>Press · Other articles</Eyebrow>
+            <h3 className="mt-5 font-semibold tracking-[-0.02em] text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.1]">
+              Written about Port443 (Pty) Ltd.
+            </h3>
+          </div>
+        </div>
+        <div className="mt-10 grid md:grid-cols-2 gap-px bg-[var(--ink-3)]">
+          {pressArticles.map((article, i) => (
             <Reveal
-              key={post.title}
+              key={article.title}
               delay={i * 0.07}
-              className="bg-[var(--ink)] p-7 flex flex-col gap-5 min-h-[280px] group"
+              className="bg-[var(--ink)] p-7 lg:p-8 flex flex-col gap-5 min-h-[240px] group"
             >
-              <div className="flex items-center justify-between text-[11px] mono uppercase tracking-[0.2em] text-[var(--muted-on-ink)]">
-                <span>{post.date}</span>
-                <span className="text-[var(--green)]">{post.source}</span>
+              <div className="flex items-center justify-between text-[11px] mono uppercase tracking-[0.2em]">
+                <span className="text-[var(--muted-on-ink)]">{article.date}</span>
+                <span className="text-[var(--green)]">{article.source}</span>
               </div>
-              <h3 className="text-[18.5px] leading-[1.25] font-semibold tracking-[-0.02em]">
-                {post.title}
+              <h3 className="text-[19px] leading-[1.25] font-semibold tracking-[-0.02em]">
+                {article.title}
               </h3>
               <p className="text-[13.5px] text-[var(--muted-on-ink)] leading-[1.55]">
-                {post.body}
+                {article.body}
               </p>
               <a
-                href={post.href}
+                href={article.href}
                 target="_blank"
                 rel="noreferrer"
                 className="mt-auto inline-flex items-center gap-1.5 text-[13px] text-[var(--ivory)] group-hover:text-[var(--green)]"
               >
-                Read
+                Read the article
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </a>
             </Reveal>
@@ -1267,145 +1162,6 @@ function InsightsFeed() {
         </div>
       </Container>
     </section>
-  )
-}
-
-/* ─── Contact Stage ───────────────────────────────────────── */
-
-function ContactStage() {
-  const [submitted, setSubmitted] = useState(false)
-  const [serviceInterest, setServiceInterest] = useState<Service["id"]>("attestation")
-
-  return (
-    <section id="contact" className="py-24 lg:py-32 relative overflow-hidden">
-      <div className="absolute inset-0 hairline-grid opacity-50 pointer-events-none" />
-      <Container className="relative">
-        <div className="grid lg:grid-cols-12 gap-14">
-          <div className="lg:col-span-6">
-            <Eyebrow>Request a demo</Eyebrow>
-            <h2 className="mt-5 text-[clamp(2.25rem,5vw,4rem)] font-semibold tracking-[-0.025em] leading-[1]">
-              Bring your existing
-              <br />
-              <span className="text-[var(--green)]">security estate.</span>
-              <br />
-              We'll show you OneView with it.
-            </h2>
-            <p className="mt-7 max-w-md text-[15.5px] leading-[1.6] text-[var(--muted-on-ink)]">
-              A 30-minute walk-through of OneView and one custom-automation
-              use case mapped to your environment. No spreadsheets requested.
-            </p>
-            <div className="mt-10 grid grid-cols-2 gap-6 max-w-md text-[13px]">
-              <div className="border-t border-[var(--ink-3)] pt-3">
-                <div className="mono text-[11px] tracking-[0.2em] text-[var(--green)]">EMAIL</div>
-                <a className="mt-1 block text-[var(--ivory)] hover:text-[var(--green)]" href="mailto:hello@port443.co.za">
-                  hello@port443.co.za
-                </a>
-              </div>
-              <div className="border-t border-[var(--ink-3)] pt-3">
-                <div className="mono text-[11px] tracking-[0.2em] text-[var(--green)]">REGION</div>
-                <div className="mt-1 text-[var(--muted-on-ink)]">Middle East &amp; Africa</div>
-              </div>
-            </div>
-          </div>
-          <div className="lg:col-span-6">
-            <form
-              className="border border-[var(--ink-3)] bg-[var(--ink-2)] p-7 lg:p-9 rounded-[2px]"
-              onSubmit={(e) => {
-                e.preventDefault()
-                setSubmitted(true)
-              }}
-            >
-              {submitted ? (
-                <div className="py-10 text-center">
-                  <div className="mono text-[11px] tracking-[0.2em] text-[var(--green)]">RECEIVED</div>
-                  <div className="mt-3 text-[20px] font-semibold tracking-[-0.02em]">
-                    Thanks. We'll be in touch within one business day.
-                  </div>
-                  <p className="mt-3 text-[14px] text-[var(--muted-on-ink)]">
-                    A Port443 engineer will reach out to schedule the OneView
-                    walk-through.
-                  </p>
-                </div>
-              ) : (
-                <>
-                  <Field id="contact-name" label="Name" />
-                  <Field id="contact-email" label="Work email" type="email" />
-                  <Field id="contact-org" label="Organisation" />
-                  <div className="mt-7">
-                    <div className="mono text-[11px] tracking-[0.2em] text-[var(--muted-on-ink)]">
-                      INTEREST
-                    </div>
-                    <div className="mt-3 grid grid-cols-2 gap-px bg-[var(--ink-3)]">
-                      {services.map((s) => (
-                        <label
-                          key={s.id}
-                          className={cn(
-                            "bg-[var(--ink-2)] px-4 py-3 text-[13px] cursor-pointer transition-colors",
-                            serviceInterest === s.id
-                              ? "bg-[var(--ink)] text-[var(--ivory)]"
-                              : "text-[var(--muted-on-ink)] hover:text-[var(--ivory)]",
-                          )}
-                        >
-                          <input
-                            type="radio"
-                            name="service"
-                            value={s.id}
-                            checked={serviceInterest === s.id}
-                            onChange={() => setServiceInterest(s.id)}
-                            className="sr-only"
-                          />
-                          <span className="mono text-[10px] tracking-[0.2em] text-[var(--green)] mr-2">
-                            {s.code}
-                          </span>
-                          {s.title}
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <button
-                    type="submit"
-                    className="mt-8 w-full inline-flex items-center justify-center gap-2 bg-[var(--green)] text-[var(--ivory-2)] px-6 py-3.5 text-[14px] font-medium tracking-tight hover:opacity-90 transition-opacity"
-                  >
-                    Request a demo
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-                  <p className="mt-4 text-[11.5px] text-[var(--muted-on-ink)] leading-[1.5]">
-                    We use your details to schedule one OneView walk-through. We
-                    do not enrol you in a sequence and we do not resell contact
-                    information.
-                  </p>
-                </>
-              )}
-            </form>
-          </div>
-        </div>
-      </Container>
-    </section>
-  )
-}
-
-function Field({
-  id,
-  label,
-  type = "text",
-}: {
-  id: string
-  label: string
-  type?: string
-}) {
-  return (
-    <label htmlFor={id} className="block first:mt-0 mt-5">
-      <span className="mono text-[11px] tracking-[0.2em] text-[var(--muted-on-ink)]">
-        {label.toUpperCase()}
-      </span>
-      <input
-        id={id}
-        name={id}
-        type={type}
-        required
-        className="mt-2 w-full bg-transparent border-b border-[var(--ink-3)] text-[15px] text-[var(--ivory)] py-2.5 focus:border-[var(--green)] outline-none transition-colors"
-      />
-    </label>
   )
 }
 
@@ -1440,14 +1196,21 @@ function PrimaryCTA({
   href,
   children,
   small = false,
+  external = false,
 }: {
   href: string
   children: React.ReactNode
   small?: boolean
+  external?: boolean
 }) {
+  const isExternalish = external || /^(https?:|mailto:|tel:)/.test(href)
+  const resolved = isExternalish ? href : withBasePath(href)
   return (
     <a
-      href={withBasePath(href)}
+      href={resolved}
+      {...(isExternalish && !href.startsWith("mailto:") && !href.startsWith("tel:")
+        ? { target: "_blank", rel: "noreferrer" }
+        : {})}
       className={cn(
         "inline-flex items-center gap-2 bg-[var(--green)] text-[var(--ivory-2)] font-medium tracking-tight hover:opacity-90 transition-opacity rounded-[2px]",
         small ? "px-4 py-2 text-[13px]" : "px-6 py-3 text-[14.5px]",

@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { ArrowRight, Bot, Eye, Layers3, ShieldCheck } from "lucide-react"
 
 import { Container } from "@/components/site/container"
@@ -126,13 +125,13 @@ export default function ServicesPage() {
                       ))}
                     </div>
                     <div className="mt-8">
-                      <Link
-                        href="/request-a-demo/"
+                      <a
+                        href={`mailto:info@port443.co.za?subject=Enquiry%20-%20${encodeURIComponent(s.title)}`}
                         className="inline-flex items-center gap-2 text-[14px] font-medium text-[var(--ivory)] hover:text-[var(--green)] transition-colors"
                       >
                         Talk to us about {s.title}
                         <ArrowRight className="h-3.5 w-3.5" />
-                      </Link>
+                      </a>
                     </div>
                   </div>
                   {i < services.length - 1 ? null : null}

@@ -7,13 +7,22 @@ import { ArrowRight } from "lucide-react"
 import { Container } from "@/components/site/container"
 import { cn, withBasePath } from "@/lib/utils"
 
+const VUEITALL_URL = "https://www.vueitall.com"
+const LINKEDIN_URL = "https://www.linkedin.com/company/port443-pty-ltd"
+const DEMO_MAILTO = "mailto:info@port443.co.za?subject=Request%20a%20demo"
+const INFO_MAILTO = "mailto:info@port443.co.za"
+
 export const navLinks = [
-  { label: "Platform", href: "/#oneview" },
-  { label: "Services", href: "/services/" },
-  { label: "About", href: "/about-us/" },
+  { label: "OneView Platform", href: "/#oneview" },
+  { label: "Attestation", href: "/#loop" },
+  { label: "Frameworks", href: "/#frameworks" },
   { label: "Insights", href: "/#insights" },
-  { label: "See OneView", href: "/#oneview" },
+  { label: "vueITall", href: VUEITALL_URL, external: true },
 ]
+
+function isExternal(href: string) {
+  return /^https?:\/\//.test(href) || href.startsWith("mailto:")
+}
 
 export function SiteNav({ floating = true }: { floating?: boolean }) {
   return (
@@ -37,23 +46,35 @@ export function SiteNav({ floating = true }: { floating?: boolean }) {
           </span>
         </Link>
         <nav className="hidden md:flex items-center gap-7 text-[13px] text-[var(--muted-on-ink)]">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="hover:text-[var(--ivory)] transition-colors"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) =>
+            link.external ? (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-[var(--ivory)] transition-colors"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="hover:text-[var(--ivory)] transition-colors"
+              >
+                {link.label}
+              </Link>
+            ),
+          )}
         </nav>
-        <Link
-          href="/request-a-demo/"
+        <a
+          href={DEMO_MAILTO}
           className="inline-flex items-center gap-2 bg-[var(--green)] text-[var(--ivory-2)] px-4 py-2 text-[13px] font-medium tracking-tight hover:opacity-90 transition-opacity rounded-[2px]"
         >
           Request a demo
           <ArrowRight className="h-3.5 w-3.5" />
-        </Link>
+        </a>
       </Container>
     </header>
   )
@@ -77,15 +98,21 @@ export function SiteFooter() {
               </span>
             </div>
             <p className="mt-4 max-w-sm text-[13.5px] leading-[1.55] text-[var(--muted-on-ink)]">
-              Cyber defence automation for the Middle East and Africa.
-              Continuous attestation, OneView posture, custom SOC automation,
-              and consulting.
+              Automating cyber security. Continuous attestation, OneView
+              posture, custom SOC automation, and security consulting.
             </p>
+            <a
+              href={DEMO_MAILTO}
+              className="mt-6 inline-flex items-center gap-2 bg-[var(--green)] text-[var(--ivory-2)] px-4 py-2 text-[13px] font-medium tracking-tight rounded-[2px] hover:opacity-90 transition-opacity"
+            >
+              Request a demo
+              <ArrowRight className="h-3.5 w-3.5" />
+            </a>
           </div>
           <FooterColumn
             title="Platform"
             links={[
-              { label: "OneView", href: "/#oneview" },
+              { label: "OneView Platform", href: "/#oneview" },
               { label: "Attestation", href: "/#loop" },
               { label: "Frameworks", href: "/#frameworks" },
             ]}
@@ -103,18 +130,15 @@ export function SiteFooter() {
             title="Company"
             links={[
               { label: "About", href: "/about-us/" },
-              { label: "Request a demo", href: "/request-a-demo/" },
               { label: "Insights", href: "/#insights" },
+              { label: "vueITall", href: VUEITALL_URL },
             ]}
           />
           <FooterColumn
             title="Connect"
             links={[
-              {
-                label: "LinkedIn",
-                href: "https://www.linkedin.com/company/port443-pty-ltd/",
-              },
-              { label: "Email", href: "mailto:hello@port443.co.za" },
+              { label: "LinkedIn", href: LINKEDIN_URL },
+              { label: "Email", href: INFO_MAILTO },
             ]}
           />
         </div>
@@ -142,16 +166,23 @@ function FooterColumn({
         {title.toUpperCase()}
       </div>
       <ul className="mt-5 space-y-3 text-[13.5px]">
-        {links.map((l) => (
-          <li key={l.label}>
-            <a
-              className="text-[var(--muted-on-ink)] hover:text-[var(--ivory)]"
-              href={withBasePath(l.href)}
-            >
-              {l.label}
-            </a>
-          </li>
-        ))}
+        {links.map((l) => {
+          const external = isExternal(l.href)
+          const resolved = external ? l.href : withBasePath(l.href)
+          return (
+            <li key={l.label}>
+              <a
+                className="text-[var(--muted-on-ink)] hover:text-[var(--ivory)]"
+                href={resolved}
+                {...(external && !l.href.startsWith("mailto:")
+                  ? { target: "_blank", rel: "noreferrer" }
+                  : {})}
+              >
+                {l.label}
+              </a>
+            </li>
+          )
+        })}
       </ul>
     </div>
   )

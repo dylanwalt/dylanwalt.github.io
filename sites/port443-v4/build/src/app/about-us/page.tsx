@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
 import { Container } from "@/components/site/container"
@@ -64,13 +63,13 @@ export default function AboutPage() {
               ))}
             </div>
             <div className="mt-12">
-              <Link
-                href="/request-a-demo/"
+              <a
+                href="mailto:info@port443.co.za?subject=Request%20a%20demo"
                 className="inline-flex items-center gap-2 bg-[var(--green)] text-[var(--ivory-2)] px-6 py-3 text-[14.5px] font-medium tracking-tight hover:opacity-90 transition-opacity rounded-[2px]"
               >
                 Request a demo
                 <ArrowRight className="h-4 w-4" />
-              </Link>
+              </a>
             </div>
           </Container>
         </section>
