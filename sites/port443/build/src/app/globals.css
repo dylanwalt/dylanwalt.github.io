@@ -136,3 +136,31 @@
   background-size: 72px 72px;
   mask-image: linear-gradient(90deg, black, rgba(0, 0, 0, 0.72), transparent);
 }
+
+.hex-grid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V50l28-16 28 16v34L28 100z' fill='none' stroke='rgba(168,255,206,0.04)' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 56px 100px;
+}
+
+.scan-lines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(168, 255, 206, 0.016) 2px,
+    rgba(168, 255, 206, 0.016) 4px
+  );
+  pointer-events: none;
+}
+
+.glow-green {
+  box-shadow: 0 0 24px rgba(168, 255, 206, 0.18), 0 0 64px rgba(168, 255, 206, 0.08);
+}
+
+.glow-green-sm {
+  box-shadow: 0 0 12px rgba(168, 255, 206, 0.2);
+}
+
+.text-glow {
+  text-shadow: 0 0 28px rgba(168, 255, 206, 0.55);
+}

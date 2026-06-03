@@ -2,10 +2,11 @@
 
 ## Hero architecture
 
-- Full-bleed network security hero using `hero-bg.jpg`.
+- Split-screen control-room hero using `hero-bg.jpg` plus a right-side
+  dashboard/panel.
 - Brand-led headline with strong enterprise signal.
 - Two primary CTAs: `Request a demo` and `Explore services`.
-- Overlay a subtle telemetry/control rail motif to support the cyber automation narrative.
+- Use a subtle telemetry/control rail motif to support the cyber automation narrative.
 
 ## Typography stack
 
@@ -15,7 +16,7 @@
 
 ## Component architecture
 
-- Hero: full-screen visual + text block + telemetry rail.
+- Hero: full-screen visual + text block + dashboard panel.
 - Proof rail: three signal cards for MEA presence, automation, and framework validation.
 - Control loop: sequential cards that show signals, correlation, and containment.
 - Services section: four service offerings with clear narrative and action.
@@ -25,8 +26,8 @@
 ## Motion paradigm
 
 - Use Framer Motion for entrance and reveal transitions only.
-- Keep the hero motion subtle: parallax and opacity layers.
-- Animate the telemetry rail and control loop with sequential reveals.
+- Keep the hero motion subtle: staged reveals and panel emphasis.
+- Animate the dashboard panel, proof rail, and control loop with sequential reveals.
 - Use `MotionConfig reducedMotion="user"` and `useReducedMotion` for accessibility.
 
 ## Conversion path

@@ -3,15 +3,15 @@
 ## Experience thesis
 
 Make Port443 feel like an enterprise control room for cyber security
-automation by combining its network imagery, Middle East and Africa presence,
-and a precise motion sequence that moves from signal to containment.
+automation by combining a dashboard-led hero, sharper section banding, and a
+clear motion sequence that moves from signal to containment.
 
 ## First viewport
 
-- Brand signal: the Port443 name and source logo lead the hero.
-- Hero scene: full-bleed source network image with a live-looking control rail.
+- Brand signal: the Port443 lock logo and cyber-defense tagline lead the hero.
+- Hero scene: split-screen hero with a dashboard/panel on the right.
 - Conversion path: Request a Demo first, Services second.
-- Next-section hint: evidence rail remains visible below the hero.
+- Next-section hint: a hard-evidence rail sits directly below the hero.
 
 ## Section sequence
 
@@ -24,9 +24,9 @@ and a precise motion sequence that moves from signal to containment.
 
 ## Signature interaction
 
-Use Framer Motion to sequence the control loop and the telemetry rail. Reduced
-motion keeps the information visible, removes continuous transforms, and uses
-opacity/focus feedback only.
+Use Framer Motion to sequence the hero panel, proof rail, and control loop.
+Reduced motion keeps the information visible, removes continuous transforms,
+and uses opacity/focus feedback only.
 
 ## Assets
 

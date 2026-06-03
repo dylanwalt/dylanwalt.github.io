@@ -15,7 +15,7 @@ export function HomeHero() {
       logo={
         <div className="flex items-center gap-2">
           <Image
-            src="/port443/logo-white.png"
+            src="/port443/logo-shield-white.svg"
             alt="Port443"
             width={30}
             height={30}
@@ -51,4 +51,3 @@ export function HomeHero() {
     />
   )
 }
-

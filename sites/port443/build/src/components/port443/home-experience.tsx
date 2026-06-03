@@ -32,8 +32,6 @@ import {
   MotionConfig,
   motion,
   useReducedMotion,
-  useScroll,
-  useTransform,
 } from "framer-motion"
 
 import { RequestDemoForm } from "@/components/port443/request-demo-form"
@@ -160,81 +158,81 @@ export function HomeExperience() {
 
 function PortHero() {
   const reduceMotion = useReducedMotion()
-  const { scrollY } = useScroll()
-  const y = useTransform(scrollY, [0, 760], [0, reduceMotion ? 0 : 92])
-  const veil = useTransform(scrollY, [0, 540], [1, 0.72])
 
   return (
-    <section className="relative isolate flex min-h-[92svh] items-end overflow-hidden bg-[#061321] text-white">
-      <motion.div className="absolute inset-0 -z-20" style={{ y }}>
-        <Image
-          src="/port443/hero-bg.jpg"
-          alt=""
-          fill
-          preload
-          sizes="100vw"
-          className="object-cover object-center"
-        />
-      </motion.div>
-      <motion.div
-        className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(3,9,18,.98)_0%,rgba(3,9,18,.9)_43%,rgba(3,9,18,.38)_100%)]"
-        style={{ opacity: veil }}
-      />
-      <div className="port-grid absolute inset-0 -z-10 opacity-45" />
-
+    <section className="relative isolate overflow-hidden bg-[#030912] text-white">
+      <div className="hex-grid absolute inset-0 -z-20 opacity-60" />
+      <div className="scan-lines absolute inset-0 -z-10 opacity-60" />
+      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white/10 to-transparent" />
+      <div className="absolute right-0 top-0 h-full w-[38vw] bg-[radial-gradient(circle_at_center,rgba(168,255,206,0.18)_0%,rgba(168,255,206,0.06)_32%,transparent_72%)] blur-3xl" />
       <HeroNav />
-      <Container className="relative pb-10 pt-28 md:pb-14 md:pt-36">
-        <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_380px]">
-          <div className="max-w-4xl">
-            <motion.p
-              initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#a8ffce]"
+      <Container className="relative grid min-h-[92svh] items-center gap-10 pb-12 pt-28 md:pb-16 md:pt-32 lg:grid-cols-[minmax(0,1fr)_minmax(340px,.92fr)]">
+        <div className="max-w-4xl">
+          <motion.p
+            initial={reduceMotion ? false : { y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#a8ffce]"
+          >
+            <span className="h-px w-10 bg-[#a8ffce]" />
+            Cyber security automation and integration
+          </motion.p>
+          <motion.h1
+            initial={reduceMotion ? false : { y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: reduceMotion ? 0 : 0.08, duration: 0.72 }}
+            className="mt-5 max-w-5xl text-balance text-6xl font-semibold tracking-normal sm:text-7xl md:text-8xl"
+          >
+            Port443
+          </motion.h1>
+          <motion.p
+            initial={reduceMotion ? false : { y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: reduceMotion ? 0 : 0.18, duration: 0.62 }}
+            className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-white/78 md:text-2xl md:leading-9"
+          >
+            A more coordinated security posture: validate controls, connect
+            visibility, and turn threat signals into faster containment.
+          </motion.p>
+          <motion.div
+            initial={reduceMotion ? false : { y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: reduceMotion ? 0 : 0.28, duration: 0.52 }}
+            className="mt-8 flex flex-col gap-3 sm:flex-row"
+          >
+            <Link
+              className="inline-flex h-12 items-center justify-center gap-2 border border-[#a8ffce] bg-[#a8ffce] px-5 text-sm font-semibold text-[#071018] transition hover:border-white hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#071018]"
+              href="/request-a-demo"
             >
-              <span className="h-px w-10 bg-[#a8ffce]" />
-              Cyber security automation and integration
-            </motion.p>
-            <motion.h1
-              initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: reduceMotion ? 0 : 0.08, duration: 0.72 }}
-              className="mt-5 max-w-5xl text-balance text-6xl font-semibold tracking-normal sm:text-7xl md:text-8xl"
+              Request a demo
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+            <Link
+              className="inline-flex h-12 items-center justify-center border border-white/30 bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur transition hover:border-white hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#071018]"
+              href="/services"
             >
-              Port443
-            </motion.h1>
-            <motion.p
-              initial={reduceMotion ? false : { opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: reduceMotion ? 0 : 0.18, duration: 0.62 }}
-              className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-white/78 md:text-2xl md:leading-9"
-            >
-              A more coordinated security posture: validate controls, connect
-              visibility, and turn threat signals into faster containment.
-            </motion.p>
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: reduceMotion ? 0 : 0.28, duration: 0.52 }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row"
-            >
-              <Link
-                className="inline-flex h-12 items-center justify-center gap-2 border border-[#a8ffce] bg-[#a8ffce] px-5 text-sm font-semibold text-[#071018] transition hover:border-white hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#071018]"
-                href="/request-a-demo"
+              Explore services
+            </Link>
+          </motion.div>
+          <motion.div
+            initial={reduceMotion ? false : { y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: reduceMotion ? 0 : 0.34, duration: 0.52 }}
+            className="mt-10 flex flex-wrap gap-3"
+          >
+            {proof.map((item) => (
+              <div
+                key={item.title}
+                className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-2 text-xs font-medium text-white/78 backdrop-blur"
               >
-                Request a demo
-                <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
-              <Link
-                className="inline-flex h-12 items-center justify-center border border-white/30 bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur transition hover:border-white hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#071018]"
-                href="/services"
-              >
-                Explore services
-              </Link>
-            </motion.div>
-          </div>
-          <TelemetryRail reduceMotion={Boolean(reduceMotion)} />
+                <item.icon className="size-3 text-[#a8ffce]" aria-hidden="true" />
+                {item.title}
+              </div>
+            ))}
+          </motion.div>
         </div>
+
+        <HeroDashboard reduceMotion={Boolean(reduceMotion)} />
       </Container>
     </section>
   )
@@ -272,113 +270,122 @@ function HeroNav() {
             Contact
           </a>
         </div>
+        <Link
+          href="/request-a-demo"
+          className="hidden items-center gap-2 border border-[#a8ffce] bg-[#a8ffce] px-4 py-2 font-semibold text-[#071018] transition hover:border-white hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#071018] md:inline-flex"
+        >
+          Request a demo
+          <ArrowRight className="size-3.5" aria-hidden="true" />
+        </Link>
       </nav>
     </Container>
   )
 }
 
-function TelemetryRail({ reduceMotion }: { reduceMotion: boolean }) {
+function HeroDashboard({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <motion.aside
-      initial={reduceMotion ? false : { opacity: 0, x: 24 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: reduceMotion ? 0 : 0.24, duration: 0.7 }}
-      className="hidden border-l border-white/18 pl-6 lg:block"
-      aria-label="Security automation stages"
+      initial={reduceMotion ? false : { y: 28 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: reduceMotion ? 0 : 0.22, duration: 0.72 }}
+      className="glow-green relative overflow-hidden rounded-[30px] border border-white/10 bg-[#071018]/96 shadow-[0_30px_120px_rgba(0,0,0,.4)]"
+      aria-label="Port443 control room"
     >
-      <div className="flex items-center justify-between text-xs uppercase tracking-[0.16em] text-white/56">
-        <span>Control fabric</span>
-        <span className="text-[#a8ffce]">Live path</span>
-      </div>
-      <div className="mt-7 space-y-5">
-        {loop.map((item, index) => (
-          <div key={item.title} className="relative pl-8">
-            <span className="absolute left-0 top-1.5 flex size-4 items-center justify-center">
-              <motion.span
-                animate={reduceMotion ? undefined : { scale: [1, 1.35, 1] }}
-                transition={{
-                  delay: index * 0.35,
-                  duration: 2.2,
-                  repeat: Number.POSITIVE_INFINITY,
-                }}
-                className="size-2 rounded-full bg-[#a8ffce]"
-              />
-            </span>
-            {index < loop.length - 1 ? (
-              <span className="absolute left-[7px] top-5 h-16 w-px bg-white/16" />
-            ) : null}
-            <div className="text-lg font-medium text-white">{item.title}</div>
-            <p className="mt-1 text-sm leading-6 text-white/62">{item.body}</p>
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,.05)_0%,transparent_32%)]" />
+      <div className="grid lg:grid-cols-[minmax(0,1.08fr)_minmax(0,.92fr)]">
+        <div className="p-5 md:p-7">
+          <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-white/48">
+            <span>Control fabric</span>
+            <span className="text-[#a8ffce]">Live path</span>
           </div>
-        ))}
+          <div className="mt-6 space-y-4">
+            {loop.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={reduceMotion ? false : { y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: reduceMotion ? 0 : index * 0.08, duration: 0.42 }}
+                className="grid gap-3 rounded-[22px] border border-white/10 bg-white/[0.04] p-4"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs text-[#a8ffce]">0{index + 1}</span>
+                  <div className="h-px flex-1 bg-white/10" />
+                </div>
+                <div className="text-lg font-semibold text-white">{item.title}</div>
+                <p className="text-sm leading-6 text-white/68">{item.body}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative min-h-[320px] border-t border-white/10 lg:min-h-full lg:border-l lg:border-t-0">
+          <Image
+            src="/port443/hero-bg.jpg"
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 42vw, 100vw"
+            className="object-cover object-center opacity-55"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,9,18,.12)_0%,rgba(3,9,18,.82)_100%)]" />
+          <div className="absolute inset-0 flex flex-col justify-between p-5 md:p-7">
+            <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-white/58">
+              <span>Evidence rail</span>
+              <span>Aligned</span>
+            </div>
+            <div className="space-y-3">
+              {proof.map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-[18px] border border-white/10 bg-[#071018]/72 p-4 backdrop-blur"
+                >
+                  <div className="flex items-start gap-3">
+                    <span className="flex size-9 items-center justify-center rounded-full border border-[#a8ffce]/20 bg-[#a8ffce]/8">
+                      <item.icon className="size-4 text-[#a8ffce]" aria-hidden="true" />
+                    </span>
+                    <div className="min-w-0">
+                      <div className="text-sm font-semibold text-white">{item.title}</div>
+                      <div className="mt-1 text-xs leading-5 text-white/64">{item.detail}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </motion.aside>
   )
 }
 
 function ProofRail() {
-  return (
-    <section className="border-y border-border bg-[#f7faf6]">
-      <Container className="grid gap-px bg-border md:grid-cols-3">
-        {proof.map((item) => (
-          <div
-            key={item.title}
-            className="flex min-h-28 items-center gap-4 bg-[#f7faf6] py-6 md:px-7"
-          >
-            <item.icon className="size-6 text-[#0e6b54]" aria-hidden="true" />
-            <div>
-              <div className="text-sm font-semibold text-foreground">{item.title}</div>
-              <div className="mt-1 text-sm text-muted-foreground">{item.detail}</div>
-            </div>
-          </div>
-        ))}
-      </Container>
-    </section>
-  )
-}
-
-function ControlLoop() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#071018] py-20 text-white md:py-28">
-      <div className="absolute inset-y-0 right-0 -z-10 hidden w-[52vw] md:block">
-        <Image
-          src="/port443/hero-bg.jpg"
-          alt=""
-          fill
-          sizes="52vw"
-          className="object-cover opacity-45"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,#071018_0%,rgba(7,16,24,.42)_100%)]" />
-      </div>
-      <Container className="grid gap-12 lg:grid-cols-[minmax(0,430px)_1fr]">
-        <Reveal>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#a8ffce]">
-            Operating loop
-          </p>
-          <h2 className="mt-4 text-balance text-4xl font-semibold tracking-normal md:text-5xl">
-            Every control becomes part of the response.
-          </h2>
-          <p className="mt-5 text-lg leading-8 text-white/68">
-            Port443 connects compliance, visibility, and response so security
-            teams can focus on the decisions that change risk.
-          </p>
-        </Reveal>
-        <div className="grid gap-0 border-y border-white/18">
-          {loop.map((item, index) => (
-            <motion.article
-              key={item.title}
-              initial={reduceMotion ? false : { opacity: 0, x: 28 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.45 }}
-              transition={{ delay: reduceMotion ? 0 : index * 0.1, duration: 0.52 }}
-              className="grid gap-4 border-b border-white/18 py-7 last:border-b-0 sm:grid-cols-[90px_1fr]"
+    <section className="border-y border-white/10 bg-[#071018] text-white">
+      <Container className="py-6 md:py-8">
+        <div className="grid gap-px overflow-hidden rounded-[28px] border border-white/10 bg-white/10 md:grid-cols-3">
+          {proof.map((item, index) => (
+              <motion.article
+                key={item.title}
+                initial={reduceMotion ? false : { y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ delay: reduceMotion ? 0 : index * 0.08, duration: 0.42 }}
+                className="bg-[#09131c] p-6 md:p-7"
             >
-              <div className="font-mono text-sm text-[#a8ffce]">0{index + 1}</div>
-              <div>
-                <h3 className="text-2xl font-medium tracking-normal">{item.title}</h3>
-                <p className="mt-2 max-w-xl leading-7 text-white/64">{item.body}</p>
+              <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.18em] text-white/42">
+                <span className="font-mono text-[#a8ffce]">0{index + 1}</span>
+                <span className="h-px flex-1 bg-white/10" />
+              </div>
+              <div className="mt-6 flex items-start gap-4">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-[18px] border border-[#a8ffce]/15 bg-white/5">
+                  <item.icon className="size-5 text-[#a8ffce]" aria-hidden="true" />
+                </span>
+                <div>
+                  <div className="text-lg font-semibold text-white">{item.title}</div>
+                  <div className="mt-2 text-sm leading-6 text-white/64">{item.detail}</div>
+                </div>
               </div>
             </motion.article>
           ))}
@@ -388,9 +395,76 @@ function ControlLoop() {
   )
 }
 
+function ControlLoop() {
+  const reduceMotion = useReducedMotion()
+
+  return (
+    <section className="relative isolate overflow-hidden bg-[#eff4ea] py-20 text-[#071018] md:py-28">
+      <div className="absolute inset-y-0 right-0 -z-10 hidden w-[44vw] md:block">
+        <Image
+          src="/port443/hero-bg.jpg"
+          alt=""
+          fill
+          sizes="44vw"
+          className="object-cover object-center opacity-25"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(239,244,234,1)_0%,rgba(239,244,234,.74)_56%,rgba(239,244,234,0)_100%)]" />
+      </div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(168,255,206,.22),transparent_38%)]" />
+      <Container className="grid gap-12 lg:grid-cols-[minmax(0,430px)_1fr]">
+        <Reveal>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0e6b54]">
+            Operating loop
+          </p>
+          <h2 className="mt-4 text-balance text-4xl font-semibold tracking-normal md:text-5xl">
+            Every control becomes part of the response.
+          </h2>
+          <p className="mt-5 text-lg leading-8 text-muted-foreground">
+            Port443 connects compliance, visibility, and response so security
+            teams can focus on the decisions that change risk.
+          </p>
+        </Reveal>
+      <motion.div
+        initial={reduceMotion ? false : { y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.35 }}
+        transition={{ duration: 0.56 }}
+        className="overflow-hidden rounded-[28px] border border-[#0e6b54]/15 bg-[#071018] text-white shadow-[0_30px_90px_rgba(0,0,0,.22)]"
+        >
+          <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 text-[10px] uppercase tracking-[0.18em] text-white/48">
+            <span>Operating loop</span>
+            <span className="text-[#a8ffce]">Sequential</span>
+          </div>
+          <div className="divide-y divide-white/10">
+            {loop.map((item, index) => (
+            <motion.article
+              key={item.title}
+              initial={reduceMotion ? false : { x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.45 }}
+              transition={{ delay: reduceMotion ? 0 : index * 0.08, duration: 0.42 }}
+              className="grid gap-4 px-5 py-6 md:grid-cols-[96px_1fr] md:items-start"
+              >
+                <div className="flex items-center gap-3 md:block">
+                  <div className="font-mono text-sm text-[#a8ffce]">0{index + 1}</div>
+                  <div className="h-px flex-1 bg-white/10 md:mt-3 md:h-16 md:w-px" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-medium tracking-normal">{item.title}</h3>
+                  <p className="mt-2 max-w-xl leading-7 text-white/64">{item.body}</p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </motion.div>
+      </Container>
+    </section>
+  )
+}
+
 function ServiceSequence() {
   return (
-    <section id="services" className="bg-background py-20 md:py-28">
+    <section id="services" className="bg-[#f7faf6] py-20 md:py-28">
       <Container>
         <Reveal className="grid gap-5 border-b border-border pb-10 md:grid-cols-[1fr_1fr] md:items-end">
           <div>
@@ -407,40 +481,75 @@ function ServiceSequence() {
             focused consulting where it changes the result.
           </p>
         </Reveal>
-        <div className="mt-4">
+        <div className="mt-10 space-y-5">
           {services.map((service, index) => (
             <Reveal key={service.title}>
-              <article className="group grid gap-5 border-b border-border py-8 md:grid-cols-[110px_1fr_1fr] md:items-start">
-                <div className="flex items-center gap-4 font-mono text-sm text-[#0e6b54]">
-                  <service.icon className="size-5" aria-hidden="true" />
-                  {service.code}
-                </div>
-                <h3 className="text-2xl font-semibold tracking-normal md:text-3xl">
-                  {service.title}
-                </h3>
-                <div>
-                  <p className="max-w-xl leading-7 text-muted-foreground">
-                    {service.description}
-                  </p>
-                  {service.title === "Custom Automation" && (
-                    <ol className="mt-5 space-y-2">
-                      {customAutomationSteps.map((s) => (
-                        <li key={s.step} className="flex items-start gap-3 text-sm text-muted-foreground">
-                          <span className="mt-0.5 font-mono text-xs font-semibold text-[#0e6b54]">{s.step}</span>
-                          <span><span className="font-semibold text-foreground">{s.label}.</span> {s.detail}</span>
-                        </li>
-                      ))}
-                    </ol>
-                  )}
-                  {index < services.length - 1 ? null : (
-                    <Link
-                      href="/services"
-                      className="mt-5 inline-flex items-center gap-2 font-semibold text-accent transition hover:text-foreground"
-                    >
-                      View service details
-                      <ArrowRight className="size-4" aria-hidden="true" />
-                    </Link>
-                  )}
+              <article className="group overflow-hidden rounded-[28px] border border-border/70 bg-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#0e6b54]/25 hover:shadow-md">
+                <div className="grid gap-0 md:grid-cols-[140px_1fr]">
+                  <div className="flex items-center justify-between gap-4 border-b border-border/70 bg-[#071018] px-6 py-5 text-white md:flex-col md:items-start md:justify-between md:border-b-0 md:border-r md:px-5 md:py-6">
+                    <div className="flex items-center gap-3 text-sm font-semibold text-[#a8ffce]">
+                      <service.icon className="size-5" aria-hidden="true" />
+                      <span className="font-mono text-xs tracking-[0.18em]">{service.code}</span>
+                    </div>
+                    <div className="text-[10px] uppercase tracking-[0.18em] text-white/48">
+                      Active
+                    </div>
+                  </div>
+                  <div className="grid gap-6 p-6 md:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(280px,.86fr)] lg:items-start">
+                    <div>
+                      <h3 className="text-2xl font-semibold tracking-normal md:text-3xl">
+                        {service.title}
+                      </h3>
+                      <p className="mt-4 max-w-xl leading-7 text-muted-foreground">
+                        {service.description}
+                      </p>
+                      {service.title === "Custom Automation" && (
+                        <ol className="mt-6 space-y-2">
+                          {customAutomationSteps.map((s) => (
+                            <li key={s.step} className="flex items-start gap-3 text-sm text-muted-foreground">
+                              <span className="mt-0.5 font-mono text-xs font-semibold text-[#0e6b54]">
+                                {s.step}
+                              </span>
+                              <span>
+                                <span className="font-semibold text-foreground">{s.label}.</span>{" "}
+                                {s.detail}
+                              </span>
+                            </li>
+                          ))}
+                        </ol>
+                      )}
+                      {index < services.length - 1 ? null : (
+                        <Link
+                          href="/services"
+                          className="mt-6 inline-flex items-center gap-2 font-semibold text-accent transition hover:text-foreground"
+                        >
+                          View service details
+                          <ArrowRight className="size-4" aria-hidden="true" />
+                        </Link>
+                      )}
+                    </div>
+                    <div className="hidden rounded-[22px] border border-border/70 bg-[#f8faf8] p-5 lg:block">
+                      <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                        Module
+                      </div>
+                      <div className="mt-4 space-y-3">
+                        <div className="h-3 w-full rounded-full bg-[#0e6b54]/15" />
+                        <div className="h-3 w-4/5 rounded-full bg-[#0e6b54]/12" />
+                        <div className="h-3 w-3/5 rounded-full bg-[#0e6b54]/10" />
+                      </div>
+                      <div className="mt-6 flex items-center gap-3">
+                        <span className="flex size-10 items-center justify-center rounded-2xl border border-[#0e6b54]/15 bg-white">
+                          <service.icon className="size-5 text-[#0e6b54]" aria-hidden="true" />
+                        </span>
+                        <div>
+                          <div className="text-sm font-semibold text-foreground">
+                            {service.code}
+                          </div>
+                          <div className="text-xs text-muted-foreground">{service.title}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </article>
             </Reveal>
@@ -505,7 +614,7 @@ function VueitallBanner() {
             <p className="mt-2 max-w-xl text-white/68">
               A security visibility platform that aggregates, correlates, and
               presents your entire security estate in one place. Built on the
-              same API-first automation engine that underpins Port443's managed
+              same API-first automation engine that underpins Port443&apos;s managed
               services.
             </p>
           </div>
@@ -639,7 +748,7 @@ function Reveal({
 
   return (
     <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 26 }}
+      initial={reduceMotion ? false : { y: 26 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.56 }}
