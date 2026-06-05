@@ -18,8 +18,9 @@ pushes the site toward a calmer, more premium control-room feel:
   regional photo block to break the page rhythm.
 - **Frameworks / insights / CTA** are kept, but each section is restated in
   a more authoritative tone.
-- **New logo** SVGs (`logo-shield-white.svg`, `logo-shield-color.svg`)
-  matching the supplied shield + padlock + circuit-trace lockup.
+- **New logo** assets now use the supplied shield + lockup across the site,
+  with a full lockup for primary brand placements and a compact shield mark
+  for dense UI surfaces.
 
 The page architecture is still product-led (sticky subnav, scroll-pinned
 signature, product bands, evidence rails), and the three star anchors from
@@ -41,6 +42,8 @@ npm run dev
 ```
 
 Open `http://localhost:3000`.
+
+For the hero comparison lab, open `http://localhost:3000/hero-lab/`.
 
 ## Static export (matches the GitHub Pages workflow)
 
@@ -65,9 +68,13 @@ Pages, lifting the slug-nested assets out into the public route root.
 
 ## Asset and route notes
 
-- Public assets live at `public/port443-v5/`. The home experience references
-  them as `/port443-v5/<file>` so `basePath` and `liftSlugAssets` in the
-  export script resolve correctly.
+- Public assets live at `public/port443-v5/`. The site now uses
+  `logo-full.webp` and `logo-mark.webp` from that folder for shared brand
+  placements, and still resolves them as `/port443-v5/<file>` so `basePath`
+  and `liftSlugAssets` in the export script work correctly.
+- `hero-lab/` is a local-only comparison route that stacks five hero
+  treatments inspired by Linear, Wiz, Tines, Vanta, and Cloudflare while
+  keeping the Port443 copy unchanged.
 - Subroutes: `/about-us/`, `/services/`, `/request-a-demo/`. Each reuses the
   shared `SiteNav`/`SiteFooter` from `components/v4/chrome.tsx`.
 - Reduced motion: every effect collapses gracefully — the Loop pin releases

@@ -11,6 +11,8 @@ const VUEITALL_URL = "https://www.vueitall.com"
 const LINKEDIN_URL = "https://www.linkedin.com/company/port443-pty-ltd"
 const DEMO_MAILTO = "mailto:info@port443.co.za?subject=Request%20a%20demo"
 const INFO_MAILTO = "mailto:info@port443.co.za"
+export const BRAND_FULL_LOGO_SRC = "/port443-v5/logo-full.webp"
+export const BRAND_MARK_LOGO_SRC = "/port443-v5/logo-mark.webp"
 
 export const navLinks = [
   { label: "OneView Platform", href: "/#oneview" },
@@ -24,6 +26,25 @@ function isExternal(href: string) {
   return /^https?:\/\//.test(href) || href.startsWith("mailto:")
 }
 
+function CompactBrandMark() {
+  return (
+    <span className="inline-flex items-center gap-2.5">
+      <span className="inline-flex rounded-[10px] bg-white/98 px-1.5 py-1 shadow-[0_10px_28px_rgba(0,0,0,0.24)]">
+        <Image
+          src={BRAND_MARK_LOGO_SRC}
+          alt="Port443"
+          width={360}
+          height={389}
+          className="h-auto w-7"
+        />
+      </span>
+      <span className="text-[15px] font-semibold tracking-tight text-[var(--ivory)]">
+        Port<span className="text-[var(--green)]">443</span>
+      </span>
+    </span>
+  )
+}
+
 export function SiteNav({ floating = true }: { floating?: boolean }) {
   return (
     <header
@@ -32,17 +53,20 @@ export function SiteNav({ floating = true }: { floating?: boolean }) {
         floating ? "absolute top-0 left-0 right-0 pt-6" : "border-b border-[var(--ink-3)] py-5",
       )}
     >
-      <Container className="flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <Image
-            src="/port443-v5/logo-shield-white.svg"
-            alt="Port443"
-            width={28}
-            height={28}
-            priority
-          />
-          <span className="text-[15px] font-semibold tracking-tight">
-            Port<span className="text-[var(--green)]">443</span>
+      <Container className="flex items-center justify-between gap-4 lg:gap-8">
+        <Link href="/" className="group">
+          <span className="sm:hidden">
+            <CompactBrandMark />
+          </span>
+          <span className="hidden sm:inline-flex rounded-[16px] bg-white/98 px-3 py-2 shadow-[0_14px_40px_rgba(0,0,0,0.24)]">
+            <Image
+              src={BRAND_FULL_LOGO_SRC}
+              alt="Port443"
+              width={960}
+              height={610}
+              className="h-auto w-[132px] md:w-[148px] lg:w-[170px]"
+              priority
+            />
           </span>
         </Link>
         <nav className="hidden md:flex items-center gap-7 text-[13px] text-[var(--muted-on-ink)]">
@@ -86,16 +110,14 @@ export function SiteFooter() {
       <Container>
         <div className="grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-5">
-            <div className="flex items-center gap-3">
+            <div className="inline-flex rounded-[18px] bg-white/98 px-4 py-3 shadow-[0_18px_48px_rgba(0,0,0,0.24)]">
               <Image
-                src="/port443-v5/logo-shield-white.svg"
+                src={BRAND_FULL_LOGO_SRC}
                 alt="Port443"
-                width={28}
-                height={28}
+                width={960}
+                height={610}
+                className="h-auto w-[190px] sm:w-[220px]"
               />
-              <span className="text-[16px] font-semibold tracking-tight">
-                Port<span className="text-[var(--green)]">443</span>
-              </span>
             </div>
             <p className="mt-4 max-w-sm text-[13.5px] leading-[1.55] text-[var(--muted-on-ink)]">
               Security evidence, posture, automation, and consulting for

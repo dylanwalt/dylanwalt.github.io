@@ -22,7 +22,11 @@ import {
 } from "framer-motion"
 
 import { Container } from "@/components/site/container"
-import { SiteFooter, SiteNav } from "@/components/v4/chrome"
+import {
+  BRAND_MARK_LOGO_SRC,
+  SiteFooter,
+  SiteNav,
+} from "@/components/v4/chrome"
 import { cn, withBasePath } from "@/lib/utils"
 
 /* ─── Brand Data ──────────────────────────────────────────── */
@@ -267,12 +271,15 @@ function StickySubnav() {
       <div className="border-b border-[var(--ink-3)] bg-[rgba(10,14,22,0.78)] backdrop-blur-md">
         <Container className="flex items-center justify-between h-14">
           <Link href="/" className="flex items-center gap-2 text-[14px] font-semibold tracking-tight">
-            <Image
-              src="/port443-v5/logo-shield-white.svg"
-              alt=""
-              width={22}
-              height={22}
-            />
+            <span className="inline-flex rounded-[9px] bg-white/98 px-1.5 py-1 shadow-[0_10px_26px_rgba(0,0,0,0.24)]">
+              <Image
+                src={BRAND_MARK_LOGO_SRC}
+                alt=""
+                width={360}
+                height={389}
+                className="h-auto w-6"
+              />
+            </span>
             Port<span className="text-[var(--green)]">443</span>
           </Link>
           <nav className="hidden lg:flex items-center gap-6 text-[12.5px] text-[var(--muted-on-ink)]">
@@ -386,12 +393,15 @@ function OneViewSurface({ large = false }: { large?: boolean }) {
       <div className="absolute inset-0 hairline-grid opacity-50 pointer-events-none" />
       <div className="relative flex items-center justify-between text-[11px] uppercase tracking-[0.18em] text-[var(--muted-on-ink)]">
         <span className="inline-flex items-center gap-2">
-          <Image
-            src="/port443-v5/logo-shield-color.svg"
-            alt=""
-            width={14}
-            height={14}
-          />
+          <span className="inline-flex rounded-[7px] bg-white/96 p-1">
+            <Image
+              src={BRAND_MARK_LOGO_SRC}
+              alt=""
+              width={360}
+              height={389}
+              className="h-auto w-[14px]"
+            />
+          </span>
           OneView · live
         </span>
         <span className="mono">coverage</span>
