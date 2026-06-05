@@ -1,0 +1,17 @@
+{
+  "siteId": "port443-v6",
+  "displayName": "Port443 V6",
+  "canonicalUrl": "https://www.port443.co.za/",
+  "scrape": {
+    "startUrls": ["https://www.port443.co.za/"],
+    "allowedDomains": ["port443.co.za", "www.port443.co.za"],
+    "maxPages": 50
+  },
+  "build": {
+    "output": "sites/port443-v6/build",
+    "stack": "nextjs+tailwind+shadcn+framer-motion+gsap"
+  },
+  "publish": {
+    "slug": "port443-v6"
+  }
+}

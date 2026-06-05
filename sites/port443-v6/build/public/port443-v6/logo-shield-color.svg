@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" fill="none">
+  <defs>
+    <linearGradient id="shield-fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#11151f"/>
+      <stop offset="100%" stop-color="#0a0e16"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield outer -->
+  <path d="M70 6 L120 22 L120 70 C120 96 100 116 70 130 C40 116 20 96 20 70 L20 22 Z"
+        fill="url(#shield-fill)" stroke="#0a0e16" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Inner accent -->
+  <path d="M70 16 L112 30 L112 70 C112 92 96 109 70 121 C44 109 28 92 28 70 L28 30 Z"
+        stroke="#22c55e" stroke-width="1" stroke-linejoin="round" fill="none" opacity="0.45"/>
+
+  <!-- Circuit traces -->
+  <g stroke="#22c55e" stroke-width="1" stroke-linecap="round" opacity="0.65">
+    <path d="M40 50 L52 50 L56 46"/>
+    <path d="M40 70 L48 70"/>
+    <path d="M40 88 L52 88 L56 92"/>
+    <path d="M100 50 L88 50 L84 46"/>
+    <path d="M100 70 L92 70"/>
+    <path d="M100 88 L88 88 L84 92"/>
+    <path d="M58 110 L58 102"/>
+    <path d="M70 114 L70 104"/>
+    <path d="M82 110 L82 102"/>
+  </g>
+  <g fill="#a8ffce">
+    <circle cx="40" cy="50" r="1.4"/>
+    <circle cx="40" cy="70" r="1.4"/>
+    <circle cx="40" cy="88" r="1.4"/>
+    <circle cx="100" cy="50" r="1.4"/>
+    <circle cx="100" cy="70" r="1.4"/>
+    <circle cx="100" cy="88" r="1.4"/>
+    <circle cx="58" cy="110" r="1.4"/>
+    <circle cx="70" cy="114" r="1.4"/>
+    <circle cx="82" cy="110" r="1.4"/>
+  </g>
+
+  <!-- Lock shackle -->
+  <path d="M54 60 L54 50 A16 16 0 0 1 86 50 L86 60"
+        stroke="#f7f6f2" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Lock body -->
+  <rect x="46" y="59" width="48" height="36" rx="5" fill="#f7f6f2"/>
+  <!-- Lock keyhole -->
+  <circle cx="70" cy="74" r="5.5" fill="#0a0e16"/>
+  <rect x="67" y="74" width="6" height="10" rx="2" fill="#0a0e16"/>
+</svg>
