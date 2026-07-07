@@ -119,4 +119,11 @@ for (const site of sites) {
 }
 await writeFile(path.join(dist, "index.html"), indexHtml(sites));
 await writeFile(path.join(dist, ".nojekyll"), "");
+
+const lodgeLens = path.join(root, "lodge-lens");
+if (await exists(lodgeLens)) {
+  await cp(lodgeLens, path.join(dist, "lodge-lens"), { recursive: true, force: true });
+  console.log("Copied lodge-lens to pages-dist/lodge-lens/");
+}
+
 console.log(`Exported ${sites.length} sites to ${path.relative(root, dist)}.`);
