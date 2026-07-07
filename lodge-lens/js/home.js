@@ -5,6 +5,15 @@ import { showGateModal } from './gate.js';
 
 const basePath = document.body.dataset.basePath || '';
 
+function lodgeAsset(path) {
+  return resolvePath(basePath, path);
+}
+
+function lodgeHref(slug) {
+  const prefix = basePath ? `${basePath.replace(/\/$/, '')}/` : '';
+  return `${prefix}${slug}/`;
+}
+
 async function initHome() {
   await initAnalytics();
 
@@ -34,7 +43,7 @@ function renderAbout(config) {
         <ul class="contact-list">
           <li><a href="mailto:${brand.contact.email}">${brand.contact.email}</a></li>
           <li><a href="tel:+27719290175">${brand.contact.phone}</a></li>
-          <li><a href="${brand.contact.linkedin}" target="_blank" rel="noopener">LinkedIn — Dylan Walt</a></li>
+          <li><a href="${brand.contact.linkedin}" target="_blank" rel="noopener">LinkedIn - Dylan Walt</a></li>
         </ul>
       </div>
     </div>`;
@@ -44,29 +53,23 @@ function renderTiles(config) {
   const grid = document.getElementById('lodge-grid');
   if (!grid) return;
 
-  const prefix = basePath ? `${basePath.replace(/\/$/, '')}/` : '';
-
   grid.innerHTML = config.lodges
-    .map((lodge, i) => {
-      const href = `${prefix}${lodge.slug}/`;
-      const logo = resolvePath(basePath, lodge.logo);
-      const featured = lodge.status === 'active' ? ' is-featured' : '';
-      const index = String(i + 1).padStart(2, '0');
+    .map((lodge) => {
+      const href = lodgeHref(lodge.slug);
+      const logo = lodgeAsset(lodge.logo);
+      const statusClass = lodge.status === 'active' ? 'active' : 'coming-soon';
       const statusLabel = lodge.status === 'active' ? 'Preview ready' : 'Coming soon';
 
       return `
-      <a class="lodge-tile${featured}" href="${href}" data-lodge-id="${lodge.id}">
-        <span class="index">${index}</span>
-        <div class="thumb">
-          <img src="${logo}" alt="" loading="lazy" onerror="this.style.display='none'"/>
+      <a class="lodge-tile ${statusClass}" href="${href}" data-lodge-id="${lodge.id}">
+        <div class="tile-logo">
+          <img src="${logo}" alt="${lodge.name} logo" loading="lazy" width="120" height="80">
         </div>
-        <div class="meta">
+        <div class="tile-body">
+          <span class="tile-status ${statusClass}">${statusLabel}</span>
           <h2>${lodge.name}</h2>
-          <div class="subtitle">${lodge.subtitle || lodge.location}</div>
-        </div>
-        <div class="tile-end">
-          <span class="status ${lodge.status === 'active' ? 'active' : ''}">${statusLabel}</span>
-          <span class="enter">Enter preview →</span>
+          <p class="tile-location">${lodge.subtitle || lodge.location}</p>
+          <span class="tile-enter">Enter preview</span>
         </div>
       </a>`;
     })

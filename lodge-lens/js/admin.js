@@ -8,7 +8,7 @@ export function initAdminBackdoor(adminPasswordHash) {
   const logo = document.querySelector('[data-admin-trigger]');
   if (!logo) return;
 
-  logo.addEventListener('click', () => {
+  logo.addEventListener('click', (e) => {
     clickCount += 1;
     clearTimeout(clickTimer);
     clickTimer = setTimeout(() => {
@@ -17,28 +17,69 @@ export function initAdminBackdoor(adminPasswordHash) {
 
     if (clickCount >= 3) {
       clickCount = 0;
-      promptAdmin(adminPasswordHash);
+      e.preventDefault();
+      showAdminModal(adminPasswordHash);
     }
   });
 }
 
-async function promptAdmin(adminPasswordHash) {
-  const password = window.prompt('Admin password:');
-  if (!password) return;
+function showAdminModal(adminPasswordHash) {
+  let overlay = document.getElementById('admin-login-overlay');
 
-  const hash = await sha256(password);
-  if (hash !== adminPasswordHash) {
-    window.alert('Incorrect admin password.');
-    return;
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'admin-login-overlay';
+    overlay.className = 'gate-overlay';
+    document.body.appendChild(overlay);
   }
 
-  await openDashboard();
+  overlay.innerHTML = `
+    <div class="gate-card admin-login-card">
+      <p class="eyebrow">Admin</p>
+      <h2>Analytics dashboard</h2>
+      <p>Enter your admin password to view lodge activity logs.</p>
+      <form id="admin-login-form">
+        <input id="admin-login-password" type="password" placeholder="Admin password" autocomplete="current-password" required>
+        <p id="admin-login-error" class="error" aria-live="polite"></p>
+        <button type="submit" class="btn btn-primary">Open dashboard</button>
+        <button type="button" class="btn btn-ghost" id="admin-login-cancel">Cancel</button>
+      </form>
+    </div>`;
+
+  overlay.classList.remove('hidden');
+
+  const form = overlay.querySelector('#admin-login-form');
+  const input = overlay.querySelector('#admin-login-password');
+  const error = overlay.querySelector('#admin-login-error');
+
+  input.focus();
+
+  overlay.querySelector('#admin-login-cancel').addEventListener('click', () => {
+    overlay.classList.add('hidden');
+  });
+
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const password = input.value.trim();
+    if (!password) return;
+
+    const hash = await sha256(password);
+    if (hash !== adminPasswordHash) {
+      error.textContent = 'Incorrect admin password.';
+      input.value = '';
+      input.focus();
+      return;
+    }
+
+    overlay.classList.add('hidden');
+    await openDashboard();
+  });
 }
 
 async function openDashboard() {
   const config = getAnalyticsConfig();
   if (!config?.endpointUrl || !config?.adminKey) {
-    window.alert('Analytics not configured. Add config/analytics.public.json (see docs/ANALYTICS_SETUP.md).');
+    showAdminMessage('Analytics not configured yet. Run setup-analytics.ps1 after deploy, then redeploy with config/analytics.public.json.');
     return;
   }
 
@@ -49,7 +90,7 @@ async function openDashboard() {
     overlay.className = 'admin-overlay';
     overlay.innerHTML = `
       <div class="admin-panel">
-        <h2>Lodge Lens — Analytics</h2>
+        <h2>Lodge Lens - Analytics</h2>
         <div class="admin-toolbar">
           <select id="admin-filter-lodge"><option value="">All lodges</option></select>
           <input id="admin-filter-event" type="text" placeholder="Filter event..." />
@@ -57,8 +98,8 @@ async function openDashboard() {
           <button class="btn btn-ghost" id="admin-export">Export CSV</button>
           <button class="btn btn-ghost" id="admin-close">Close</button>
         </div>
-        <div id="admin-stats" style="color:var(--muted);font-size:0.875rem;margin-bottom:1rem"></div>
-        <div style="overflow-x:auto">
+        <div id="admin-stats" class="admin-stats"></div>
+        <div class="admin-table-wrap">
           <table class="admin-table">
             <thead>
               <tr>
@@ -87,6 +128,24 @@ async function openDashboard() {
   await loadRows(config);
 }
 
+function showAdminMessage(message) {
+  let overlay = document.getElementById('admin-login-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'admin-login-overlay';
+    overlay.className = 'gate-overlay';
+    document.body.appendChild(overlay);
+  }
+  overlay.innerHTML = `
+    <div class="gate-card admin-login-card">
+      <h2>Analytics</h2>
+      <p>${message}</p>
+      <button type="button" class="btn btn-primary" id="admin-msg-close">OK</button>
+    </div>`;
+  overlay.classList.remove('hidden');
+  overlay.querySelector('#admin-msg-close').addEventListener('click', () => overlay.classList.add('hidden'));
+}
+
 let allRows = [];
 
 async function loadRows(config) {
@@ -94,8 +153,8 @@ async function loadRows(config) {
   const stats = document.getElementById('admin-stats');
   if (!tbody) return;
 
-  tbody.innerHTML = '<tr><td colspan="6">Loading…</td></tr>';
-  stats.textContent = 'Fetching from Google Sheet…';
+  tbody.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
+  if (stats) stats.textContent = 'Fetching from Google Sheet...';
 
   try {
     const url = `${config.endpointUrl}?adminKey=${encodeURIComponent(config.adminKey)}`;
@@ -107,8 +166,8 @@ async function loadRows(config) {
     populateLodgeFilter(allRows);
     filterRows();
   } catch (err) {
-    tbody.innerHTML = `<tr><td colspan="6">Error: ${err.message}</td></tr>`;
-    stats.textContent = '';
+    tbody.innerHTML = `<tr><td colspan="6">Error: ${escapeHtml(err.message)}</td></tr>`;
+    if (stats) stats.textContent = '';
   }
 }
 
@@ -133,7 +192,7 @@ function filterRows() {
 
   if (stats) {
     const sessions = new Set(rows.map((r) => r.session_id)).size;
-    stats.textContent = `${rows.length} events · ${sessions} sessions`;
+    stats.textContent = `${rows.length} events, ${sessions} sessions`;
   }
 
   if (!tbody) return;
@@ -152,7 +211,7 @@ function filterRows() {
       <td>${escapeHtml(r.event)}</td>
       <td>${escapeHtml(r.label)}</td>
       <td>${escapeHtml(r.value)}</td>
-      <td style="font-size:0.75rem;color:var(--muted)">${escapeHtml(String(r.session_id || '').slice(0, 12))}</td>
+      <td class="session-cell">${escapeHtml(String(r.session_id || '').slice(0, 12))}</td>
     </tr>`,
     )
     .join('');

@@ -13,6 +13,13 @@ if (-not (Test-Path $PagesRepo)) {
   exit 1
 }
 
+Write-Host "Running pre-deploy validation..."
+& "$PSScriptRoot\validate-site.ps1" -SiteRoot $source
+if ($LASTEXITCODE -ne 0) {
+  Write-Error "Validation failed. Fix issues before deploy."
+  exit 1
+}
+
 Write-Host "Copying site to $dest ..."
 if (Test-Path $dest) { Remove-Item $dest -Recurse -Force }
 New-Item -ItemType Directory -Force -Path $dest | Out-Null
@@ -25,7 +32,7 @@ Write-Host "GitHub Pages deploys via CI (export-pages.mjs copies lodge-lens into
 # Patch base paths for GitHub Pages subfolder (UTF-8 without BOM)
 $utf8NoBom = New-Object System.Text.UTF8Encoding $false
 Get-ChildItem -Path $dest -Filter "*.html" -Recurse | ForEach-Object {
-  $content = Get-Content $_.FullName -Raw
+  $content = [System.IO.File]::ReadAllText($_.FullName, $utf8NoBom)
   $content = $content -replace 'data-base-path="\.\."', 'data-base-path="/lodge-lens"'
   $content = $content -replace 'data-base-path=""', 'data-base-path="/lodge-lens"'
   [System.IO.File]::WriteAllText($_.FullName, $content, $utf8NoBom)

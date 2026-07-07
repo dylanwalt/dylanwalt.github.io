@@ -61,12 +61,39 @@ img, svg { display: block; max-width: 100%; }
   cursor: pointer;
   user-select: none;
   padding-block: 0.25rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
 
-.logo-link svg,
-.logo-link img {
-  height: 28px;
+.brand-logo {
+  display: block;
+  height: 32px;
   width: auto;
+  max-width: 220px;
+}
+
+.brand-mark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.brand-mark-elevate {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.brand-mark-sub {
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-top: 0.15rem;
 }
 
 .header-note {
@@ -134,105 +161,90 @@ img, svg { display: block; max-width: 100%; }
 }
 
 .lodge-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: var(--space-md);
 }
 
 .lodge-tile {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-md) 0;
-  border-bottom: 1px solid var(--line);
-  transition: background 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  color: inherit;
 }
 
 .lodge-tile:hover {
-  background: var(--surface);
+  border-color: var(--line-strong);
+  box-shadow: 0 8px 24px rgba(28, 26, 23, 0.06);
 }
 
-.lodge-tile.is-featured {
-  grid-template-columns: auto 1fr auto;
-  padding: var(--space-lg) 0;
-  background: var(--surface);
-  margin-bottom: -1px;
-  border-bottom: 1px solid var(--line-strong);
+.lodge-tile.active {
+  border-color: var(--accent);
 }
 
-.lodge-tile .index {
-  font-family: var(--font-display);
-  font-size: 1.125rem;
-  color: var(--ink-faint);
-  min-width: 2rem;
-}
-
-.lodge-tile .thumb {
-  width: 72px;
-  height: 48px;
+.tile-logo {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: var(--space-lg) var(--space-md);
+  min-height: 140px;
   background: var(--paper);
-  border: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
-.lodge-tile.is-featured .thumb {
-  width: 96px;
-  height: 64px;
-}
-
-.lodge-tile .thumb img {
-  max-height: 36px;
-  max-width: 64px;
+.tile-logo img {
+  max-height: 72px;
+  max-width: 160px;
+  width: auto;
+  height: auto;
   object-fit: contain;
 }
 
-.lodge-tile .meta h2 {
-  font-family: var(--font-display);
-  font-size: 1.375rem;
-  font-weight: 500;
-  margin: 0 0 0.15rem;
-  letter-spacing: -0.01em;
+.tile-body {
+  padding: var(--space-md);
 }
 
-.lodge-tile.is-featured .meta h2 {
-  font-size: 1.75rem;
-}
-
-.lodge-tile .subtitle {
-  font-size: 0.875rem;
-  color: var(--ink-muted);
-}
-
-.lodge-tile .tile-end {
-  text-align: right;
-}
-
-.lodge-tile .status {
+.tile-status {
   display: block;
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-faint);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.5rem;
 }
 
-.lodge-tile .status.active {
+.tile-status.active {
   color: var(--accent);
 }
 
-.lodge-tile .enter {
+.tile-body h2 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 0 0 0.25rem;
+  line-height: 1.2;
+}
+
+.tile-location {
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+  margin: 0 0 var(--space-sm);
+}
+
+.tile-enter {
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--accent);
   letter-spacing: 0.02em;
 }
 
-.lodge-tile:hover .enter {
+.lodge-tile:hover .tile-enter {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -414,6 +426,30 @@ img, svg { display: block; max-width: 100%; }
 
 .btn-ghost:hover {
   border-color: var(--ink);
+}
+
+.gate-card .btn-ghost {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.admin-login-card .btn-primary {
+  margin-bottom: 0;
+}
+
+.admin-stats {
+  color: var(--ink-muted);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+}
+
+.session-cell {
+  font-size: 0.75rem;
+  color: var(--ink-faint);
 }
 
 /* ——— Experience ——— */
@@ -712,16 +748,8 @@ img, svg { display: block; max-width: 100%; }
 .hidden { display: none !important; }
 
 @media (max-width: 768px) {
-  .lodge-tile {
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto;
-  }
-  .lodge-tile .tile-end {
-    grid-column: 2;
-    text-align: left;
-  }
-  .lodge-tile .index { display: none; }
   .about-grid { grid-template-columns: 1fr; }
   .actions { flex-direction: column; }
   .actions .btn { width: 100%; }
+  .lodge-grid { grid-template-columns: 1fr; }
 }

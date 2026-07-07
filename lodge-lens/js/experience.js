@@ -13,7 +13,7 @@ const loadedIframes = new Set();
 const videoStates = new Map();
 
 export function renderExperience(lodge, basePath) {
-  document.title = `${lodge.name} — Lodge Lens`;
+  document.title = `${lodge.name} - Lodge Lens`;
   document.body.dataset.lodgeId = lodge.id;
 
   const heroTitle = document.getElementById('exp-title');
@@ -88,7 +88,7 @@ function renderActions(lodge) {
   }
 
   if (contact) {
-    contact.href = `mailto:dylanwalt10@gmail.com?subject=${encodeURIComponent(`Footage inquiry — ${lodge.name}`)}`;
+    contact.href = `mailto:dylanwalt10@gmail.com?subject=${encodeURIComponent(`Footage inquiry - ${lodge.name}`)}`;
     contact.addEventListener('click', () => trackClick(lodge.id, 'cta_click', 'mailto'));
   }
 }
