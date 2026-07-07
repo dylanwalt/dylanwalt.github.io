@@ -1,0 +1,10 @@
+config/analytics.public.json
+config/admin.local.json
+PASSWORDS.local.md
+analytics/apps-script/.clasp.json
+.clasp.json
+.clasprc.json
+*.mp4
+*.mov
+source/
+source-photos/

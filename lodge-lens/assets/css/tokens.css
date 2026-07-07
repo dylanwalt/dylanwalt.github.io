@@ -1,0 +1,39 @@
+:root {
+  color-scheme: light;
+
+  /* Palette — warm editorial (see docs/DESIGN.md) */
+  --paper: #f3f0ea;
+  --surface: #faf8f4;
+  --ink: #1c1a17;
+  --ink-muted: #5c574f;
+  --ink-faint: #8a847a;
+  --line: #d8d2c8;
+  --line-strong: #c4bcb0;
+  --accent: #7a6342;
+  --accent-hover: #5f4d33;
+  --inverse: #1c1a17;
+  --inverse-text: #f3f0ea;
+  --danger: #9b3d3d;
+
+  /* Type */
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-body: "Instrument Sans", "Helvetica Neue", sans-serif;
+
+  /* Scale */
+  --space-xs: 0.5rem;
+  --space-sm: 0.875rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: clamp(3rem, 8vw, 5.5rem);
+
+  --radius: 2px;
+  --max-width: 1120px;
+  --header-h: 4.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

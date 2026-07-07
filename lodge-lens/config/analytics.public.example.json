@@ -1,0 +1,5 @@
+{
+  "endpointUrl": "https://script.google.com/macros/s/REPLACE_DEPLOYMENT_ID/exec",
+  "writeKey": "REPLACE_WRITE_KEY",
+  "adminKey": "REPLACE_ADMIN_KEY"
+}
