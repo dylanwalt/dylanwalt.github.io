@@ -20,12 +20,15 @@ New-Item -ItemType Directory -Force -Path $dest | Out-Null
 $exclude = @('node_modules', '.clasp.json', '.clasprc.json', 'analytics')
 robocopy $source $dest /E /XD $exclude /NFL /NDL /NJH /NJS /nc /ns /np | Out-Null
 
-# Patch base paths for GitHub Pages subfolder
+Write-Host "GitHub Pages deploys via CI (export-pages.mjs copies lodge-lens into pages-dist)."
+
+# Patch base paths for GitHub Pages subfolder (UTF-8 without BOM)
+$utf8NoBom = New-Object System.Text.UTF8Encoding $false
 Get-ChildItem -Path $dest -Filter "*.html" -Recurse | ForEach-Object {
   $content = Get-Content $_.FullName -Raw
   $content = $content -replace 'data-base-path="\.\."', 'data-base-path="/lodge-lens"'
   $content = $content -replace 'data-base-path=""', 'data-base-path="/lodge-lens"'
-  Set-Content $_.FullName $content -Encoding utf8
+  [System.IO.File]::WriteAllText($_.FullName, $content, $utf8NoBom)
 }
 
 Push-Location $PagesRepo
