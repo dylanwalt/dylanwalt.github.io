@@ -94,7 +94,7 @@
   transform: scale(1.04);
   will-change: transform;
   backface-visibility: hidden;
-  filter: brightness(1.28) contrast(1.04);
+  filter: contrast(1.02);
 }
 
 .cinema-fallback {
