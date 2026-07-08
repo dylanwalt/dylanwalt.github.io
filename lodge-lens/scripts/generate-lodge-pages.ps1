@@ -14,14 +14,22 @@ $template = @'
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{NAME}} - Lodge Lens</title>
-  <link rel="icon" href="../assets/brand/elevate-walt-media/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/brand/elevate-walt-media/favicon.png" type="image/png">
   <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body data-base-path=".." data-lodge-slug="{{SLUG}}" data-admin-hash="{{ADMIN_HASH}}">
   <header class="site-header">
     <div class="container inner">
       <a class="logo-link" href="../" data-admin-trigger aria-label="Elevate Walt Media">
-        <img class="brand-logo" src="../assets/brand/elevate-walt-media/logo.svg" alt="Elevate Walt Media" width="220" height="32">
+        <span class="brand-logo-wrap">
+          <img class="brand-logo"
+            src="../assets/brand/elevate-walt-media/logo.png"
+            srcset="../assets/brand/elevate-walt-media/logo.png 1x, ../assets/brand/elevate-walt-media/logo@2x.png 2x"
+            alt="Elevate Walt Media"
+            width="34"
+            height="44"
+            decoding="async">
+        </span>
       </a>
     </div>
   </header>

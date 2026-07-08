@@ -75,16 +75,19 @@ function Test-Wave0 {
 function Test-Wave1 {
   Write-Host 'Wave 1: Brand and assets' -ForegroundColor Cyan
 
-  $brandLogo = Join-Path $SiteRoot 'assets\brand\elevate-walt-media\logo.svg'
-  if (-not (Test-Path $brandLogo)) { Fail 'Missing brand logo.svg' }
-  elseif ((Get-Item $brandLogo).Length -lt 100) { Fail 'Brand logo.svg too small' }
+  $brandLogo = Join-Path $SiteRoot 'assets\brand\elevate-walt-media\logo.png'
+  $brandLogo2x = Join-Path $SiteRoot 'assets\brand\elevate-walt-media\logo@2x.png'
+  if (-not (Test-Path $brandLogo)) { Fail 'Missing brand logo.png' }
+  elseif ((Get-Item $brandLogo).Length -lt 5000) { Fail 'Brand logo.png too small - use high-res source' }
+  if (-not (Test-Path $brandLogo2x)) { Warn 'Missing logo@2x.png for retina displays' }
 
   $indexPath = Join-Path $SiteRoot 'index.html'
   $indexBytes = [System.IO.File]::ReadAllBytes($indexPath)
   $indexText = [System.Text.Encoding]::UTF8.GetString($indexBytes)
-  if ($indexText -notmatch 'brand-logo' -and $indexText -notmatch 'elevate-walt-media/logo\.svg') {
-    Fail 'index.html missing brand logo (img.brand-logo or logo.svg)'
+  if ($indexText -notmatch 'brand-logo' -and $indexText -notmatch 'elevate-walt-media/logo\.png') {
+    Fail 'index.html missing brand logo (img.brand-logo or logo.png)'
   }
+  if ($indexText -notmatch 'logo@2x\.png') { Warn 'index.html missing retina srcset for brand logo' }
 
   $config = Get-Content (Join-Path $SiteRoot 'config\lodges.public.json') -Raw | ConvertFrom-Json
   foreach ($lodge in $config.lodges) {
