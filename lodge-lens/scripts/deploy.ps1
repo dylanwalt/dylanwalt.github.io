@@ -31,6 +31,10 @@ Write-Host "GitHub Pages deploys via CI (export-pages.mjs copies lodge-lens into
 
 Push-Location $PagesRepo
 git add $PublishPath scripts/export-pages.mjs
+$analyticsConfig = Join-Path $dest 'config\analytics.public.json'
+if (Test-Path $analyticsConfig) {
+  git add -f (Join-Path $PublishPath 'config/analytics.public.json')
+}
 git status
 git commit -m $Message
 git push origin main
