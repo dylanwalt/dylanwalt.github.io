@@ -127,7 +127,8 @@ img, svg { display: block; max-width: 100%; }
   color: var(--ink-faint);
 }
 
-.cinema-video.is-hidden {
+.cinema-canvas.is-hidden,
+.cinema-poster.is-hidden {
   display: none;
 }
 

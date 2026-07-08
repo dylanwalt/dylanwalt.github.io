@@ -84,7 +84,8 @@
   background: #000;
 }
 
-.cinema-video {
+.cinema-poster,
+.cinema-canvas {
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -94,7 +95,24 @@
   transform: scale(1.04);
   will-change: transform;
   backface-visibility: hidden;
+}
+
+.cinema-poster {
   filter: contrast(1.02);
+  transition: opacity 0.35s ease;
+}
+
+.cinema-poster.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cinema-canvas {
+  filter: contrast(1.02);
+}
+
+.cinema-canvas.is-hidden {
+  display: none;
 }
 
 .cinema-fallback {

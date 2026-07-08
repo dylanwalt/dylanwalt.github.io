@@ -9,9 +9,11 @@ import subprocess
 import sys
 from pathlib import Path
 
-from PIL import Image, ImageEnhance, ImageFilter, ImageOps
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from hero_enhance import enhance_frame  # noqa: E402
 FFMPEG = ROOT / "_tools" / "ffmpeg" / "ffmpeg-7.1.1-essentials_build" / "bin" / "ffmpeg.exe"
 DEFAULT_SOURCE = Path.home() / "Downloads" / "1735057741252.MOV"
 DEFAULT_OUT = ROOT / "assets" / "video" / "hero-aerial.mp4"
@@ -27,23 +29,6 @@ def run(cmd: list[str]) -> None:
     proc = subprocess.run(cmd, capture_output=True, text=True)
     if proc.returncode != 0:
         raise RuntimeError(proc.stderr.strip() or proc.stdout.strip() or "ffmpeg failed")
-
-
-def enhance_frame(img: Image.Image) -> Image.Image:
-    """Per-frame grade: denoise, lift shadows, sharpen detail."""
-    img = img.convert("RGB")
-
-    # Mild luminance smoothing (keeps edges sharper than a flat blur).
-    smooth = img.filter(ImageFilter.GaussianBlur(radius=0.8))
-    img = Image.blend(img, smooth, 0.12)
-
-    img = ImageOps.autocontrast(img, cutoff=0.4)
-    img = ImageEnhance.Brightness(img).enhance(1.07)
-    img = ImageEnhance.Contrast(img).enhance(1.1)
-    img = ImageEnhance.Color(img).enhance(1.12)
-    img = img.filter(ImageFilter.UnsharpMask(radius=1.6, percent=140, threshold=2))
-    img = ImageEnhance.Sharpness(img).enhance(1.15)
-    return img
 
 
 def extract_frames(source: Path, raw_dir: Path) -> int:

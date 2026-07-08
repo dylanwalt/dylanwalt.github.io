@@ -5,7 +5,7 @@ analytics/apps-script/.clasp.json
 .clasp.json
 .clasprc.json
 *.mp4
-!assets/video/hero-aerial.mp4
+assets/video/hero-aerial.mp4
 *.mov
 *.heic
 source/

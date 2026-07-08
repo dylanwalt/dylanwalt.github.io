@@ -1,26 +1,30 @@
 /**
- * Scroll-scrubbed cinematic hero - video currentTime tracks scroll position.
- * Fetches the clip as a blob so seeking works without HTTP range support (python -m http.server).
+ * Scroll-scrubbed cinematic hero - canvas frame sequence (instant seek, no video buffer).
  */
+import { resolvePath } from './utils.js';
+
+const PRELOAD_BATCH = 24;
+
 export function initCinemaHero() {
   const section = document.getElementById('cinema-hero');
-  const video = section?.querySelector('.cinema-video');
+  const canvas = section?.querySelector('.cinema-canvas');
+  const poster = section?.querySelector('.cinema-poster');
   const header = document.querySelector('.site-header--hero');
-  if (!section || !video) return;
+  if (!section || !canvas) return;
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const src =
-    video.getAttribute('src') ||
-    video.querySelector('source')?.getAttribute('src') ||
-    '';
-  if (!src) return;
+  const basePath = document.body.dataset.basePath || '';
+  const ctx = canvas.getContext('2d', { alpha: false });
+  if (!ctx) return;
 
-  const fallbackDuration = parseFloat(section.dataset.duration || video.dataset.duration || '4.5');
-  let duration = fallbackDuration;
+  const fallbackDuration = parseFloat(section.dataset.duration || '4.5');
+  let frameCount = Math.round(fallbackDuration * 60);
+  let frames = [];
+  let loaded = 0;
   let ready = false;
-  let lastSeek = -1;
-  let blobUrl = null;
+  let lastIndex = -1;
+  let manifest = null;
 
   const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
 
@@ -29,25 +33,91 @@ export function initCinemaHero() {
     return clamp(-section.getBoundingClientRect().top / scrollable, 0, 1);
   };
 
-  const seekTo = (time) => {
-    const t = clamp(time, 0, Math.max(0, duration - 0.033));
-    if (Math.abs(lastSeek - t) < 0.008) return;
-    lastSeek = t;
-    video.pause();
-    if (typeof video.fastSeek === 'function') {
-      video.fastSeek(t);
-    } else {
-      video.currentTime = t;
+  const frameIndex = (progress) =>
+    clamp(Math.round(progress * Math.max(0, frameCount - 1)), 0, frameCount - 1);
+
+  const drawCover = (img) => {
+    if (!img?.complete || !img.naturalWidth) return;
+    const cw = canvas.clientWidth;
+    const ch = canvas.clientHeight;
+    if (!cw || !ch) return;
+    if (canvas.width !== cw || canvas.height !== ch) {
+      canvas.width = cw;
+      canvas.height = ch;
     }
+    const ir = img.naturalWidth / img.naturalHeight;
+    const cr = cw / ch;
+    let sw;
+    let sh;
+    let sx;
+    let sy;
+    if (ir > cr) {
+      sh = img.naturalHeight;
+      sw = sh * cr;
+      sx = (img.naturalWidth - sw) / 2;
+      sy = 0;
+    } else {
+      sw = img.naturalWidth;
+      sh = sw / cr;
+      sx = 0;
+      sy = (img.naturalHeight - sh) / 2;
+    }
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
+  };
+
+  const drawFrame = (index) => {
+    if (index === lastIndex) return;
+    const img = frames[index];
+    if (!img) return;
+    lastIndex = index;
+    drawCover(img);
+    if (poster) poster.classList.add('is-hidden');
+  };
+
+  const loadImage = (url) =>
+    new Promise((resolve, reject) => {
+      const img = new Image();
+      img.decoding = 'async';
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error(`Failed to load ${url}`));
+      img.src = url;
+    });
+
+  const loadFrame = async (index, url) => {
+    const img = await loadImage(url);
+    frames[index] = img;
+    loaded += 1;
+    if (index === 0) drawFrame(0);
+    return img;
+  };
+
+  const preloadAll = async (urls) => {
+    if (urls.length === 0) return;
+    await loadFrame(0, urls[0]);
+    for (let i = 1; i < urls.length; i += PRELOAD_BATCH) {
+      const batch = urls.slice(i, i + PRELOAD_BATCH);
+      await Promise.all(
+        batch.map((url, j) => loadFrame(i + j, url)),
+      );
+    }
+  };
+
+  const activate = () => {
+    if (ready) return;
+    ready = true;
+    section.classList.add('is-video-ready');
+    lastIndex = -1;
+    drawFrame(frameIndex(scrollProgress()));
   };
 
   const tick = () => {
     if (ready) {
       const progress = scrollProgress();
-      seekTo(progress * duration);
+      drawFrame(frameIndex(progress));
 
       const scale = 1.04 - progress * 0.04;
-      video.style.transform = `scale(${scale})`;
+      canvas.style.transform = `scale(${scale})`;
+
       section.style.setProperty('--cinema-progress', String(progress));
 
       if (header) {
@@ -57,45 +127,40 @@ export function initCinemaHero() {
     requestAnimationFrame(tick);
   };
 
-  const activate = () => {
-    if (ready) return;
-    duration = video.duration;
-    if (!Number.isFinite(duration) || duration <= 0) duration = fallbackDuration;
-    ready = true;
-    video.pause();
-    section.classList.add('is-video-ready');
-    lastSeek = -1;
-    seekTo(scrollProgress() * duration);
-  };
-
-  const bindVideo = () => {
-    video.addEventListener('loadeddata', activate, { once: true });
-    video.addEventListener('canplaythrough', activate, { once: true });
-    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) activate();
-    else video.load();
-  };
-
   const prepare = async () => {
     try {
-      const res = await fetch(src);
+      const manifestUrl = resolvePath(basePath, 'assets/video/hero-frames/manifest.json');
+      const res = await fetch(manifestUrl);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const blob = await res.blob();
-      blobUrl = URL.createObjectURL(blob);
-      video.src = blobUrl;
-      bindVideo();
+      manifest = await res.json();
+      frameCount = manifest.frameCount || frameCount;
+
+      const posterPath = resolvePath(
+        basePath,
+        `assets/video/hero-frames/${manifest.poster || manifest.frames[0]}`,
+      );
+      if (poster) {
+        poster.src = posterPath;
+        poster.fetchPriority = 'high';
+      }
+
+      const urls = manifest.frames.map((name) =>
+        resolvePath(basePath, `assets/video/hero-frames/${name}`),
+      );
+
+      await preloadAll(urls);
+      activate();
     } catch {
-      video.src = src;
-      bindVideo();
+      section.classList.remove('is-video-ready');
+      canvas.classList.add('is-hidden');
     }
   };
 
-  video.addEventListener('error', () => {
-    section.classList.remove('is-video-ready');
-    video.classList.add('is-hidden');
-  });
-
-  window.addEventListener('pagehide', () => {
-    if (blobUrl) URL.revokeObjectURL(blobUrl);
+  window.addEventListener('resize', () => {
+    if (ready) {
+      lastIndex = -1;
+      drawFrame(frameIndex(scrollProgress()));
+    }
   });
 
   prepare();
