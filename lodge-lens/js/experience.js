@@ -12,89 +12,136 @@ import { resolvePath } from './utils.js';
 const loadedIframes = new Set();
 const videoStates = new Map();
 
+function chapterCategory(ch) {
+  if (ch.category) return ch.category;
+  return ch.id === 'aerial' ? 'general' : 'events';
+}
+
 export function renderExperience(lodge, basePath) {
   document.title = `${lodge.name} - Lodge Lens`;
   document.body.dataset.lodgeId = lodge.id;
 
+  const galleryLogo = document.getElementById('gallery-logo');
   const heroTitle = document.getElementById('exp-title');
   const heroLoc = document.getElementById('exp-location');
+  const lodgeLogo = resolvePath(basePath, lodge.logo);
+
+  if (galleryLogo) {
+    galleryLogo.src = lodgeLogo;
+    galleryLogo.alt = `${lodge.name} logo`;
+  }
   if (heroTitle) heroTitle.textContent = lodge.name;
   if (heroLoc) heroLoc.textContent = lodge.subtitle || lodge.location;
 
-  renderChapterNav(lodge);
-  renderChapters(lodge, basePath);
-  renderActions(lodge);
+  renderDownloadAll(lodge);
+  renderGallery(lodge, basePath);
+  renderContact(lodge);
+  setupGalleryTabs(lodge.id);
   setupChapterObserver(lodge);
   setupYouTubeAPI(lodge);
 }
 
-function renderChapterNav(lodge) {
-  const nav = document.getElementById('chapter-nav');
-  if (!nav || !lodge.chapters) return;
+function renderDownloadAll(lodge) {
+  const btn = document.getElementById('btn-download-all');
+  if (!btn) return;
 
-  nav.innerHTML = lodge.chapters
-    .map(
-      (ch) =>
-        `<a href="#chapter-${ch.id}" data-chapter="${ch.id}">${ch.title}</a>`,
-    )
-    .join('');
+  if (lodge.drivePackageUrl && lodge.drivePackageUrl !== 'REPLACE_DRIVE_URL') {
+    btn.href = lodge.drivePackageUrl;
+    btn.target = '_blank';
+    btn.rel = 'noopener';
+    btn.addEventListener('click', () => trackClick(lodge.id, 'download_click', 'drive-package'));
+  } else {
+    btn.classList.add('is-disabled');
+    btn.setAttribute('aria-disabled', 'true');
+    btn.addEventListener('click', (e) => e.preventDefault());
+  }
 }
 
-function renderChapters(lodge, basePath) {
-  const container = document.getElementById('chapters');
-  if (!container || !lodge.chapters) return;
+function renderContact(lodge) {
+  const contact = document.getElementById('btn-contact');
+  if (!contact) return;
+  contact.href = `mailto:dylanwalt10@gmail.com?subject=${encodeURIComponent(`Footage inquiry - ${lodge.name}`)}`;
+  contact.addEventListener('click', () => trackClick(lodge.id, 'cta_click', 'mailto'));
+}
 
-  container.innerHTML = lodge.chapters
-    .map(
-      (ch) => `
-    <section class="chapter" id="chapter-${ch.id}" data-chapter="${ch.id}">
-      <div class="container">
-        <h2>${ch.title}</h2>
-        <p class="desc">${ch.description || ''}</p>
-        <div class="video-wrap" data-youtube-id="${ch.youtubeId}" data-chapter="${ch.id}">
-          ${
-            ch.youtubeId && ch.youtubeId !== 'REPLACE_ME'
-              ? `<iframe
-              id="yt-${ch.id}"
-              data-src="https://www.youtube-nocookie.com/embed/${ch.youtubeId}?rel=0&modestbranding=1&enablejsapi=1"
-              title="${ch.title}"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              loading="lazy"></iframe>`
-              : `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);padding:2rem;text-align:center;">
-              Add YouTube video ID in config (see docs/YOUTUBE_SETUP.md)
-            </div>`
-          }
-        </div>
-      </div>
-    </section>`,
-    )
-    .join('');
+function renderGallery(lodge, basePath) {
+  const generalPanel = document.getElementById('panel-general');
+  const eventsPanel = document.getElementById('panel-events');
+  if (!lodge.chapters || !generalPanel || !eventsPanel) return;
+
+  const general = lodge.chapters.filter((ch) => chapterCategory(ch) === 'general');
+  const events = lodge.chapters.filter((ch) => chapterCategory(ch) === 'events');
+
+  generalPanel.innerHTML = general.length
+    ? general.map((ch) => renderEventBlock(ch, basePath)).join('')
+    : '<p class="gallery-empty">No general footage published yet.</p>';
+
+  eventsPanel.innerHTML = events.length
+    ? events.map((ch) => renderEventBlock(ch, basePath)).join('')
+    : '<p class="gallery-empty">No event footage published yet.</p>';
 
   void basePath;
 }
 
-function renderActions(lodge) {
-  const download = document.getElementById('btn-download');
-  const contact = document.getElementById('btn-contact');
+function renderEventBlock(ch, basePath) {
+  const videoHtml =
+    ch.youtubeId && ch.youtubeId !== 'REPLACE_ME'
+      ? `<div class="gallery-video" data-chapter="${ch.id}">
+          <iframe
+            id="yt-${ch.id}"
+            data-src="https://www.youtube-nocookie.com/embed/${ch.youtubeId}?rel=0&modestbranding=1&enablejsapi=1"
+            title="${ch.title}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"></iframe>
+        </div>`
+      : `<div class="gallery-video gallery-video--pending" data-chapter="${ch.id}">
+          <p>Video preview coming soon</p>
+        </div>`;
 
-  if (download && lodge.drivePackageUrl && lodge.drivePackageUrl !== 'REPLACE_DRIVE_URL') {
-    download.href = lodge.drivePackageUrl;
-    download.target = '_blank';
-    download.rel = 'noopener';
-    download.addEventListener('click', () => trackClick(lodge.id, 'download_click', 'drive-package'));
-  } else if (download) {
-    download.style.display = 'none';
-  }
+  const images = ch.images?.length
+    ? ch.images
+        .map(
+          (img) => `
+        <figure class="gallery-photo">
+          <img src="${img.src?.startsWith('http') ? img.src : resolvePath(basePath, img.src)}" alt="${img.alt || ch.title}" loading="lazy">
+          ${img.caption ? `<figcaption>${img.caption}</figcaption>` : ''}
+        </figure>`,
+        )
+        .join('')
+    : `<div class="gallery-photo gallery-photo--placeholder" aria-hidden="true">
+        <span>Photos coming soon</span>
+      </div>`;
 
-  if (contact) {
-    contact.href = `mailto:dylanwalt10@gmail.com?subject=${encodeURIComponent(`Footage inquiry - ${lodge.name}`)}`;
-    contact.addEventListener('click', () => trackClick(lodge.id, 'cta_click', 'mailto'));
-  }
+  return `
+    <article class="gallery-event" id="chapter-${ch.id}" data-chapter="${ch.id}">
+      <header class="gallery-event-header">
+        <h2>${ch.title}</h2>
+        <p>${ch.description || ''}</p>
+      </header>
+      <div class="gallery-event-media">
+        ${videoHtml}
+        <div class="gallery-photos">${images}</div>
+      </div>
+    </article>`;
+}
+
+function setupGalleryTabs(lodgeId) {
+  const tabs = document.querySelectorAll('.gallery-tabs button');
+  const panels = document.querySelectorAll('.gallery-panel');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      tabs.forEach((t) => t.classList.toggle('active', t === tab));
+      panels.forEach((p) => p.classList.toggle('active', p.dataset.panel === target));
+      trackClick(lodgeId, 'gallery_tab', target);
+    });
+  });
 }
 
 function setupChapterObserver(lodge) {
-  const chapters = document.querySelectorAll('.chapter[data-chapter]');
+  const blocks = document.querySelectorAll('.gallery-event[data-chapter]');
   const seen = new Set();
 
   const observer = new IntersectionObserver(
@@ -108,24 +155,10 @@ function setupChapterObserver(lodge) {
         lazyLoadIframe(chapterId);
       });
     },
-    { threshold: 0.35 },
+    { threshold: 0.2 },
   );
 
-  chapters.forEach((ch) => observer.observe(ch));
-
-  const navLinks = document.querySelectorAll('#chapter-nav a');
-  const navObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.dataset.chapter;
-          navLinks.forEach((a) => a.classList.toggle('active', a.dataset.chapter === id));
-        }
-      });
-    },
-    { rootMargin: '-40% 0px -40% 0px' },
-  );
-  chapters.forEach((ch) => navObserver.observe(ch));
+  blocks.forEach((block) => observer.observe(block));
 }
 
 function lazyLoadIframe(chapterId) {

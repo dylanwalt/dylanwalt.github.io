@@ -18,7 +18,7 @@ async function initLodgePage() {
   const lodge = getLodge(config, slug);
 
   if (!lodge) {
-    document.body.innerHTML = '<main class="container coming-soon-page"><h1>Lodge not found</h1></main>';
+    document.body.innerHTML = '<main class="coming-soon-page container"><h1>Property not found</h1></main>';
     return;
   }
 
@@ -50,7 +50,7 @@ function showComingSoon(lodge) {
       <h1>${lodge.name}</h1>
       <p>${lodge.subtitle || lodge.location}</p>
       <p style="margin-top:1rem">Private preview coming soon. Footage for this property is not yet published.</p>
-      <a class="btn btn-ghost" href="${basePath ? basePath + '/' : './'}" style="margin-top:2rem">← All properties</a>
+      <a class="btn btn-ghost" href="${basePath ? basePath + '/' : '../'}" style="margin-top:2rem;display:inline-flex">All properties</a>
     </div>`;
 }
 

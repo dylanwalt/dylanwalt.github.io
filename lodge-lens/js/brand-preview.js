@@ -7,6 +7,8 @@ export function renderBrandPreview(lodge, basePath) {
   const section = document.getElementById('brand-preview');
   if (!section) return;
 
+  section.classList.remove('hidden');
+
   const { brand } = lodge;
   const logoSrc = resolvePath(basePath, brand.logo);
 

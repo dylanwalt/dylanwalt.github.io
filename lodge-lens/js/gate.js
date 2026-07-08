@@ -43,7 +43,7 @@ export function showGateModal(lodge, onUnlock, { onCancel } = {}) {
         <input id="gate-password" type="password" placeholder="Password" autocomplete="current-password" required>
         <p id="gate-error" class="error" aria-live="polite"></p>
         <button type="submit" class="btn btn-primary">Continue</button>
-        ${onCancel ? '<button type="button" class="btn btn-ghost" id="gate-cancel" style="margin-top:0.5rem;width:100%">Cancel</button>' : ''}
+        ${onCancel ? '<button type="button" class="btn btn-ghost" id="gate-cancel">Cancel</button>' : ''}
       </form>
       <div id="gate-contact-wrap"></div>
     </div>`;

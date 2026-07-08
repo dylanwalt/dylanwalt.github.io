@@ -11,42 +11,37 @@
 </head>
 <body class="page-home" data-base-path="" data-admin-hash="023ed1285e86978de9570bbebb2871e8e9a4c7ba7596480ba76046e09dbf9460">
   <header class="site-header site-header--hero">
-    <div class="header-brand-center">
+    <div class="header-brand-row">
       <a class="logo-link logo-link--hero" href="./" data-admin-trigger aria-label="Elevated Walt Media">
         <span class="brand-logo-wrap">
           <img class="brand-logo"
             src="assets/brand/elevate-walt-media/logo.png"
             srcset="assets/brand/elevate-walt-media/logo.png 1x, assets/brand/elevate-walt-media/logo@2x.png 2x"
             alt="Elevated Walt Media"
-            width="88"
-            height="88"
+            width="56"
+            height="56"
             decoding="async">
         </span>
       </a>
-      <p class="header-brand-name">Elevated Walt Media</p>
-      <p class="header-note">Private client previews</p>
+      <div class="header-brand-text">
+        <p class="header-brand-name">Elevated Walt Media</p>
+        <p class="header-note">Private client previews</p>
+      </div>
     </div>
   </header>
 
-  <section class="cinema-hero" id="cinema-hero" aria-label="Aerial showcase">
+  <section class="cinema-hero" id="cinema-hero" data-duration="4.5" aria-label="Aerial showcase">
     <div class="cinema-sticky">
       <div class="cinema-fallback" aria-hidden="true"></div>
       <video
         class="cinema-video"
+        src="assets/video/hero-aerial.mp4"
         muted
         playsinline
         preload="auto"
-        aria-hidden="true">
-        <source src="https://videos.pexels.com/video-files/4434242/4434242-hd_1920_1080_25fps.mp4" type="video/mp4">
-      </video>
+        data-duration="4.5"
+        aria-hidden="true"></video>
       <div class="cinema-overlay" aria-hidden="true"></div>
-
-      <div class="cinema-drone" aria-hidden="true">
-        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="">
-          <path d="M32 28a6 6 0 1 0 0-12 6 6 0 0 0 0 12Zm-18 4 6-3 4 2-6 3-4-2Zm36 0-4 2-6-3 4-2 6 3ZM20 20l3 6-2 4-3-6 2-4Zm24 0 2 4-3 6-2-4 3-6ZM32 34v8m-3 0h6m-3 0v6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <circle cx="32" cy="22" r="3" fill="currentColor"/>
-        </svg>
-      </div>
 
       <div class="cinema-content container">
         <p class="cinema-eyebrow">Lodge Lens</p>
@@ -59,7 +54,14 @@
         </div>
       </div>
 
-      <a class="cinema-scroll-cue" href="#properties">Explore properties</a>
+      <a class="cinema-scroll-cue" href="#aerial-diary">View aerial frames</a>
+    </div>
+  </section>
+
+  <section id="aerial-diary" class="aerial-diary" aria-label="Aerial portfolio by shoot date">
+    <div id="aerial-diary-stage" class="aerial-diary-stage"></div>
+    <div class="aerial-diary-handoff">
+      <a class="handoff-link" href="#properties">Continue to property previews</a>
     </div>
   </section>
 
@@ -85,7 +87,8 @@
     <section class="container lodge-section">
       <div class="section-heading">
         <p class="section-label">Properties</p>
-        <p class="section-intro">Eight hospitality partners across Southern Africa and the Indian Ocean. Select a lodge to enter its private preview.</p>
+        <h2 class="section-title">Private previews for your team</h2>
+        <p class="section-intro">Eight hospitality partners across Southern Africa and the Indian Ocean. Select a lodge to enter its password-protected chapter gallery.</p>
       </div>
       <div id="lodge-grid" class="lodge-grid" aria-live="polite"></div>
     </section>

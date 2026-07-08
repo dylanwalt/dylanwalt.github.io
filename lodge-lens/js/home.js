@@ -3,6 +3,7 @@ import { initAnalytics } from './analytics.js';
 import { initAdminBackdoor } from './admin.js';
 import { showGateModal } from './gate.js';
 import { initCinemaHero } from './hero-scroll.js';
+import { initAerialDiary } from './aerial-diary.js';
 
 const basePath = document.body.dataset.basePath || '';
 
@@ -23,6 +24,7 @@ async function initHome() {
 
   const config = await loadConfig();
   initCinemaHero();
+  await initAerialDiary();
   renderAbout(config);
   renderTiles(config);
 }

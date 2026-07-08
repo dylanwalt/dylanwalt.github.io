@@ -27,6 +27,8 @@ $allFiles = Get-ChildItem -Path $SiteRoot -Recurse -File |
   Where-Object {
     $textExtensions -contains $_.Extension -and
     $_.FullName -notmatch '\\analytics\\apps-script\\' -and
+    $_.FullName -notmatch '\\node_modules\\' -and
+    $_.FullName -notmatch '\\_tools\\' -and
     $_.Name -ne 'PASSWORDS.local.md'
   }
 
@@ -104,7 +106,9 @@ function Test-Wave2 {
   $config = Get-Content (Join-Path $SiteRoot 'config\lodges.public.json') -Raw | ConvertFrom-Json
   $siteRootNorm = (Resolve-Path $SiteRoot).Path.TrimEnd('\')
 
-  Get-ChildItem -Path $SiteRoot -Filter '*.html' -Recurse | ForEach-Object {
+  Get-ChildItem -Path $SiteRoot -Filter '*.html' -Recurse |
+    Where-Object { $_.FullName -notmatch '\\node_modules\\' } |
+    ForEach-Object {
     $html = [System.IO.File]::ReadAllText($_.FullName, [System.Text.UTF8Encoding]::new($false))
     if ($html -notmatch 'charset="utf-8"') { Fail "Missing utf-8 charset: $($_.Name)" }
     $dirNorm = $_.Directory.FullName.TrimEnd('\')
@@ -120,11 +124,12 @@ function Test-Wave2 {
 
   $safari = Join-Path $SiteRoot 'safari-plains\index.html'
   if ((Get-Content $safari -Raw) -notmatch 'id="experience"') { Fail 'Safari Plains missing experience section' }
+  if ((Get-Content $safari -Raw) -notmatch 'gallery-tabs') { Fail 'Safari Plains missing gallery tabs' }
 
   $indexHtml = [System.IO.File]::ReadAllText((Join-Path $SiteRoot 'index.html'), [System.Text.UTF8Encoding]::new($false))
   $homeJs = [System.IO.File]::ReadAllText((Join-Path $SiteRoot 'js\home.js'), [System.Text.UTF8Encoding]::new($false))
   if ($homeJs -notmatch 'lodge-tile') { Fail 'js/home.js must render square lodge tiles (lodge-tile class)' }
-  if ($indexText -notmatch 'cinema-hero') { Warn 'index.html missing cinematic hero section' }
+  if ($indexHtml -notmatch 'cinema-hero') { Warn 'index.html missing cinematic hero section' }
 }
 
 function Test-Wave3 {
@@ -153,7 +158,8 @@ function Test-Wave3 {
 function Test-Wave4 {
   Write-Host 'Wave 4: Copy rules' -ForegroundColor Cyan
 
-  $htmlFiles = Get-ChildItem -Path $SiteRoot -Filter '*.html' -Recurse
+  $htmlFiles = Get-ChildItem -Path $SiteRoot -Filter '*.html' -Recurse |
+    Where-Object { $_.FullName -notmatch '\\node_modules\\' }
   $combined = ($htmlFiles | ForEach-Object {
     [System.IO.File]::ReadAllText($_.FullName, [System.Text.UTF8Encoding]::new($false))
   }) -join ' '

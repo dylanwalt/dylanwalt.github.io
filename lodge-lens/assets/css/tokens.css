@@ -1,5 +1,15 @@
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
+
+  /* Theater / screening room (dark editorial) */
+  --theater-bg: #0a0c0b;
+  --theater-surface: #121514;
+  --theater-elevated: #1a1d1b;
+  --theater-text: #ece8e0;
+  --theater-muted: rgba(220, 214, 204, 0.62);
+  --earth: #8a7a62;
+  --earth-light: #c9b89a;
+  --earth-dim: #5c5244;
 
   /* Elevated Walt Media logo palette */
   --slate-950: #252a2f;

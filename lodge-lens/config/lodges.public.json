@@ -36,10 +36,10 @@
       "tileImage": "/assets/lodges/safari-plains/tile.webp",
       "activities": ["Picnic", "Wine Tasting", "Aerial"],
       "chapters": [
-        { "id": "picnic", "title": "Picnic", "youtubeId": "REPLACE_ME", "description": "Bush dining experience" },
-        { "id": "wine-1", "title": "Wine Tasting - Venue 1", "youtubeId": "REPLACE_ME", "description": "First tasting venue" },
-        { "id": "wine-2", "title": "Wine Tasting - Venue 2", "youtubeId": "REPLACE_ME", "description": "Second tasting venue" },
-        { "id": "aerial", "title": "Aerial Overview", "youtubeId": "REPLACE_ME", "description": "Drone overview of the lodge and reserve" }
+        { "id": "aerial", "category": "general", "title": "Aerial Overview", "youtubeId": "REPLACE_ME", "description": "Drone overview of the lodge and reserve", "images": [] },
+        { "id": "picnic", "category": "events", "title": "Picnic", "youtubeId": "REPLACE_ME", "description": "Bush dining experience", "images": [] },
+        { "id": "wine-1", "category": "events", "title": "Wine Tasting - Venue 1", "youtubeId": "REPLACE_ME", "description": "First tasting venue", "images": [] },
+        { "id": "wine-2", "category": "events", "title": "Wine Tasting - Venue 2", "youtubeId": "REPLACE_ME", "description": "Second tasting venue", "images": [] }
       ],
       "drivePackageUrl": "REPLACE_DRIVE_URL",
       "brand": {
