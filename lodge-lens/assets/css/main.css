@@ -15,10 +15,7 @@ body {
   font-weight: 400;
   line-height: 1.6;
   color: var(--ink);
-  background:
-    radial-gradient(ellipse 80% 50% at 100% 0%, rgba(122, 99, 66, 0.07), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(122, 99, 66, 0.05), transparent 50%),
-    var(--paper);
+  background: var(--paper);
   min-height: 100vh;
 }
 
@@ -46,20 +43,32 @@ img, svg { display: block; max-width: 100%; }
   position: sticky;
   top: 0;
   z-index: 50;
-  height: var(--header-h);
+  height: var(--header-h-compact);
   display: flex;
   align-items: center;
-  background: rgba(243, 240, 234, 0.94);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--line);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+  background: rgba(47, 53, 59, 0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(168, 189, 212, 0.1);
+  color: var(--slate-100);
 }
 
-.site-header .inner {
+.site-header .inner,
+.site-header .header-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  gap: var(--space-md);
+}
+
+.site-header--compact .brand-logo-wrap {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 8px;
+}
+
+.site-header--compact .header-note {
+  color: rgba(232, 236, 240, 0.65);
 }
 
 .logo-link {
@@ -116,6 +125,10 @@ img, svg { display: block; max-width: 100%; }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-faint);
+}
+
+.cinema-video.is-hidden {
+  display: none;
 }
 
 /* ——— Hero ——— */
@@ -331,7 +344,7 @@ img, svg { display: block; max-width: 100%; }
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(122, 99, 66, 0.04) 0%, transparent 38%);
+  background: linear-gradient(180deg, rgba(26, 58, 92, 0.05) 0%, transparent 38%);
   pointer-events: none;
 }
 
@@ -342,8 +355,8 @@ img, svg { display: block; max-width: 100%; }
 }
 
 .lodge-tile.active {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 1px rgba(122, 99, 66, 0.15), var(--shadow-soft);
+  border-color: var(--navy);
+  box-shadow: 0 0 0 1px rgba(26, 58, 92, 0.15), var(--shadow-soft);
 }
 
 .tile-logo {
@@ -409,7 +422,7 @@ img, svg { display: block; max-width: 100%; }
 }
 
 .tile-status.active {
-  color: var(--accent);
+  color: var(--navy);
 }
 
 .tile-body h2 {
@@ -947,9 +960,9 @@ img, svg { display: block; max-width: 100%; }
 /* ——— Footer ——— */
 .site-footer {
   padding: var(--space-lg) 0;
-  background: var(--inverse);
-  color: var(--inverse-text);
-  border-top: 3px solid var(--accent);
+  background: var(--slate-900);
+  color: var(--slate-100);
+  border-top: 3px solid var(--navy);
 }
 
 .footer-inner {

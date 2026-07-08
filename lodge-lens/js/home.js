@@ -2,6 +2,7 @@ import { loadConfig, resolvePath } from './utils.js';
 import { initAnalytics } from './analytics.js';
 import { initAdminBackdoor } from './admin.js';
 import { showGateModal } from './gate.js';
+import { initCinemaHero } from './hero-scroll.js';
 
 const basePath = document.body.dataset.basePath || '';
 
@@ -21,6 +22,7 @@ async function initHome() {
   if (adminHash) initAdminBackdoor(adminHash);
 
   const config = await loadConfig();
+  initCinemaHero();
   renderAbout(config);
   renderTiles(config);
 }

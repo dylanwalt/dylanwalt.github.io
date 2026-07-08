@@ -11,12 +11,12 @@
     },
     "about": "Dylan Walt is an Information Engineering student at the University of the Witwatersrand and aerial media creator based in Johannesburg. He combines drone cinematography with a strong technical background - from lead backend engineering at Velzee to co-founding ClevaCado, an agtech startup tackling post-harvest loss. Elevated Walt Media helps lodges, estates, and hospitality brands showcase their properties with cinematic aerial storytelling.",
     "colors": {
-      "bg": "#F3F0EA",
-      "surface": "#FAF8F4",
-      "text": "#1C1A17",
-      "muted": "#5C574F",
-      "accent": "#7A6342",
-      "accentDim": "#5F4D33"
+      "bg": "#E9EDF1",
+      "surface": "#F5F7F9",
+      "text": "#1A1F24",
+      "muted": "#45505A",
+      "accent": "#1A3A5C",
+      "accentDim": "#0F2840"
     },
     "logo": "/assets/brand/elevate-walt-media/logo.png",
     "favicon": "/assets/brand/elevate-walt-media/favicon.png"

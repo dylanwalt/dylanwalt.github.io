@@ -1,0 +1,291 @@
+/* Cinematic home hero - scroll-scrubbed aerial (Savoy / Pertex inspired) */
+
+.page-home {
+  --header-h: 7.5rem;
+}
+
+.page-home .site-header--hero {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(37, 42, 47, 0.72) 0%, rgba(37, 42, 47, 0) 100%);
+  border: none;
+  box-shadow: none;
+  transition: background 0.45s ease, backdrop-filter 0.45s ease;
+}
+
+.page-home .site-header--hero.is-solid {
+  background: rgba(47, 53, 59, 0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(168, 189, 212, 0.12);
+}
+
+.header-brand-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  text-align: center;
+}
+
+.page-home .logo-link--hero {
+  display: block;
+}
+
+.page-home .brand-logo-wrap {
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.page-home .header-brand-name {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ice);
+}
+
+.page-home .header-note {
+  margin: 0;
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(232, 236, 240, 0.55);
+}
+
+.cinema-hero {
+  position: relative;
+  height: 250vh;
+  margin-bottom: -1px;
+}
+
+.cinema-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 32rem;
+  overflow: hidden;
+  background: var(--slate-950);
+}
+
+.cinema-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.05);
+  will-change: transform;
+}
+
+.cinema-fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 20%, rgba(106, 143, 173, 0.25), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(26, 58, 92, 0.35), transparent 50%),
+    linear-gradient(165deg, var(--slate-800) 0%, var(--navy-deep) 55%, var(--slate-950) 100%);
+}
+
+.cinema-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(37, 42, 47, 0.55) 0%, rgba(15, 40, 64, 0.25) 40%, rgba(15, 40, 64, 0.65) 100%),
+    linear-gradient(90deg, rgba(15, 40, 64, 0.5) 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.cinema-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100%;
+  padding: calc(var(--header-h) + 2rem) 1.25rem 5rem;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  color: var(--white);
+}
+
+.cinema-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ice);
+  margin: 0 0 1rem;
+}
+
+.cinema-content h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 4.75rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.25rem;
+  max-width: 14ch;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+
+.cinema-lead {
+  font-size: clamp(1rem, 2.2vw, 1.125rem);
+  line-height: 1.7;
+  color: rgba(232, 236, 240, 0.88);
+  margin: 0 0 1.5rem;
+  max-width: 36rem;
+}
+
+.cinema-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(168, 189, 212, 0.9);
+}
+
+.cinema-meta span::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--sky);
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.cinema-drone {
+  position: absolute;
+  z-index: 3;
+  top: 28%;
+  right: 12%;
+  width: clamp(3rem, 8vw, 5rem);
+  opacity: 0.85;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4));
+  transition: transform 0.08s linear;
+  pointer-events: none;
+}
+
+.cinema-drone svg {
+  width: 100%;
+  height: auto;
+  fill: var(--white);
+}
+
+.cinema-scroll-cue {
+  position: absolute;
+  z-index: 4;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(232, 236, 240, 0.7);
+  text-decoration: none;
+  animation: cinema-bob 2.4s ease-in-out infinite;
+}
+
+.cinema-scroll-cue::after {
+  content: "";
+  width: 1px;
+  height: 2.5rem;
+  background: linear-gradient(180deg, var(--ice), transparent);
+}
+
+@keyframes cinema-bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
+
+.site-content {
+  position: relative;
+  z-index: 5;
+  background: var(--paper);
+  border-radius: 1.25rem 1.25rem 0 0;
+  margin-top: -1.25rem;
+  box-shadow: 0 -24px 64px rgba(15, 40, 64, 0.12);
+}
+
+.page-home .preview-steps {
+  padding-top: var(--space-xl);
+}
+
+.page-home .step-card {
+  background: var(--surface);
+  border-color: var(--line);
+}
+
+.page-home .step-card::after {
+  background: linear-gradient(90deg, var(--navy), var(--sky), transparent);
+}
+
+.page-home .step-num {
+  color: var(--wash-deep);
+}
+
+.page-home .lodge-tile::before {
+  background: linear-gradient(180deg, rgba(26, 58, 92, 0.05) 0%, transparent 38%);
+}
+
+.page-home .lodge-tile.active {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 1px rgba(26, 58, 92, 0.12), var(--shadow-soft);
+}
+
+@media (max-width: 768px) {
+  .page-home {
+    --header-h: 6.5rem;
+  }
+
+  .page-home .brand-logo-wrap {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
+  .cinema-drone {
+    top: 22%;
+    right: 8%;
+    opacity: 0.5;
+  }
+
+  .cinema-hero {
+    height: 200vh;
+  }
+
+  .cinema-content h1 {
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinema-scroll-cue {
+    animation: none;
+  }
+
+  .cinema-hero {
+    height: auto;
+  }
+
+  .cinema-sticky {
+    position: relative;
+    height: auto;
+    min-height: 85vh;
+  }
+}

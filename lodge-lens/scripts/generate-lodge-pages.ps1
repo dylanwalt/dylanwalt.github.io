@@ -18,19 +18,20 @@ $template = @'
   <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body data-base-path=".." data-lodge-slug="{{SLUG}}" data-admin-hash="{{ADMIN_HASH}}">
-  <header class="site-header">
-    <div class="container inner">
+  <header class="site-header site-header--compact">
+    <div class="container inner header-row">
       <a class="logo-link" href="../" data-admin-trigger aria-label="Elevated Walt Media">
         <span class="brand-logo-wrap">
           <img class="brand-logo"
             src="../assets/brand/elevate-walt-media/logo.png"
             srcset="../assets/brand/elevate-walt-media/logo.png 1x, ../assets/brand/elevate-walt-media/logo@2x.png 2x"
             alt="Elevated Walt Media"
-            width="64"
-            height="64"
+            width="52"
+            height="52"
             decoding="async">
         </span>
       </a>
+      <span class="header-note">{{HEADER_NOTE}}</span>
     </div>
   </header>
   <main id="main-content"></main>
@@ -48,7 +49,8 @@ foreach ($lodge in $config.lodges) {
   if ($lodge.slug -eq 'safari-plains') { continue }
   $dir = Join-Path $SiteRoot $lodge.slug
   New-Item -ItemType Directory -Force -Path $dir | Out-Null
-  $html = $template.Replace('{{NAME}}', $lodge.name).Replace('{{SLUG}}', $lodge.slug).Replace('{{ADMIN_HASH}}', $adminHash)
+  $note = "$($lodge.name) preview"
+  $html = $template.Replace('{{NAME}}', $lodge.name).Replace('{{SLUG}}', $lodge.slug).Replace('{{ADMIN_HASH}}', $adminHash).Replace('{{HEADER_NOTE}}', $note)
   [System.IO.File]::WriteAllText((Join-Path $dir 'index.html'), $html, $utf8NoBom)
   Write-Host "Generated $($lodge.slug)"
 }
