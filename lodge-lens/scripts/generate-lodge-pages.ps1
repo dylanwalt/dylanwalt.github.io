@@ -20,12 +20,12 @@ $template = @'
 <body data-base-path=".." data-lodge-slug="{{SLUG}}" data-admin-hash="{{ADMIN_HASH}}">
   <header class="site-header">
     <div class="container inner">
-      <a class="logo-link" href="../" data-admin-trigger aria-label="Elevate Walt Media">
+      <a class="logo-link" href="../" data-admin-trigger aria-label="Elevated Walt Media">
         <span class="brand-logo-wrap">
           <img class="brand-logo"
             src="../assets/brand/elevate-walt-media/logo.png"
             srcset="../assets/brand/elevate-walt-media/logo.png 1x, ../assets/brand/elevate-walt-media/logo@2x.png 2x"
-            alt="Elevate Walt Media"
+            alt="Elevated Walt Media"
             width="34"
             height="44"
             decoding="async">
@@ -36,7 +36,7 @@ $template = @'
   <main id="main-content"></main>
   <footer class="site-footer">
     <div class="container">
-      <p>Preview footage is for internal review only. &copy; Elevate Walt Media</p>
+      <p>Preview footage is for internal review only. &copy; Elevated Walt Media</p>
     </div>
   </footer>
   <script type="module" src="../js/lodge.js"></script>
