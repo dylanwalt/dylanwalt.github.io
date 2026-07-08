@@ -120,10 +120,27 @@ for (const site of sites) {
 await writeFile(path.join(dist, "index.html"), indexHtml(sites));
 await writeFile(path.join(dist, ".nojekyll"), "");
 
+async function patchLodgeLensBasePaths(dir) {
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      await patchLodgeLensBasePaths(full);
+      continue;
+    }
+    if (!entry.name.endsWith(".html")) continue;
+    let html = await readFile(full, "utf8");
+    html = html.replaceAll('data-base-path=".."', 'data-base-path="/lodge-lens"');
+    html = html.replaceAll('data-base-path=""', 'data-base-path="/lodge-lens"');
+    await writeFile(full, html, "utf8");
+  }
+}
+
 const lodgeLens = path.join(root, "lodge-lens");
 if (await exists(lodgeLens)) {
-  await cp(lodgeLens, path.join(dist, "lodge-lens"), { recursive: true, force: true });
-  console.log("Copied lodge-lens to pages-dist/lodge-lens/");
+  const lodgeDist = path.join(dist, "lodge-lens");
+  await cp(lodgeLens, lodgeDist, { recursive: true, force: true });
+  await patchLodgeLensBasePaths(lodgeDist);
+  console.log("Copied lodge-lens to pages-dist/lodge-lens/ (base paths patched for GitHub Pages)");
 }
 
 console.log(`Exported ${sites.length} sites to ${path.relative(root, dist)}.`);

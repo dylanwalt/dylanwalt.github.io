@@ -31,6 +31,7 @@
       "status": "active",
       "passwordHash": "38bf05041aaf9c2e94dd6d2e412362eb09488f0998b2a527c3f959786c4f76cb",
       "website": "https://safariplains.co.za",
+      "logoSourceUrl": "https://safariplains.co.za/wp-content/uploads/2025/02/safari-plains-brand-colour.png",
       "logo": "/assets/lodges/safari-plains/logo.png",
       "tileImage": "/assets/lodges/safari-plains/tile.webp",
       "activities": ["Picnic", "Wine Tasting", "Aerial"],
@@ -57,6 +58,7 @@
       "status": "coming-soon",
       "passwordHash": "83d1f1bfab3565e050d5e4a5eafc254092ece3d0d17354637db2858c521a15a3",
       "website": "https://www.anantara.com/en/bazaruto-island",
+      "logoSourceUrl": "https://assets.anantara.com/image/upload/f_auto,q_auto/media/minor/anantara/images/logos/anantara_logo_header_w_2024_360x140.png",
       "logo": "/assets/lodges/anantara-bazaruto/logo.png",
       "tileImage": "/assets/lodges/anantara-bazaruto/tile.webp",
       "activities": []
@@ -70,6 +72,7 @@
       "status": "coming-soon",
       "passwordHash": "0c81fcbf7aed4925642d0367595af6bbca2dfad84578c043e89f3c37709187b2",
       "website": "https://www.diamondsresorts.com/resort/diamonds-thudufushi",
+      "logoSourceUrl": "https://d1vp8nomjxwyf1.cloudfront.net/wp-content/uploads/sites/108/2017/05/03121800/logo_diamonds_hotels_e_resorts.png",
       "logo": "/assets/lodges/diamonds-thudufushi/logo.png",
       "tileImage": "/assets/lodges/diamonds-thudufushi/tile.webp",
       "activities": []
@@ -83,6 +86,7 @@
       "status": "coming-soon",
       "passwordHash": "71a3b5dba75d39d3f561965af2ddca94c36ac07c65127bdccdd129cbd88281c4",
       "website": "https://karafuuzanzibar.com/en/",
+      "logoSourceUrl": "https://karafuuzanzibar.com/wp-content/uploads/2023/08/dark-logo.png",
       "logo": "/assets/lodges/karafuu-beach-resort/logo.png",
       "tileImage": "/assets/lodges/karafuu-beach-resort/tile.webp",
       "activities": []
@@ -96,6 +100,7 @@
       "status": "coming-soon",
       "passwordHash": "526ccce76b2496a6e1bb449dc0960eb17c1f0bb930af19cb36dbf3bd90d132ae",
       "website": "https://www.riu.com/en/hotel/tanzania/zanzibar/hotel-riu-jambo",
+      "logoSourceUrl": "https://www.riu.com/dam/RIU-RSC/Logo-RIU-RSC.png",
       "logo": "/assets/lodges/hotel-riu-jambo/logo.png",
       "tileImage": "/assets/lodges/hotel-riu-jambo/tile.webp",
       "activities": []
@@ -109,6 +114,7 @@
       "status": "coming-soon",
       "passwordHash": "b32ba9c94c134c3741c09e08405b05bd3c393ab989c351f111c2f572cae75250",
       "website": "https://www.themora.com/zanzibar/",
+      "logoSourceUrl": "https://www.themora.com/wp-content/uploads/2023/11/The_Mora_Master_Logo.jpg",
       "logo": "/assets/lodges/the-mora-zanzibar/logo.png",
       "tileImage": "/assets/lodges/the-mora-zanzibar/tile.webp",
       "activities": []
@@ -122,6 +128,7 @@
       "status": "coming-soon",
       "passwordHash": "d0d6bf2d601c5fe22487e409990d9d139481e7a25b5eb952503fb8b434ca16c8",
       "website": "https://www.kayandmonty.com/",
+      "logoSourceUrl": "https://images.squarespace-cdn.com/content/v1/5631f08ae4b03329c8b1bf93/1508230368872-1XBD1XDT9M5WWO2NGYYV/Kay+and+Monty_Vineyards_Illustration+Logo_A.png",
       "logo": "/assets/lodges/kay-and-monty/logo.png",
       "tileImage": "/assets/lodges/kay-and-monty/tile.webp",
       "activities": []
@@ -135,6 +142,7 @@
       "status": "coming-soon",
       "passwordHash": "c6e17476d5848e70aeb76fe471f1a2d2ebe561525fb7706c57201b4f6a3932b5",
       "website": "https://rovresort.co.za/",
+      "logoSourceUrl": "https://rovresort.co.za/wp-content/uploads/2025/05/rov-resort-logo1.png",
       "logo": "/assets/lodges/riviera-on-vaal/logo.png",
       "tileImage": "/assets/lodges/riviera-on-vaal/tile.webp",
       "activities": []

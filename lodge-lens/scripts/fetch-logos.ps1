@@ -1,51 +1,46 @@
-# Fetch lodge logos from official websites (favicon / og:image fallbacks)
+# Fetch official lodge logos from curated source URLs in config
 param(
   [string]$ConfigPath = "$PSScriptRoot\..\config\lodges.public.json",
   [string]$AssetsRoot = "$PSScriptRoot\..\assets\lodges"
 )
 
+$ErrorActionPreference = 'Stop'
 $config = Get-Content $ConfigPath -Raw | ConvertFrom-Json
+
+function Save-Logo($url, $outPath) {
+  $dir = Split-Path $outPath -Parent
+  New-Item -ItemType Directory -Force -Path $dir | Out-Null
+
+  $headers = @{ 'User-Agent' = 'Mozilla/5.0 (compatible; LodgeLens/1.0)' }
+  Invoke-WebRequest -Uri $url -OutFile $outPath -UseBasicParsing -TimeoutSec 45 -Headers $headers
+
+  $size = (Get-Item $outPath).Length
+  if ($size -lt 800) {
+    throw "Downloaded file too small ($size bytes) from $url"
+  }
+  return $size
+}
 
 foreach ($lodge in $config.lodges) {
   $outDir = Join-Path $AssetsRoot $lodge.id
-  New-Item -ItemType Directory -Force -Path $outDir | Out-Null
+  $logoPath = Join-Path $outDir 'logo.png'
+  $tilePath = Join-Path $outDir 'tile.webp'
 
-  $domain = ([uri]$lodge.website).Host
-  $logoPath = Join-Path $outDir "logo.png"
-  $tilePath = Join-Path $outDir "tile.webp"
+  if (-not $lodge.logoSourceUrl) {
+    Write-Warning "$($lodge.id): missing logoSourceUrl in config - add an official logo URL"
+    continue
+  }
 
-  Write-Host "Fetching logo for $($lodge.name) ($domain)..."
+  Write-Host "Fetching $($lodge.name)..."
+  Write-Host "  $($lodge.logoSourceUrl)"
 
-  $fetched = $false
-
-  # Try Google high-res favicon
-  $faviconUrl = "https://www.google.com/s2/favicons?domain=$domain&sz=128"
   try {
-    Invoke-WebRequest -Uri $faviconUrl -OutFile $logoPath -UseBasicParsing -TimeoutSec 20
-    if ((Get-Item $logoPath).Length -gt 200) { $fetched = $true }
-  } catch {
-    Write-Warning "  Favicon failed: $_"
-  }
-
-  # Try clearbit (may 404 — harmless)
-  if (-not $fetched) {
-    try {
-      $clearbit = "https://logo.clearbit.com/$domain"
-      Invoke-WebRequest -Uri $clearbit -OutFile $logoPath -UseBasicParsing -TimeoutSec 15
-      if ((Get-Item $logoPath).Length -gt 500) { $fetched = $true }
-    } catch { }
-  }
-
-  if (-not $fetched) {
-    Write-Warning "  Could not fetch logo for $($lodge.id). Add manually to $logoPath"
-  } else {
-    Write-Host "  Saved $logoPath"
-  }
-
-  # Tile placeholder: copy logo if exists, else skip (CSS gradient shows)
-  if (Test-Path $logoPath) {
+    $bytes = Save-Logo $lodge.logoSourceUrl $logoPath
+    Write-Host "  Saved logo.png ($bytes bytes)"
     Copy-Item $logoPath $tilePath -Force -ErrorAction SilentlyContinue
+  } catch {
+    Write-Warning "  Failed for $($lodge.id): $_"
   }
 }
 
-Write-Host "Done. Re-run after adding manual logos for any failures."
+Write-Host 'Done. Verify logos visually before deploy.'

@@ -88,6 +88,7 @@ function Test-Wave1 {
 
   $config = Get-Content (Join-Path $SiteRoot 'config\lodges.public.json') -Raw | ConvertFrom-Json
   foreach ($lodge in $config.lodges) {
+    if (-not $lodge.logoSourceUrl) { Warn "$($lodge.id): missing logoSourceUrl (official logo URL)" }
     $logoPath = Join-Path $SiteRoot ($lodge.logo.TrimStart('/') -replace '/', '\')
     if (-not (Test-Path $logoPath)) { Fail "$($lodge.id): missing logo at $($lodge.logo)" }
     elseif ((Get-Item $logoPath).Length -lt 200) { Warn "$($lodge.id): logo suspiciously small" }
@@ -105,7 +106,7 @@ function Test-Wave2 {
     if ($html -notmatch 'charset="utf-8"') { Fail "Missing utf-8 charset: $($_.Name)" }
     $dirNorm = $_.Directory.FullName.TrimEnd('\')
     if ($dirNorm -eq $siteRootNorm -and $html -match 'data-base-path="/lodge-lens"') {
-      Fail 'Source index.html must use data-base-path="" (deploy script patches live paths)'
+      Fail 'Source index.html must use data-base-path="" (export-pages.mjs patches paths at CI export)'
     }
   }
 

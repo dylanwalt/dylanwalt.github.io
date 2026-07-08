@@ -8,7 +8,7 @@
   <link rel="icon" href="assets/brand/elevate-walt-media/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
-<body data-base-path="/lodge-lens" data-admin-hash="023ed1285e86978de9570bbebb2871e8e9a4c7ba7596480ba76046e09dbf9460">
+<body data-base-path="" data-admin-hash="023ed1285e86978de9570bbebb2871e8e9a4c7ba7596480ba76046e09dbf9460">
   <header class="site-header">
     <div class="container inner">
       <a class="logo-link" href="./" data-admin-trigger aria-label="Elevate Walt Media">
@@ -18,24 +18,57 @@
     </div>
   </header>
 
-  <main class="hero container">
-    <div class="hero-inner">
-      <p class="eyebrow">Lodge Lens</p>
-      <h1>Aerial stories for extraordinary places</h1>
-      <p class="hero-lead">Select a property below to access your password-protected preview for your internal team: curated footage, brand samples, and download links.</p>
+  <section class="hero-shell">
+    <div class="container hero-grid">
+      <div class="hero-inner">
+        <p class="eyebrow">Lodge Lens</p>
+        <h1>Aerial stories for extraordinary places</h1>
+        <p class="hero-lead">Select a property below to access your password-protected preview for your internal team: curated footage, brand samples, and download links.</p>
+      </div>
+      <aside class="hero-aside" aria-label="Preview portal overview">
+        <p class="hero-aside-label">What your team receives</p>
+        <ul class="hero-points">
+          <li>Chaptered aerial footage</li>
+          <li>On-brand social mockups</li>
+          <li>Full-res download package</li>
+        </ul>
+        <p class="hero-aside-note">Each property has its own secure gate. Previews are for internal review only.</p>
+      </aside>
     </div>
-  </main>
+  </section>
+
+  <section class="container preview-steps" aria-label="Preview contents">
+    <article class="step-card">
+      <span class="step-num">01</span>
+      <h2>Curated chapters</h2>
+      <p>Footage organised by experience - picnic, tastings, aerial overviews - so your team can review quickly.</p>
+    </article>
+    <article class="step-card">
+      <span class="step-num">02</span>
+      <h2>Brand samples</h2>
+      <p>Mockups showing how aerial content can sit on your channels before anything goes public.</p>
+    </article>
+    <article class="step-card">
+      <span class="step-num">03</span>
+      <h2>Download package</h2>
+      <p>Secure Drive link for the full deliverable set once your team is ready to share internally.</p>
+    </article>
+  </section>
 
   <section class="container lodge-section">
-    <p class="section-label">Properties</p>
+    <div class="section-heading">
+      <p class="section-label">Properties</p>
+      <p class="section-intro">Eight hospitality partners across Southern Africa and the Indian Ocean. Select a lodge to enter its private preview.</p>
+    </div>
     <div id="lodge-grid" class="lodge-grid" aria-live="polite"></div>
   </section>
 
   <section id="about-section" class="container about-section"></section>
 
   <footer class="site-footer">
-    <div class="container">
-      <p>Preview footage is for internal review only. &copy; Elevate Walt Media</p>
+    <div class="container footer-inner">
+      <p>Preview footage is for internal review only. Not for public distribution.</p>
+      <p class="footer-brand">&copy; Elevate Walt Media</p>
     </div>
   </footer>
 

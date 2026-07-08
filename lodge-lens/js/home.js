@@ -37,9 +37,15 @@ function renderAbout(config) {
         <h2>${brand.name}</h2>
         <p class="tagline">${brand.tagline}</p>
         <p>${brand.about}</p>
+        <div class="about-credentials">
+          <span class="credential">Aerial cinematography</span>
+          <span class="credential">Hospitality-focused</span>
+          <span class="credential">Johannesburg-based</span>
+        </div>
       </div>
       <div class="about-contact">
         <h3>Contact</h3>
+        <p class="about-contact-lead">Questions about your preview or deliverables? Reach out directly.</p>
         <ul class="contact-list">
           <li><a href="mailto:${brand.contact.email}">${brand.contact.email}</a></li>
           <li><a href="tel:+27719290175">${brand.contact.phone}</a></li>
@@ -63,7 +69,8 @@ function renderTiles(config) {
       return `
       <a class="lodge-tile ${statusClass}" href="${href}" data-lodge-id="${lodge.id}">
         <div class="tile-logo">
-          <img src="${logo}" alt="${lodge.name} logo" loading="lazy" width="120" height="80">
+          <span class="tile-region">${lodge.location}</span>
+          <img src="${logo}" alt="${lodge.name} logo" loading="lazy" width="160" height="96">
         </div>
         <div class="tile-body">
           <span class="tile-status ${statusClass}">${statusLabel}</span>

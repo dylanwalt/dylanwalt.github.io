@@ -11,6 +11,9 @@
   --line-strong: #c4bcb0;
   --accent: #7a6342;
   --accent-hover: #5f4d33;
+  --wash: #ebe4d8;
+  --wash-deep: #e2d9ca;
+  --shadow-soft: 0 12px 40px rgba(28, 26, 23, 0.08);
   --inverse: #1c1a17;
   --inverse-text: #f3f0ea;
   --danger: #9b3d3d;
