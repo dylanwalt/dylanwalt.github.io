@@ -8,9 +8,26 @@
   <link rel="icon" href="assets/brand/elevate-walt-media/favicon.png" type="image/png">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="stylesheet" href="assets/css/experience-loader.css">
   <link rel="preload" as="image" href="assets/video/hero-frames/poster.webp" fetchpriority="high">
 </head>
-<body class="page-home" data-base-path="" data-admin-hash="023ed1285e86978de9570bbebb2871e8e9a4c7ba7596480ba76046e09dbf9460">
+<body class="page-home is-loading" data-base-path="" data-admin-hash="023ed1285e86978de9570bbebb2871e8e9a4c7ba7596480ba76046e09dbf9460">
+  <div id="experience-loader" class="experience-loader" aria-live="polite" aria-busy="true" aria-label="Loading">
+    <img
+      class="experience-loader-logo"
+      src="assets/brand/elevate-walt-media/logo.png"
+      srcset="assets/brand/elevate-walt-media/logo.png 1x, assets/brand/elevate-walt-media/logo@2x.png 2x"
+      alt="Elevated Walt Media"
+      width="320"
+      height="299"
+      decoding="async">
+    <p class="experience-loader-brand">Elevated Walt Media</p>
+    <p class="experience-loader-text">Loading your experience ... for optimal performance</p>
+    <div class="experience-loader-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <span class="experience-loader-bar-fill"></span>
+    </div>
+  </div>
+
   <header class="site-header site-header--hero">
     <div class="header-brand-row">
       <a class="logo-link logo-link--hero" href="./" aria-label="Elevated Walt Media">

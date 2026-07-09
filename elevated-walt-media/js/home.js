@@ -2,9 +2,9 @@ import { loadConfig, resolvePath } from './utils.js';
 import { initAnalytics } from './analytics.js';
 import { initAdminBackdoor } from './admin.js';
 import { showGateModal } from './gate.js';
-import { initCinemaHero } from './hero-scroll.js';
 import { initAerialDiary } from './aerial-diary.js';
 import { enforceDesktopOnly } from './mobile-gate.js';
+import { runExperienceLoader } from './experience-loader.js';
 
 const basePath = document.body.dataset.basePath || '';
 
@@ -20,13 +20,14 @@ function lodgeHref(slug) {
 async function initHome() {
   if (enforceDesktopOnly()) return;
 
+  await runExperienceLoader();
+
   await initAnalytics();
 
   const adminHash = document.body.dataset.adminHash;
   if (adminHash) initAdminBackdoor(adminHash);
 
   const config = await loadConfig();
-  initCinemaHero();
   await initAerialDiary();
   renderAbout(config);
   renderTiles(config);

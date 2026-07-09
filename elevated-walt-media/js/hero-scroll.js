@@ -5,17 +5,23 @@ import { resolvePath } from './utils.js';
 
 const PRELOAD_BATCH = 24;
 
-export function initCinemaHero() {
+export function initCinemaHero(options = {}) {
+  const { onProgress } = options;
   const section = document.getElementById('cinema-hero');
   const canvas = section?.querySelector('.cinema-canvas');
   const poster = section?.querySelector('.cinema-poster');
-  if (!section || !canvas) return;
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return Promise.resolve();
+  }
+
+  if (!section || !canvas) {
+    return Promise.resolve();
+  }
 
   const basePath = document.body.dataset.basePath || '';
   const ctx = canvas.getContext('2d', { alpha: false });
-  if (!ctx) return;
+  if (!ctx) return Promise.resolve();
 
   const fallbackDuration = parseFloat(section.dataset.duration || '4.5');
   let frameCount = Math.round(fallbackDuration * 60);
@@ -24,6 +30,15 @@ export function initCinemaHero() {
   let ready = false;
   let lastIndex = -1;
   let manifest = null;
+
+  let resolveReady = () => {};
+  const readyPromise = new Promise((resolve) => {
+    resolveReady = resolve;
+  });
+
+  const reportProgress = () => {
+    onProgress?.(loaded, frameCount);
+  };
 
   const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
 
@@ -86,18 +101,19 @@ export function initCinemaHero() {
     const img = await loadImage(url);
     frames[index] = img;
     loaded += 1;
+    reportProgress();
     if (index === 0) drawFrame(0);
     return img;
   };
 
   const preloadAll = async (urls) => {
     if (urls.length === 0) return;
+    frameCount = urls.length;
+    reportProgress();
     await loadFrame(0, urls[0]);
     for (let i = 1; i < urls.length; i += PRELOAD_BATCH) {
       const batch = urls.slice(i, i + PRELOAD_BATCH);
-      await Promise.all(
-        batch.map((url, j) => loadFrame(i + j, url)),
-      );
+      await Promise.all(batch.map((url, j) => loadFrame(i + j, url)));
     }
   };
 
@@ -129,6 +145,7 @@ export function initCinemaHero() {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       manifest = await res.json();
       frameCount = manifest.frameCount || frameCount;
+      reportProgress();
 
       const posterPath = resolvePath(
         basePath,
@@ -148,6 +165,8 @@ export function initCinemaHero() {
     } catch {
       section.classList.remove('is-video-ready');
       canvas.classList.add('is-hidden');
+    } finally {
+      resolveReady();
     }
   };
 
@@ -160,4 +179,5 @@ export function initCinemaHero() {
 
   prepare();
   requestAnimationFrame(tick);
+  return readyPromise;
 }

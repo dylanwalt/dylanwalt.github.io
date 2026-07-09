@@ -131,6 +131,7 @@ function Test-Wave2 {
   $indexHtml = [System.IO.File]::ReadAllText((Join-Path $SiteRoot 'index.html'), [System.Text.UTF8Encoding]::new($false))
   $homeJs = [System.IO.File]::ReadAllText((Join-Path $SiteRoot 'js\home.js'), [System.Text.UTF8Encoding]::new($false))
   if ($homeJs -notmatch 'lodge-tile') { Fail 'js/home.js must render square lodge tiles (lodge-tile class)' }
+  if ($indexHtml -notmatch 'experience-loader') { Warn 'index.html missing experience loader splash' }
   if ($indexHtml -notmatch 'cinema-hero') { Warn 'index.html missing cinematic hero section' }
 }
 
