@@ -4,6 +4,7 @@ import { initAdminBackdoor } from './admin.js';
 import { showGateModal } from './gate.js';
 import { initCinemaHero } from './hero-scroll.js';
 import { initAerialDiary } from './aerial-diary.js';
+import { enforceDesktopOnly } from './mobile-gate.js';
 
 const basePath = document.body.dataset.basePath || '';
 
@@ -17,6 +18,8 @@ function lodgeHref(slug) {
 }
 
 async function initHome() {
+  if (enforceDesktopOnly()) return;
+
   await initAnalytics();
 
   const adminHash = document.body.dataset.adminHash;

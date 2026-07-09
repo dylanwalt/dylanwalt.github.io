@@ -4,11 +4,14 @@ import { checkGate, isActiveLodge } from './gate.js';
 import { renderExperience } from './experience.js';
 import { renderBrandPreview } from './brand-preview.js';
 import { initAdminBackdoor } from './admin.js';
+import { enforceDesktopOnly } from './mobile-gate.js';
 
 const basePath = document.body.dataset.basePath || '';
 const slug = document.body.dataset.lodgeSlug;
 
 async function initLodgePage() {
+  if (enforceDesktopOnly()) return;
+
   await initAnalytics();
 
   const adminHash = document.body.dataset.adminHash;
