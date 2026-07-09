@@ -22,10 +22,11 @@
       height="299"
       decoding="async">
     <p class="experience-loader-brand">Elevated Walt Media</p>
-    <p class="experience-loader-text">Loading your experience ... for optimal performance</p>
+    <p class="experience-loader-text">Loading your experience</p>
     <div class="experience-loader-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
       <span class="experience-loader-bar-fill"></span>
     </div>
+    <button type="button" class="experience-loader-skip hidden" id="experience-loader-skip">Continue</button>
   </div>
 
   <section class="cinema-hero" id="cinema-hero" data-duration="4.5" data-frame-count="134" aria-label="Aerial showcase">
@@ -61,49 +62,30 @@
       <div class="cinema-content container">
         <p class="cinema-eyebrow">Elevated Walt Media</p>
         <h1>Aerial stories for extraordinary places</h1>
-        <p class="cinema-lead">Password-protected previews for your internal team - curated chapters, brand samples, and download links for each property.</p>
+        <p class="cinema-lead">Private drone previews for your marketing team.</p>
         <div class="cinema-meta">
-          <span>Internal review only</span>
-          <span>Chaptered footage</span>
-          <span>Secure access</span>
+          <span>Internal review</span>
+          <span>Password protected</span>
         </div>
       </div>
 
-      <a class="cinema-scroll-cue" href="#aerial-diary"><span>View aerial frames</span></a>
+      <a class="cinema-scroll-cue cinema-scroll-cue--primary" href="#aerial-diary"><span>View aerial frames</span></a>
     </div>
   </section>
 
   <section id="aerial-diary" class="aerial-diary" aria-label="Aerial portfolio by shoot date">
     <div id="aerial-diary-stage" class="aerial-diary-stage"></div>
     <div class="aerial-diary-handoff">
-      <a class="handoff-link" href="#properties">Continue to property previews</a>
+      <a class="handoff-link" href="#properties">View property previews</a>
     </div>
   </section>
 
   <main class="site-content" id="properties">
-    <section class="container preview-steps" aria-label="Preview contents">
-      <article class="step-card">
-        <span class="step-num">01</span>
-        <h2>Curated chapters</h2>
-        <p>Footage organised by experience - picnic, tastings, aerial overviews - so your team can review quickly.</p>
-      </article>
-      <article class="step-card">
-        <span class="step-num">02</span>
-        <h2>Brand samples</h2>
-        <p>Mockups showing how aerial content can sit on your channels before anything goes public.</p>
-      </article>
-      <article class="step-card">
-        <span class="step-num">03</span>
-        <h2>Download package</h2>
-        <p>Secure Drive link for the full deliverable set once your team is ready to share internally.</p>
-      </article>
-    </section>
-
     <section class="container lodge-section">
       <div class="section-heading">
         <p class="section-label">Properties</p>
-        <h2 class="section-title">Private previews for your team</h2>
-        <p class="section-intro">Eight hospitality partners across Southern Africa and the Indian Ocean. Select a lodge to enter its password-protected chapter gallery.</p>
+        <h2 class="section-title">Your preview portals</h2>
+        <p class="section-intro">Select your lodge. You will need the password we sent your team.</p>
       </div>
       <div id="lodge-grid" class="lodge-grid" aria-live="polite"></div>
     </section>
@@ -112,7 +94,7 @@
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <p>Preview footage is for internal review only. Not for public distribution.</p>
+        <p>Internal review for your internal team. Not for public distribution.</p>
         <p class="footer-brand">&copy; Elevated Walt Media</p>
       </div>
     </footer>

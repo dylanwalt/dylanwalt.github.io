@@ -32,7 +32,7 @@ function showAdminModal(adminPasswordHash) {
         <input id="admin-login-password" type="password" placeholder="Admin password" autocomplete="current-password" required>
         <p id="admin-login-error" class="error" aria-live="polite"></p>
         <button type="submit" class="btn btn-primary">Open dashboard</button>
-        <button type="button" class="btn btn-ghost" id="admin-login-cancel">Cancel</button>
+        <button type="button" class="btn btn-ghost admin-login-cancel" id="admin-login-cancel">Cancel</button>
       </form>
     </div>`;
 
@@ -90,6 +90,7 @@ async function openDashboard() {
           <button class="btn btn-ghost" id="admin-close">Close</button>
         </div>
         <div id="admin-stats" class="admin-stats"></div>
+        <p id="admin-status" class="admin-status" aria-live="polite"></p>
         <div class="admin-table-wrap">
           <table class="admin-table">
             <thead>
@@ -149,7 +150,9 @@ async function loadRows(config) {
   if (!tbody) return;
 
   tbody.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
-  if (stats) stats.textContent = 'Fetching from Google Sheet...';
+  const statusEl = document.getElementById('admin-status');
+  if (statusEl) statusEl.textContent = 'Fetching activity...';
+  if (stats) stats.innerHTML = '';
 
   try {
     const url = `${config.endpointUrl}?adminKey=${encodeURIComponent(config.adminKey)}`;
@@ -168,9 +171,12 @@ async function loadRows(config) {
     allRows = (data.rows || []).slice().reverse();
     populateLodgeFilter(allRows);
     filterRows();
+    if (statusEl) statusEl.textContent = '';
   } catch (err) {
-    tbody.innerHTML = `<tr><td colspan="6" class="admin-error">Error: ${escapeHtml(err.message)}</td></tr>`;
-    if (stats) stats.textContent = '';
+    tbody.innerHTML = `<tr><td colspan="6" class="admin-error">Could not load analytics. <button type="button" class="btn btn-ghost admin-retry" id="admin-retry">Retry</button></td></tr>`;
+    if (stats) stats.innerHTML = '';
+    if (statusEl) statusEl.textContent = err.message;
+    document.getElementById('admin-retry')?.addEventListener('click', () => loadRows(config));
   }
 }
 
@@ -195,7 +201,11 @@ function filterRows() {
 
   if (stats) {
     const sessions = new Set(rows.map((r) => r.session_id)).size;
-    stats.textContent = `${rows.length} events, ${sessions} sessions`;
+    const lodges = new Set(rows.map((r) => r.lodge_id).filter(Boolean)).size;
+    stats.innerHTML = `
+      <div class="admin-stat"><span class="admin-stat-val">${rows.length}</span><span class="admin-stat-label">Events</span></div>
+      <div class="admin-stat"><span class="admin-stat-val">${sessions}</span><span class="admin-stat-label">Sessions</span></div>
+      <div class="admin-stat"><span class="admin-stat-val">${lodges}</span><span class="admin-stat-label">Lodges</span></div>`;
   }
 
   if (!tbody) return;

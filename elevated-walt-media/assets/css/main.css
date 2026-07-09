@@ -746,10 +746,50 @@ img, svg { display: block; max-width: 100%; }
 }
 
 .admin-stats {
-  color: #a8bdd4;
-  font-size: 0.9375rem;
-  font-weight: 600;
+  display: flex;
+  gap: 1rem;
   margin-bottom: 1rem;
+}
+
+.admin-stat {
+  flex: 1;
+  min-width: 5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #2d3a47;
+  border-radius: 6px;
+  background: #0f1419;
+}
+
+.admin-stat-val {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #e8eef4;
+}
+
+.admin-stat-label {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8fa3b8;
+}
+
+.admin-status {
+  color: #f5a5a5;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.gate-overlay .admin-login-card .admin-login-cancel {
+  margin-top: 0.5rem;
+}
+
+.in-progress-note {
+  margin-top: 1rem;
+  max-width: 28rem;
+  color: var(--ink-muted);
 }
 
 .admin-table-wrap {

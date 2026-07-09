@@ -1,4 +1,4 @@
-# Setup Lodge Lens analytics via Google clasp CLI
+# Setup Elevated Walt Media analytics via Google clasp CLI
 # Run AFTER site is live on https://dylanwalt.github.io/lodge-lens/
 param(
   [switch]$SkipLogin,
@@ -52,8 +52,8 @@ function Invoke-ClaspLogin {
   Invoke-Clasp -ClaspArgs @('login', '--no-localhost')
 }
 
-Write-Host "Lodge Lens Analytics Setup (clasp CLI)" -ForegroundColor Cyan
-Write-Host "Live site: https://dylanwalt.github.io/lodge-lens/" -ForegroundColor Gray
+Write-Host "Elevated Walt Media Analytics Setup (clasp CLI)" -ForegroundColor Cyan
+Write-Host "Live site: https://dylanwalt.github.io/elevated-walt-media/" -ForegroundColor Gray
 
 if (-not (Get-Command clasp -ErrorAction SilentlyContinue)) {
   Write-Host "Installing @google/clasp globally..."
@@ -101,7 +101,7 @@ if (-not (Test-Path $claspJsonPath)) {
   Invoke-Clasp -ClaspArgs @(
     'create',
     '--type', 'sheets',
-    '--title', 'Lodge Lens Analytics',
+    '--title', 'Elevated Walt Media Analytics',
     '--rootDir', $scriptDir
   )
 } else {
@@ -132,10 +132,10 @@ Write-Utf8NoBom $codePath $code
 
 Write-Host "`nStep 3: Push and deploy web app" -ForegroundColor Cyan
 Invoke-Clasp -ClaspArgs @('push', '--force', '-P', $scriptDir)
-Invoke-Clasp -ClaspArgs @('create-version', 'Lodge Lens analytics', '-P', $scriptDir)
-Invoke-Clasp -ClaspArgs @('create-deployment', '--description', 'Lodge Lens web app', '-P', $scriptDir)
+Invoke-Clasp -ClaspArgs @('create-version', 'Elevated Walt Media analytics', '-P', $scriptDir)
+Invoke-Clasp -ClaspArgs @('create-deployment', '--description', 'Elevated Walt Media web app', '-P', $scriptDir)
 $deployJson = clasp list-deployments -P $scriptDir --json | ConvertFrom-Json
-$deployment = $deployJson | Where-Object { $_.description -eq 'Lodge Lens web app' } | Select-Object -First 1
+$deployment = $deployJson | Where-Object { $_.description -eq 'Elevated Walt Media web app' } | Select-Object -First 1
 if (-not $deployment) {
   $deployment = $deployJson | Where-Object { $_.versionNumber } | Sort-Object versionNumber -Descending | Select-Object -First 1
 }

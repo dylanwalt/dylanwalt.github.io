@@ -80,7 +80,7 @@ export async function initAerialDiary() {
       <div class="diary-bridge">
         <p class="diary-bridge-eyebrow">After the fly-through</p>
         <h2 class="diary-bridge-title">Frames from the field</h2>
-        <p class="diary-bridge-lead">Drone stills grouped by shoot day - scroll to move through time.</p>
+        <p class="diary-bridge-lead">Scroll sideways to browse by shoot day <span class="diary-scroll-hint" aria-hidden="true">→</span></p>
       </div>
       <nav class="diary-index" aria-label="Shoot dates">${renderIndex(chapters)}</nav>
       <div class="diary-viewport">
@@ -91,7 +91,7 @@ export async function initAerialDiary() {
       <div class="diary-progress" aria-hidden="true">
         <div class="diary-progress-fill"></div>
       </div>
-      <p class="diary-disclosure">Low-resolution previews - final footage is delivered in full quality.</p>
+      <p class="diary-disclosure">Low-res previews only.</p>
     </div>`;
 
   const track = stage.querySelector('.diary-track');

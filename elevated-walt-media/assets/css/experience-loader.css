@@ -69,3 +69,20 @@ body.is-loaded .experience-loader {
   background: linear-gradient(90deg, var(--accent), #7eb8e8);
   transition: width 0.25s ease;
 }
+
+.experience-loader-skip {
+  margin-top: 1rem;
+  padding: 0.55rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.experience-loader-skip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}

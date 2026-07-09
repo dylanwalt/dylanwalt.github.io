@@ -44,9 +44,17 @@
   cursor: pointer;
 }
 
-.sg-tab span {
-  margin-left: 0.35rem;
-  opacity: 0.7;
+.sg-tab .sg-tab-count {
+  margin-left: 0.45rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.sg-tab.is-active .sg-tab-count,
+.sg-tab:hover .sg-tab-count {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .sg-tab.is-active,

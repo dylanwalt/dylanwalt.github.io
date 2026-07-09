@@ -26,7 +26,6 @@ FULL = OUT / "full"
 SAFE_SESSIONS = {
     "session-03-2",
     "session-03-3",
-    "session-04",
     "session-05-1",
     "session-05-3",
     "session-05-7",
@@ -86,25 +85,20 @@ def likely_no_people(item: dict, sessions: dict[str, dict]) -> bool:
     if item.get("media_family") == "drone":
         return False
 
-    cat = item.get("visual_category", "unclassified")
     sid = item.get("vision_session") or ""
+    if sid not in SAFE_SESSIONS:
+        return False
+
     session = sessions.get(sid, {})
     desc = session.get("description", "")
+    cat = item.get("visual_category", "unclassified")
 
-    if cat in EXCLUDE_CATEGORIES and sid not in SAFE_SESSIONS:
-        return False
-    if cat == "lodge-lifestyle" and sid not in SAFE_SESSIONS:
-        return False
     if PEOPLE_PATTERN.search(desc):
         return False
+    if cat in EXCLUDE_CATEGORIES:
+        return False
 
-    if cat == "wildlife-game-drive":
-        return True
-    if cat == "lodge-lifestyle" and sid in SAFE_SESSIONS:
-        return True
-    if sid in SAFE_SESSIONS:
-        return True
-    return False
+    return True
 
 
 def main() -> int:
@@ -166,7 +160,7 @@ def main() -> int:
     payload = {
         "generated_at": datetime.now().isoformat(),
         "count": len(numbered),
-        "note": "Landscape, wildlife and property shots with no visible guests. Tell us photo numbers to remove or add.",
+        "note": "Property, landscape and wildlife shots. Reference by photo number.",
         "images": numbered,
     }
     (OUT / "image-portal-index.json").write_text(

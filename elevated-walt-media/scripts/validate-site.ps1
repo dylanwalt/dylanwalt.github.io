@@ -147,10 +147,10 @@ function Test-Wave3 {
   }
 
   foreach ($lodge in $config.lodges) {
-    if ($lodge.status -eq 'active' -and -not $lodge.passwordHash) {
-      Fail "$($lodge.id): active lodge needs passwordHash"
+    if ($lodge.status -eq 'completed' -and -not $lodge.passwordHash) {
+      Fail "$($lodge.id): completed lodge needs passwordHash"
     }
-    if ($lodge.status -eq 'active') {
+    if ($lodge.status -eq 'completed') {
       foreach ($ch in $lodge.chapters) {
         if ($ch.youtubeId -eq 'REPLACE_ME') { Warn "$($lodge.id): $($ch.id) youtubeId not set" }
       }

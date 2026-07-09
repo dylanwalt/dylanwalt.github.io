@@ -1,5 +1,5 @@
 /**
- * Block mobile/tablet visitors - Lodge Lens is optimised for desktop review.
+ * Block mobile/tablet visitors - Elevated Walt Media is optimised for desktop review.
  */
 
 export function isMobileDevice() {
@@ -40,10 +40,9 @@ export function enforceDesktopOnly() {
   overlay.innerHTML = `
     <div class="mobile-gate-card">
       <p class="mobile-gate-eyebrow">Elevated Walt Media</p>
-      <h1 id="mobile-gate-title">Please use a desktop computer</h1>
-      <p>For the best experience reviewing aerial footage and image libraries, this preview is optimised for PC or Mac.</p>
-      <p>Kindly open this link on a computer when you can. Thank you for your understanding.</p>
-      <p class="mobile-gate-brand">Elevated Walt Media</p>
+      <h1 id="mobile-gate-title">Desktop only</h1>
+      <p>This preview works best on a computer. Open this link on a PC or Mac to review footage.</p>
+      <p><a href="mailto:dylanwalt10@gmail.com">dylanwalt10@gmail.com</a></p>
     </div>`;
 
   document.body.style.overflow = 'hidden';

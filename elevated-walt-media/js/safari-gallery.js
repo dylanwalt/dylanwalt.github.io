@@ -32,7 +32,7 @@ export async function initSafariGallery(lodge, basePath) {
   shell.className = 'safari-gallery safari-gallery--drone';
   shell.innerHTML = `
     <div class="sg-toolbar">
-      <p class="sg-intro">Numbered drone clips - tell us which to move between events, e.g. "move Drone 07 to Wine Event 2".</p>
+      <p class="sg-intro">Numbered clips - reference by number when giving feedback.</p>
       <div class="sg-tabs" role="tablist" aria-label="Event chapters"></div>
       <p class="sg-summary" aria-live="polite"></p>
     </div>
@@ -81,7 +81,7 @@ export async function initSafariGallery(lodge, basePath) {
 
     titleEl.textContent = `${clip.label} - ${clip.subject || 'Aerial clip'}`;
     descEl.textContent = clip.summary || '';
-    noteEl.textContent = clip.hero_notes ? `Editor note: ${clip.hero_notes}` : '';
+    noteEl.textContent = clip.hero_notes ? clip.hero_notes : '';
     noteEl.hidden = !clip.hero_notes;
 
     listEl.querySelectorAll('.sg-clip-btn').forEach((btn, i) => {
@@ -136,7 +136,7 @@ export async function initSafariGallery(lodge, basePath) {
     btn.className = `sg-tab${key === state.event ? ' is-active' : ''}`;
     btn.dataset.event = key;
     btn.setAttribute('role', 'tab');
-    btn.innerHTML = `${meta.label} <span>${count}</span>`;
+    btn.innerHTML = `<span class="sg-tab-label">${meta.label}</span><span class="sg-tab-count" aria-label="${count} clips">${count}</span>`;
     btn.addEventListener('click', () => {
       state.event = key;
       tabsEl.querySelectorAll('.sg-tab').forEach((t) => {

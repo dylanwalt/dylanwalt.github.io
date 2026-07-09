@@ -7,7 +7,7 @@ $config = Get-Content $configPath -Raw | ConvertFrom-Json
 $errors = @()
 
 foreach ($lodge in $config.lodges) {
-  if ($lodge.status -eq 'active') {
+  if ($lodge.status -eq 'completed') {
     if (-not $lodge.passwordHash) { $errors += "$($lodge.id): missing passwordHash" }
     foreach ($ch in $lodge.chapters) {
       if ($ch.youtubeId -eq 'REPLACE_ME') { $errors += "$($lodge.id): chapter $($ch.id) needs youtubeId" }
