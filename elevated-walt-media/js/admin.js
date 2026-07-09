@@ -154,7 +154,15 @@ async function loadRows(config) {
   try {
     const url = `${config.endpointUrl}?adminKey=${encodeURIComponent(config.adminKey)}`;
     const res = await fetch(url);
-    const data = await res.json();
+    const raw = await res.text();
+    let data;
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      throw new Error(
+        'Analytics endpoint did not return JSON. Redeploy the Google Apps Script web app (Anyone access) and refresh.',
+      );
+    }
     if (!data.ok) throw new Error(data.error || 'Failed to load');
 
     allRows = (data.rows || []).slice().reverse();
