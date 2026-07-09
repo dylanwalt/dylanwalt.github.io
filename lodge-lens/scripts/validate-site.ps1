@@ -125,6 +125,7 @@ function Test-Wave2 {
   $safari = Join-Path $SiteRoot 'safari-plains\index.html'
   if ((Get-Content $safari -Raw) -notmatch 'id="experience"') { Fail 'Safari Plains missing experience section' }
   if ((Get-Content $safari -Raw) -notmatch 'safari-gallery-root') { Fail 'Safari Plains missing media gallery root' }
+  if ((Get-Content $safari -Raw) -notmatch 'editor-advice-root') { Fail 'Safari Plains missing editor advice section' }
 
   $indexHtml = [System.IO.File]::ReadAllText((Join-Path $SiteRoot 'index.html'), [System.Text.UTF8Encoding]::new($false))
   $homeJs = [System.IO.File]::ReadAllText((Join-Path $SiteRoot 'js\home.js'), [System.Text.UTF8Encoding]::new($false))

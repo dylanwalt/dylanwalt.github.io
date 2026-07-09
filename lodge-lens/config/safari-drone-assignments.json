@@ -1,0 +1,20 @@
+{
+  "events": {
+    "bush-picnic": {
+      "label": "Bush Picnic",
+      "description": "Aerial coverage of bush dining, picnic decks and waterfront experiences.",
+      "clips": [2, 3, 4, 5, 11, 12, 14]
+    },
+    "wine-1": {
+      "label": "Wine Tasting Event 1",
+      "description": "Deck and villa dining - assign clips by telling us the drone number.",
+      "clips": [8]
+    },
+    "wine-2": {
+      "label": "Wine Tasting Event 2",
+      "description": "Lodge reveals and estate overview - assign clips by telling us the drone number.",
+      "clips": [1, 6, 7, 9, 10, 13]
+    }
+  },
+  "exclude_tiers": ["rough"]
+}
