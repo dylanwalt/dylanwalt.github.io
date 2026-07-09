@@ -3,10 +3,10 @@
  */
 import { resolvePath } from './utils.js';
 
-const PRELOAD_BATCH = 24;
+const PRELOAD_BATCH = 12;
 
 export function initCinemaHero(options = {}) {
-  const { onProgress } = options;
+  const { onProgress, onScrollReady, scrollReadyRatio = 0.28 } = options;
   const section = document.getElementById('cinema-hero');
   const canvas = section?.querySelector('.cinema-canvas');
   const poster = section?.querySelector('.cinema-poster');
@@ -28,16 +28,18 @@ export function initCinemaHero(options = {}) {
   let frames = [];
   let loaded = 0;
   let ready = false;
+  let scrollReady = false;
+  let readyTarget = 2;
   let lastIndex = -1;
   let manifest = null;
 
-  let resolveReady = () => {};
-  const readyPromise = new Promise((resolve) => {
-    resolveReady = resolve;
+  let resolveScrollReady = () => {};
+  const scrollReadyPromise = new Promise((resolve) => {
+    resolveScrollReady = resolve;
   });
 
   const reportProgress = () => {
-    onProgress?.(loaded, frameCount);
+    onProgress?.(loaded, frameCount, readyTarget);
   };
 
   const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
@@ -79,11 +81,21 @@ export function initCinemaHero(options = {}) {
     ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
   };
 
+  const nearestLoadedIndex = (index) => {
+    if (frames[index]) return index;
+    for (let offset = 1; offset < frameCount; offset += 1) {
+      if (index - offset >= 0 && frames[index - offset]) return index - offset;
+      if (index + offset < frameCount && frames[index + offset]) return index + offset;
+    }
+    return -1;
+  };
+
   const drawFrame = (index) => {
-    if (index === lastIndex) return;
-    const img = frames[index];
+    const drawIndex = frames[index] ? index : nearestLoadedIndex(index);
+    if (drawIndex < 0 || drawIndex === lastIndex) return;
+    const img = frames[drawIndex];
     if (!img) return;
-    lastIndex = index;
+    lastIndex = drawIndex;
     drawCover(img);
     if (poster) poster.classList.add('is-hidden');
   };
@@ -98,6 +110,7 @@ export function initCinemaHero(options = {}) {
     });
 
   const loadFrame = async (index, url) => {
+    if (frames[index]) return frames[index];
     const img = await loadImage(url);
     frames[index] = img;
     loaded += 1;
@@ -106,15 +119,38 @@ export function initCinemaHero(options = {}) {
     return img;
   };
 
-  const preloadAll = async (urls) => {
-    if (urls.length === 0) return;
-    frameCount = urls.length;
-    reportProgress();
-    await loadFrame(0, urls[0]);
-    for (let i = 1; i < urls.length; i += PRELOAD_BATCH) {
-      const batch = urls.slice(i, i + PRELOAD_BATCH);
+  const loadRange = async (urls, start, end) => {
+    for (let i = start; i < end; i += PRELOAD_BATCH) {
+      const batchEnd = Math.min(end, i + PRELOAD_BATCH);
+      const batch = urls.slice(i, batchEnd);
       await Promise.all(batch.map((url, j) => loadFrame(i + j, url)));
     }
+  };
+
+  const markScrollReady = () => {
+    if (scrollReady) return;
+    scrollReady = true;
+    activate();
+    onScrollReady?.();
+    resolveScrollReady();
+  };
+
+  const preloadForScroll = async (urls) => {
+    if (urls.length === 0) return;
+    frameCount = urls.length;
+    readyTarget = Math.max(2, Math.ceil(frameCount * scrollReadyRatio));
+    reportProgress();
+
+    await loadFrame(0, urls[0]);
+    if (urls.length === 1) {
+      markScrollReady();
+      return;
+    }
+
+    await loadRange(urls, 1, readyTarget);
+    markScrollReady();
+
+    loadRange(urls, readyTarget, urls.length).catch(() => {});
   };
 
   const activate = () => {
@@ -145,6 +181,7 @@ export function initCinemaHero(options = {}) {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       manifest = await res.json();
       frameCount = manifest.frameCount || frameCount;
+      readyTarget = Math.max(2, Math.ceil(frameCount * scrollReadyRatio));
       reportProgress();
 
       const posterPath = resolvePath(
@@ -160,13 +197,11 @@ export function initCinemaHero(options = {}) {
         resolvePath(basePath, `assets/video/hero-frames/${name}`),
       );
 
-      await preloadAll(urls);
-      activate();
+      await preloadForScroll(urls);
     } catch {
       section.classList.remove('is-video-ready');
       canvas.classList.add('is-hidden');
-    } finally {
-      resolveReady();
+      if (!scrollReady) resolveScrollReady();
     }
   };
 
@@ -179,5 +214,5 @@ export function initCinemaHero(options = {}) {
 
   prepare();
   requestAnimationFrame(tick);
-  return readyPromise;
+  return scrollReadyPromise;
 }
