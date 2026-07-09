@@ -9,6 +9,7 @@ import {
 } from './analytics.js';
 import { resolvePath } from './utils.js';
 import { initSafariGallery } from './safari-gallery.js';
+import { initImagePortal } from './image-portal.js';
 
 const loadedIframes = new Set();
 const videoStates = new Map();
@@ -37,6 +38,7 @@ export function renderExperience(lodge, basePath) {
   renderDownloadAll(lodge);
   if (lodge.id === 'safari-plains') {
     void initSafariGallery(lodge, basePath);
+    void initImagePortal(lodge, basePath);
   } else {
     renderGallery(lodge, basePath);
   }
@@ -51,6 +53,17 @@ export function renderExperience(lodge, basePath) {
 function renderDownloadAll(lodge) {
   const btn = document.getElementById('btn-download-all');
   if (!btn) return;
+
+  if (lodge.id === 'safari-plains') {
+    btn.textContent = 'Request download';
+    btn.href = safariDownloadMailto(lodge);
+    btn.removeAttribute('target');
+    btn.removeAttribute('rel');
+    btn.classList.remove('is-disabled');
+    btn.removeAttribute('aria-disabled');
+    btn.addEventListener('click', () => trackClick(lodge.id, 'download_request', 'header'));
+    return;
+  }
 
   if (lodge.drivePackageUrl && lodge.drivePackageUrl !== 'REPLACE_DRIVE_URL') {
     btn.href = lodge.drivePackageUrl;
@@ -67,8 +80,30 @@ function renderDownloadAll(lodge) {
 function renderContact(lodge) {
   const contact = document.getElementById('btn-contact');
   if (!contact) return;
+  if (lodge.id === 'safari-plains') {
+    contact.textContent = 'Request download';
+    contact.href = safariDownloadMailto(lodge);
+    contact.addEventListener('click', () => trackClick(lodge.id, 'download_request', 'footer'));
+    return;
+  }
   contact.href = `mailto:dylanwalt10@gmail.com?subject=${encodeURIComponent(`Footage inquiry - ${lodge.name}`)}`;
   contact.addEventListener('click', () => trackClick(lodge.id, 'cta_click', 'mailto'));
+}
+
+function safariDownloadMailto(lodge) {
+  const subject = `Download request - ${lodge.name}`;
+  const body = [
+    'Hi Dylan,',
+    '',
+    'We would like to request the full-resolution download package for Safari Plains.',
+    '',
+    'Preferred drone clips (if any):',
+    'Preferred photos (if any):',
+    'Notes:',
+    '',
+    'Thank you,',
+  ].join('\n');
+  return `mailto:dylanwalt10@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 function renderGallery(lodge, basePath) {

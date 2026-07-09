@@ -8,11 +8,11 @@
     },
     "wine-1": {
       "label": "Wine Tasting Event 1",
-      "description": "Deck and villa dining - assign clips by telling us the drone number."
+      "description": "Main lodge aerials and deck reveals."
     },
     "wine-2": {
       "label": "Wine Tasting Event 2",
-      "description": "Lodge reveals and estate overview - assign clips by telling us the drone number."
+      "description": "Villa dining, estate overview and lodge savanna coverage."
     }
   },
   "clips": [
@@ -20,7 +20,7 @@
       "number": 1,
       "label": "Drone 01",
       "id": "dji-fly-20260705-122542-pm-0001-1783248041688-quickshot",
-      "event": "wine-2",
+      "event": "bush-picnic",
       "tier": "hero",
       "subject": "lodge-deck",
       "summary": "Aerial reveal of raised viewing deck in bushveld with waterhole approach.",
@@ -90,7 +90,7 @@
       "number": 6,
       "label": "Drone 06",
       "id": "dji-fly-20260706-25812-pm-0006-1783343433910-quickshot",
-      "event": "wine-2",
+      "event": "wine-1",
       "tier": "hero",
       "subject": "main-lodge",
       "summary": "Main lodge cluster with pool, deck and waterhole \u2014 classic estate reveal.",
@@ -104,7 +104,7 @@
       "number": 7,
       "label": "Drone 07",
       "id": "dji-fly-20260706-30528-pm-0008-1783343429871-quickshot",
-      "event": "wine-2",
+      "event": "wine-1",
       "tier": "usable",
       "subject": "main-lodge",
       "summary": "Similar main-lodge orbit to 0006 \u2014 alternate angle.",
@@ -118,7 +118,7 @@
       "number": 8,
       "label": "Drone 08",
       "id": "dji-fly-20260706-32736-pm-0013-1783357851643-quickshot",
-      "event": "wine-1",
+      "event": "wine-2",
       "tier": "hero",
       "subject": "villa-dining",
       "summary": "Secluded villa with couple at bush table \u2014 strong privacy/luxury story.",
@@ -160,7 +160,7 @@
       "number": 11,
       "label": "Drone 11",
       "id": "dji-fly-20260706-33432-pm-0017-1783357827612-quickshot",
-      "event": "bush-picnic",
+      "event": "wine-2",
       "tier": "usable",
       "subject": "bush-picnic",
       "summary": "Top-down bush picnic setup with staff \u2014 good events coverage.",
@@ -174,7 +174,7 @@
       "number": 12,
       "label": "Drone 12",
       "id": "dji-fly-20260706-33552-pm-0018-1783357821450-quickshot",
-      "event": "bush-picnic",
+      "event": "wine-2",
       "tier": "usable",
       "subject": "bush-dining",
       "summary": "Top-down private bush dining beside villa \u2014 golden hour.",
@@ -202,7 +202,7 @@
       "number": 14,
       "label": "Drone 14",
       "id": "dji-fly-20260706-34312-pm-0021-1783357810104-quickshot",
-      "event": "bush-picnic",
+      "event": "wine-2",
       "tier": "usable",
       "subject": "bush-picnic",
       "summary": "Top-down intimate bush table for two \u2014 events content.",

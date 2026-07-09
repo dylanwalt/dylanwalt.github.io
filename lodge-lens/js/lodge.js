@@ -3,7 +3,6 @@ import { initAnalytics } from './analytics.js';
 import { checkGate, isActiveLodge } from './gate.js';
 import { renderExperience } from './experience.js';
 import { renderBrandPreview } from './brand-preview.js';
-import { initEditorAdvice } from './editor-advice.js';
 import { initAdminBackdoor } from './admin.js';
 
 const basePath = document.body.dataset.basePath || '';
@@ -35,9 +34,7 @@ function renderAfterUnlock(lodge) {
   if (isActiveLodge(lodge)) {
     document.getElementById('experience')?.classList.remove('hidden');
     renderExperience(lodge, basePath);
-    if (lodge.id === 'safari-plains') {
-      void initEditorAdvice(lodge, basePath);
-    } else {
+    if (lodge.id !== 'safari-plains') {
       renderBrandPreview(lodge, basePath);
     }
   } else {

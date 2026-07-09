@@ -32,7 +32,7 @@ export async function initSafariGallery(lodge, basePath) {
   shell.className = 'safari-gallery safari-gallery--drone';
   shell.innerHTML = `
     <div class="sg-toolbar">
-      <p class="sg-intro">Numbered drone clips for easy review. Tell us "move Drone 07 to Wine Event 2" and we will update the layout.</p>
+      <p class="sg-intro">Numbered drone clips - tell us which to move between events, e.g. "move Drone 07 to Wine Event 2".</p>
       <div class="sg-tabs" role="tablist" aria-label="Event chapters"></div>
       <p class="sg-summary" aria-live="polite"></p>
     </div>
