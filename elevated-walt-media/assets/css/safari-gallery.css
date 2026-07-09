@@ -1,0 +1,200 @@
+/* Safari Plains drone gallery */
+
+.safari-gallery-root {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem) var(--space-lg);
+}
+
+.safari-gallery--drone .sg-toolbar {
+  position: sticky;
+  top: calc(var(--header-h-compact, 4.5rem) - 1px);
+  z-index: 40;
+  padding: 1rem 0 0.75rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(180deg, var(--paper) 85%, transparent);
+  border-bottom: 1px solid var(--line);
+}
+
+.sg-intro {
+  margin: 0 0 0.85rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.sg-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+
+.sg-tab {
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.sg-tab span {
+  margin-left: 0.35rem;
+  opacity: 0.7;
+}
+
+.sg-tab.is-active,
+.sg-tab:hover {
+  color: var(--white);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.sg-summary {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.sg-layout {
+  display: grid;
+  grid-template-columns: 1fr min(22rem, 38vw);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.sg-player-wrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--slate-900);
+  border: 1px solid var(--line);
+}
+
+.sg-player {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.sg-player-meta {
+  margin-top: 0.85rem;
+}
+
+.sg-player-title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.sg-player-desc {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.sg-player-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--accent);
+  font-style: italic;
+}
+
+.sg-clip-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: min(70vh, 36rem);
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.sg-clip-btn {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 0.15rem 0.65rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sg-clip-btn img {
+  grid-row: 1 / 3;
+  width: 4.5rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--slate-800);
+}
+
+.sg-clip-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+.sg-clip-sub {
+  grid-column: 2;
+  font-size: 0.6875rem;
+  color: var(--ink-muted);
+  text-transform: capitalize;
+}
+
+.sg-clip-dur {
+  grid-column: 3;
+  grid-row: 1;
+  font-size: 0.625rem;
+  color: var(--ink-faint);
+}
+
+.sg-clip-btn.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.sg-clip-btn:hover {
+  border-color: var(--line-strong);
+}
+
+.gallery-empty {
+  margin: 0;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 768px) {
+  .sg-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sg-clip-list {
+    max-height: none;
+  }
+
+  .safari-gallery--drone .sg-toolbar {
+    top: 0;
+  }
+}

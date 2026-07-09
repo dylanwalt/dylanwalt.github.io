@@ -1,0 +1,200 @@
+/* Safari Plains image portal */
+
+.image-portal-root {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-xl) clamp(1.25rem, 4vw, 2.5rem);
+  border-top: 1px solid var(--line);
+}
+
+.image-portal-head {
+  margin-bottom: 1.25rem;
+}
+
+.image-portal-head h2 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  font-weight: 500;
+}
+
+.image-portal-lead {
+  margin: 0;
+  max-width: 40rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.image-portal-count {
+  margin: 0.5rem 0 0;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.image-portal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr));
+  gap: 0.65rem;
+}
+
+.image-portal-card {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--slate-900);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.image-portal-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.image-portal-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-portal-num {
+  position: absolute;
+  left: 0.4rem;
+  bottom: 0.4rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #fff;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.image-portal-lightbox {
+  max-width: min(96vw, 56rem);
+  width: 100%;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background: var(--slate-900);
+  color: #fff;
+}
+
+.image-portal-lightbox::backdrop {
+  background: rgba(8, 10, 12, 0.88);
+}
+
+.image-portal-lightbox img {
+  display: block;
+  width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+}
+
+.image-portal-caption {
+  margin: 0;
+  padding: 0.75rem 1rem 1rem;
+  font-size: 0.8125rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.image-portal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.safari-intro-note {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1rem clamp(1.25rem, 4vw, 2.5rem) 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.safari-intro-note p {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  border-radius: 0 8px 8px 0;
+}
+
+.safari-drone-note {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem) 1.25rem;
+}
+
+.safari-drone-note-eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.safari-drone-note-lead,
+.safari-drone-note-benefit {
+  margin: 0 0 0.65rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.safari-drone-specs {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.75rem 0 0;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+}
+
+.safari-drone-specs div {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.safari-drone-specs dt {
+  margin: 0;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.safari-drone-specs dd {
+  margin: 0;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 480px) {
+  .safari-drone-specs div {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+}

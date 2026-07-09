@@ -120,27 +120,31 @@ for (const site of sites) {
 await writeFile(path.join(dist, "index.html"), indexHtml(sites));
 await writeFile(path.join(dist, ".nojekyll"), "");
 
-async function patchLodgeLensBasePaths(dir) {
+async function patchElevatedWaltMediaBasePaths(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      await patchLodgeLensBasePaths(full);
+      await patchElevatedWaltMediaBasePaths(full);
       continue;
     }
     if (!entry.name.endsWith(".html")) continue;
     let html = await readFile(full, "utf8");
-    html = html.replaceAll('data-base-path=".."', 'data-base-path="/lodge-lens"');
-    html = html.replaceAll('data-base-path=""', 'data-base-path="/lodge-lens"');
+    html = html.replaceAll('data-base-path=".."', 'data-base-path="/elevated-walt-media"');
+    html = html.replaceAll('data-base-path=""', 'data-base-path="/elevated-walt-media"');
     await writeFile(full, html, "utf8");
   }
 }
 
-const lodgeLens = path.join(root, "lodge-lens");
-if (await exists(lodgeLens)) {
-  const lodgeDist = path.join(dist, "lodge-lens");
-  await cp(lodgeLens, lodgeDist, { recursive: true, force: true });
-  await patchLodgeLensBasePaths(lodgeDist);
-  console.log("Copied lodge-lens to pages-dist/lodge-lens/ (base paths patched for GitHub Pages)");
+const elevatedWaltMedia = path.join(root, "elevated-walt-media");
+const legacyLodgeLens = path.join(root, "lodge-lens");
+const siteSource = (await exists(elevatedWaltMedia)) ? elevatedWaltMedia : legacyLodgeLens;
+const publishSlug = (await exists(elevatedWaltMedia)) ? "elevated-walt-media" : "lodge-lens";
+
+if (await exists(siteSource)) {
+  const siteDist = path.join(dist, publishSlug);
+  await cp(siteSource, siteDist, { recursive: true, force: true });
+  await patchElevatedWaltMediaBasePaths(siteDist);
+  console.log(`Copied ${publishSlug} to pages-dist/${publishSlug}/ (base paths patched for GitHub Pages)`);
 }
 
 console.log(`Exported ${sites.length} sites to ${path.relative(root, dist)}.`);
