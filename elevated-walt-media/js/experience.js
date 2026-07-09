@@ -9,7 +9,6 @@ import {
 } from './analytics.js';
 import { resolvePath } from './utils.js';
 import { initSafariGallery } from './safari-gallery.js';
-import { initImagePortal } from './image-portal.js';
 
 const loadedIframes = new Set();
 const videoStates = new Map();
@@ -38,7 +37,6 @@ export function renderExperience(lodge, basePath) {
   renderDownloadAll(lodge);
   if (lodge.id === 'safari-plains') {
     void initSafariGallery(lodge, basePath);
-    void initImagePortal(lodge, basePath);
   } else {
     renderGallery(lodge, basePath);
   }
@@ -98,7 +96,6 @@ function safariDownloadMailto(lodge) {
     'We would like to request the full-resolution download package for Safari Plains.',
     '',
     'Preferred drone clips (if any):',
-    'Preferred photos (if any):',
     'Notes:',
     '',
     'Thank you,',
@@ -141,20 +138,6 @@ function renderEventBlock(ch, basePath) {
           <p>Video preview coming soon</p>
         </div>`;
 
-  const images = ch.images?.length
-    ? ch.images
-        .map(
-          (img) => `
-        <figure class="gallery-photo">
-          <img src="${img.src?.startsWith('http') ? img.src : resolvePath(basePath, img.src)}" alt="${img.alt || ch.title}" loading="lazy">
-          ${img.caption ? `<figcaption>${img.caption}</figcaption>` : ''}
-        </figure>`,
-        )
-        .join('')
-    : `<div class="gallery-photo gallery-photo--placeholder" aria-hidden="true">
-        <span>Photos coming soon</span>
-      </div>`;
-
   return `
     <article class="gallery-event" id="chapter-${ch.id}" data-chapter="${ch.id}">
       <header class="gallery-event-header">
@@ -163,7 +146,6 @@ function renderEventBlock(ch, basePath) {
       </header>
       <div class="gallery-event-media">
         ${videoHtml}
-        <div class="gallery-photos">${images}</div>
       </div>
     </article>`;
 }

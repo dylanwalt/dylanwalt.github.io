@@ -2,7 +2,6 @@ import { loadConfig, resolvePath } from './utils.js';
 import { initAnalytics, trackPageView } from './analytics.js';
 import { initAdminBackdoor } from './admin.js';
 import { showGateModal } from './gate.js';
-import { initAerialDiary } from './aerial-diary.js';
 import { enforceDesktopOnly } from './mobile-gate.js';
 import { runExperienceLoader } from './experience-loader.js';
 
@@ -28,7 +27,6 @@ async function initHome() {
   if (adminHash) initAdminBackdoor(adminHash);
 
   const config = await loadConfig();
-  await initAerialDiary();
   trackPageView('home');
   renderAbout(config);
   renderTiles(config);
