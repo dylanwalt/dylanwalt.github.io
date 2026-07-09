@@ -126,6 +126,7 @@ function Test-Wave2 {
   if ((Get-Content $safari -Raw) -notmatch 'id="experience"') { Fail 'Safari Plains missing experience section' }
   if ((Get-Content $safari -Raw) -notmatch 'safari-gallery-root') { Fail 'Safari Plains missing media gallery root' }
   if ((Get-Content $safari -Raw) -notmatch 'image-portal-root') { Fail 'Safari Plains missing image portal section' }
+  if ((Get-Content $safari -Raw) -notmatch 'safari-drone-note') { Fail 'Safari Plains missing drone equipment note' }
 
   $indexHtml = [System.IO.File]::ReadAllText((Join-Path $SiteRoot 'index.html'), [System.Text.UTF8Encoding]::new($false))
   $homeJs = [System.IO.File]::ReadAllText((Join-Path $SiteRoot 'js\home.js'), [System.Text.UTF8Encoding]::new($false))
