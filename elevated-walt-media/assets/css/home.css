@@ -1,26 +1,51 @@
 /* Cinematic home hero - scroll-scrubbed aerial (production-house inspired) */
 
 .page-home {
-  --header-h: 7.25rem;
+  --header-h: 0px;
 }
 
-.page-home .site-header--hero {
-  position: relative;
-  z-index: 60;
-  min-height: var(--header-h);
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 1rem clamp(1.25rem, 3vw, 2.5rem);
-  background: var(--paper);
-  border-bottom: 1px solid var(--line);
+.page-home .site-header--hero.cinema-brand-float {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  min-height: 0;
+  padding: 1.35rem clamp(1.25rem, 3vw, 2.5rem);
+  background: transparent;
+  border: none;
   box-shadow: none;
+  pointer-events: none;
+}
+
+.page-home .cinema-brand-float .header-brand-row {
+  pointer-events: auto;
+}
+
+.page-home .cinema-brand-float .logo-link--hero {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 0.8rem;
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(8, 10, 14, 0.78), rgba(22, 28, 36, 0.62));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 10px 36px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.page-home .cinema-brand-float .logo-link--hero:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .page-home .site-header--hero.is-solid {
-  background: var(--paper);
+  background: transparent;
   backdrop-filter: none;
-  border-bottom: 1px solid var(--line);
+  border-bottom: none;
 }
 
 .header-brand-row {
@@ -44,10 +69,11 @@
 
 .page-home .brand-logo--full {
   display: block;
-  height: 6rem;
+  height: 5.25rem;
   width: auto;
-  border-radius: 8px;
+  border-radius: 6px;
   object-fit: contain;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.35));
 }
 
 .page-home .header-brand-name {
