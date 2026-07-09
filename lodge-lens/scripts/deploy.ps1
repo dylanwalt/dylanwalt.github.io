@@ -24,7 +24,7 @@ Write-Host "Copying site to $dest ..."
 if (Test-Path $dest) { Remove-Item $dest -Recurse -Force }
 New-Item -ItemType Directory -Force -Path $dest | Out-Null
 
-$exclude = @('node_modules', '.clasp.json', '.clasprc.json', 'analytics', '_tools', 'assets\video\hero-aerial.mp4', 'assets\video\_hero-build', 'assets\media\safari-plains\raw', 'assets\media\safari-plains\organized', 'assets\media\safari-plains\_vision-cache', 'assets\media\safari-plains\_vision-packs', 'assets\media\safari-plains\_drone-review')
+$exclude = @('node_modules', '.clasp.json', '.clasprc.json', 'analytics', '_tools', 'assets\video\hero-aerial.mp4', 'assets\video\_hero-build', 'assets\media\safari-plains\raw', 'assets\media\safari-plains\organized', 'assets\media\safari-plains\_vision-cache', 'assets\media\safari-plains\_vision-packs', 'assets\media\safari-plains\_drone-review', 'assets\media\safari-plains\_review-samples')
 robocopy $source $dest /E /XD $exclude /NFL /NDL /NJH /NJS /nc /ns /np | Out-Null
 
 Write-Host "GitHub Pages deploys via CI (export-pages.mjs copies lodge-lens into pages-dist and patches base paths)."

@@ -8,6 +8,7 @@ import {
   trackClick,
 } from './analytics.js';
 import { resolvePath } from './utils.js';
+import { initSafariGallery } from './safari-gallery.js';
 
 const loadedIframes = new Set();
 const videoStates = new Map();
@@ -34,11 +35,17 @@ export function renderExperience(lodge, basePath) {
   if (heroLoc) heroLoc.textContent = lodge.subtitle || lodge.location;
 
   renderDownloadAll(lodge);
-  renderGallery(lodge, basePath);
+  if (lodge.id === 'safari-plains') {
+    void initSafariGallery(lodge, basePath);
+  } else {
+    renderGallery(lodge, basePath);
+  }
   renderContact(lodge);
-  setupGalleryTabs(lodge.id);
-  setupChapterObserver(lodge);
-  setupYouTubeAPI(lodge);
+  if (lodge.id !== 'safari-plains') {
+    setupGalleryTabs(lodge.id);
+    setupChapterObserver(lodge);
+    setupYouTubeAPI(lodge);
+  }
 }
 
 function renderDownloadAll(lodge) {
