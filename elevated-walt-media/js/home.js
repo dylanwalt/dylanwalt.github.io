@@ -16,6 +16,14 @@ function lodgeHref(slug) {
   return `${prefix}${slug}/`;
 }
 
+function escapeHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 async function initHome() {
   if (enforceDesktopOnly()) return;
 
@@ -37,22 +45,40 @@ function renderAbout(config) {
   const aboutEl = document.getElementById('about-section');
   if (!aboutEl || !brand) return;
 
+  const profileSrc = brand.profileImage ? lodgeAsset(brand.profileImage) : '';
+  const owner = brand.owner || brand.name;
+  const credentials = (brand.credentials || [])
+    .map((item) => `<span class="credential">${escapeHtml(item)}</span>`)
+    .join('');
+
   aboutEl.innerHTML = `
-    <div class="about-grid">
+    <div class="about-feature-inner container">
+      <div class="about-portrait">
+        <div class="about-portrait-frame">
+          ${
+            profileSrc
+              ? `<img src="${profileSrc}" alt="${escapeHtml(owner)}" width="320" height="400" decoding="async">`
+              : `<div class="about-portrait-placeholder" aria-hidden="true">${escapeHtml(owner.charAt(0))}</div>`
+          }
+        </div>
+        <p class="about-portrait-caption">${escapeHtml(brand.name)}</p>
+      </div>
       <div class="about-copy">
-        <p class="eyebrow">About</p>
-        <h2>${brand.name}</h2>
-        <p class="tagline">${brand.tagline}</p>
-        <p class="about-short">${brand.aboutShort || brand.about}</p>
+        <p class="eyebrow about-eyebrow">Your aerial partner</p>
+        <h2>${escapeHtml(owner)}</h2>
+        <p class="about-brand-line"><strong>${escapeHtml(brand.name)}</strong> · ${escapeHtml(brand.tagline)}</p>
+        <p class="about-bio">${escapeHtml(brand.about || brand.aboutShort || '')}</p>
+        ${credentials ? `<div class="about-credentials">${credentials}</div>` : ''}
       </div>
-      <div class="about-contact">
-        <h3>Contact</h3>
+      <aside class="about-contact">
+        <h3>Get in touch</h3>
+        <p class="about-contact-lead">Questions about your preview, feedback on clips, or full-res downloads for your internal team.</p>
         <ul class="contact-list">
-          <li><a href="mailto:${brand.contact.email}">${brand.contact.email}</a></li>
-          <li><a href="tel:+27719290175">${brand.contact.phone}</a></li>
-          <li><a href="${brand.contact.linkedin}" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="mailto:${escapeHtml(brand.contact.email)}">${escapeHtml(brand.contact.email)}</a></li>
+          <li><a href="tel:+27719290175">${escapeHtml(brand.contact.phone)}</a></li>
+          <li><a href="${escapeHtml(brand.contact.linkedin)}" target="_blank" rel="noopener">LinkedIn</a></li>
         </ul>
-      </div>
+      </aside>
     </div>`;
 }
 
