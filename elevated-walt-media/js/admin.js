@@ -81,6 +81,7 @@ async function openDashboard() {
     overlay.innerHTML = `
       <div class="admin-panel">
         <h2>Elevated Walt Media - Analytics</h2>
+        <p class="admin-panel-sub">Lodge activity from your live preview portal</p>
         <div class="admin-toolbar">
           <select id="admin-filter-lodge"><option value="">All lodges</option></select>
           <input id="admin-filter-event" type="text" placeholder="Filter event..." />
@@ -107,7 +108,10 @@ async function openDashboard() {
       </div>`;
     document.body.appendChild(overlay);
 
-    overlay.querySelector('#admin-close').addEventListener('click', () => overlay.classList.add('hidden'));
+    overlay.querySelector('#admin-close').addEventListener('click', () => {
+      overlay.classList.add('hidden');
+      document.body.classList.remove('admin-dashboard-open');
+    });
     overlay.querySelector('#admin-refresh').addEventListener('click', () => loadRows(config));
     overlay.querySelector('#admin-export').addEventListener('click', exportCsv);
     overlay.querySelector('#admin-filter-lodge').addEventListener('change', filterRows);
@@ -115,6 +119,7 @@ async function openDashboard() {
   }
 
   overlay.classList.remove('hidden');
+  document.body.classList.add('admin-dashboard-open');
   await loadRows(config);
 }
 
@@ -156,7 +161,7 @@ async function loadRows(config) {
     populateLodgeFilter(allRows);
     filterRows();
   } catch (err) {
-    tbody.innerHTML = `<tr><td colspan="6">Error: ${escapeHtml(err.message)}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" class="admin-error">Error: ${escapeHtml(err.message)}</td></tr>`;
     if (stats) stats.textContent = '';
   }
 }
@@ -187,7 +192,7 @@ function filterRows() {
 
   if (!tbody) return;
   if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="6">No events yet.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="admin-empty">No events yet.</td></tr>';
     return;
   }
 
