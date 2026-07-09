@@ -240,19 +240,24 @@
   animation: cinema-bob 2.4s ease-in-out infinite;
 }
 
+.cinema-scroll-cue span {
+  order: 1;
+}
+
 .cinema-scroll-cue::before {
   content: "";
+  order: 2;
   width: 1.35rem;
   height: 1.35rem;
   border-right: 3px solid #ffffff;
   border-bottom: 3px solid #ffffff;
   transform: rotate(45deg);
-  margin-top: 0.15rem;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85));
 }
 
 .cinema-scroll-cue::after {
   content: "";
+  order: 3;
   width: 2px;
   height: 2.75rem;
   background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.15) 100%);
