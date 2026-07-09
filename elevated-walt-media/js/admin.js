@@ -175,7 +175,7 @@ async function loadRows(config) {
   } catch (err) {
     tbody.innerHTML = `<tr><td colspan="6" class="admin-error">Could not load analytics. <button type="button" class="btn btn-ghost admin-retry" id="admin-retry">Retry</button></td></tr>`;
     if (stats) stats.innerHTML = '';
-    if (statusEl) statusEl.textContent = err.message;
+    if (statusEl) statusEl.textContent = `${err.message} Run scripts/authorize-analytics.ps1 once, then Refresh.`;
     document.getElementById('admin-retry')?.addEventListener('click', () => loadRows(config));
   }
 }

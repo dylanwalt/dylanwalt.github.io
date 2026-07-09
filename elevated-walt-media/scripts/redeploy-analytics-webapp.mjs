@@ -1,5 +1,5 @@
 /**
- * Create a Google Apps Script WEB_APP deployment (clasp deploy alone often 404s).
+ * Create a Google Apps Script WEB_APP deployment with public access.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -36,34 +36,36 @@ async function api(method, urlPath, body) {
     body: body ? JSON.stringify(body) : undefined,
   });
   const text = await res.text();
-  let data;
-  try {
-    data = JSON.parse(text);
-  } catch {
-    data = { raw: text };
-  }
   if (!res.ok) {
     throw new Error(`${method} ${urlPath} → ${res.status}: ${text}`);
   }
-  return data;
+  return text ? JSON.parse(text) : {};
 }
 
 const versions = await api('GET', `/projects/${scriptId}/versions?pageSize=1`);
 const versionNumber = versions.versions?.[0]?.versionNumber;
 if (!versionNumber) {
-  throw new Error('No script versions found. Run clasp push && clasp create-version first.');
+  throw new Error('No script versions found.');
 }
 
 const deployment = await api('POST', `/projects/${scriptId}/deployments`, {
   versionNumber,
-  description: 'Elevated Walt Media web app',
+  description: 'Elevated Walt Media public web app',
   manifestFileName: 'appsscript',
+  deploymentConfig: {
+    scriptId,
+    versionNumber,
+    manifestFileName: 'appsscript',
+    description: 'Elevated Walt Media public web app',
+  },
   entryPoints: [
     {
       entryPointType: 'WEB_APP',
       webApp: {
-        access: 'ANYONE',
-        executeAs: 'USER_DEPLOYING',
+        entryPointConfig: {
+          access: 'ANYONE_ANONYMOUS',
+          executeAs: 'USER_DEPLOYING',
+        },
       },
     },
   ],
@@ -73,14 +75,3 @@ const deploymentId = deployment.deploymentId;
 const url = `https://script.google.com/macros/s/${deploymentId}/exec`;
 console.log('deploymentId:', deploymentId);
 console.log('url:', url);
-
-// Verify GET
-const testUrl = `${url}?adminKey=${encodeURIComponent('1pJABqv0G86DroUwRkZSWKQs4nXebzLY')}`;
-const verify = await fetch(testUrl, { redirect: 'follow' });
-const body = await verify.text();
-console.log('verify status:', verify.status);
-console.log('verify body:', body.slice(0, 200));
-
-if (!verify.ok || body.includes('<!DOCTYPE')) {
-  console.warn('Warning: endpoint may not return JSON yet. Check Apps Script deploy settings.');
-}
