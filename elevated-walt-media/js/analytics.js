@@ -1,28 +1,37 @@
 import { getAnalyticsSessionId } from './utils.js';
 
 let analyticsConfig = null;
+let configPromise = null;
 let sessionStart = Date.now();
 const progressTimers = new Map();
 
 export async function initAnalytics() {
-  try {
-    const base = document.body.dataset.basePath || '';
-    const prefix = base ? `${base}/` : '';
-    const res = await fetch(`${prefix}config/analytics.public.json`.replace(/\/+/g, '/'));
-    if (res.ok) analyticsConfig = await res.json();
-  } catch {
-    analyticsConfig = null;
-  }
+  if (configPromise) return configPromise;
+
+  configPromise = (async () => {
+    try {
+      const base = document.body.dataset.basePath || '';
+      const prefix = base ? `${base}/` : '';
+      const res = await fetch(`${prefix}config/analytics.public.json`.replace(/\/+/g, '/'));
+      if (res.ok) analyticsConfig = await res.json();
+    } catch {
+      analyticsConfig = null;
+    }
+  })();
+
+  await configPromise;
 
   window.addEventListener('beforeunload', () => {
     const lodgeId = document.body.dataset.lodgeId;
     if (lodgeId) {
-      sendEvent(lodgeId, 'session_end', lodgeId, String(Math.round((Date.now() - sessionStart) / 1000)));
+      sendEvent(lodgeId, 'session_end', lodgeId, String(Math.round((Date.now() - sessionStart) / 1000)), {
+        preferBeacon: true,
+      });
     }
   });
 }
 
-export function sendEvent(lodgeId, event, label = '', value = '') {
+export function sendEvent(lodgeId, event, label = '', value = '', options = {}) {
   if (!analyticsConfig?.endpointUrl || !analyticsConfig?.writeKey) return;
 
   const payload = {
@@ -37,18 +46,32 @@ export function sendEvent(lodgeId, event, label = '', value = '') {
 
   const body = JSON.stringify(payload);
 
-  if (navigator.sendBeacon) {
-    navigator.sendBeacon(analyticsConfig.endpointUrl, new Blob([body], { type: 'application/json' }));
+  if (options.preferBeacon && navigator.sendBeacon) {
+    navigator.sendBeacon(
+      analyticsConfig.endpointUrl,
+      new Blob([body], { type: 'text/plain;charset=utf-8' }),
+    );
     return;
   }
 
   fetch(analyticsConfig.endpointUrl, {
     method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
+    mode: 'cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body,
     keepalive: true,
-  }).catch(() => {});
+  }).catch(() => {
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(
+        analyticsConfig.endpointUrl,
+        new Blob([body], { type: 'text/plain;charset=utf-8' }),
+      );
+    }
+  });
+}
+
+export function trackPageView(lodgeId) {
+  sendEvent(lodgeId, 'page_view', lodgeId);
 }
 
 export function trackChapterView(lodgeId, chapterId) {
