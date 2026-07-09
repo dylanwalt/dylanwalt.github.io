@@ -6,6 +6,7 @@ analytics/apps-script/.clasp.json
 .clasprc.json
 *.mp4
 assets/video/hero-aerial.mp4
+!assets/media/safari-plains/drone-gallery/videos/*.mp4
 *.mov
 *.heic
 source/

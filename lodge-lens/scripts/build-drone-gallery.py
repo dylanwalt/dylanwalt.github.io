@@ -50,36 +50,46 @@ def find_source(clip: dict, by_id: dict[str, dict]) -> Path | None:
 
 def transcode(src: Path, dest: Path) -> bool:
     dest.parent.mkdir(parents=True, exist_ok=True)
-    cmd = [
-        str(FFMPEG),
-        "-y",
-        "-i",
-        str(src),
-        "-an",
-        "-vf",
-        "scale=1280:-2",
-        "-c:v",
-        "libx264",
-        "-profile:v",
-        "baseline",
-        "-level",
-        "3.0",
-        "-pix_fmt",
-        "yuv420p",
-        "-movflags",
-        "+faststart",
-        "-preset",
-        "fast",
-        "-crf",
-        "23",
-        str(dest),
-    ]
-    try:
-        subprocess.run(cmd, capture_output=True, check=True, timeout=600)
-        return dest.exists() and dest.stat().st_size > 0
-    except Exception as exc:
-        print(f"  transcode fail: {exc}", file=sys.stderr)
+
+    def run(crf: str, scale: str) -> bool:
+        cmd = [
+            str(FFMPEG),
+            "-y",
+            "-i",
+            str(src),
+            "-an",
+            "-vf",
+            scale,
+            "-c:v",
+            "libx264",
+            "-profile:v",
+            "baseline",
+            "-level",
+            "3.0",
+            "-pix_fmt",
+            "yuv420p",
+            "-movflags",
+            "+faststart",
+            "-preset",
+            "fast",
+            "-crf",
+            crf,
+            str(dest),
+        ]
+        try:
+            subprocess.run(cmd, capture_output=True, check=True, timeout=600)
+            return dest.exists() and dest.stat().st_size > 0
+        except Exception as exc:
+            print(f"  transcode fail: {exc}", file=sys.stderr)
+            return False
+
+    if not run("23", "scale=1280:-2"):
         return False
+    # GitHub rejects files over 100 MB — tighten long clips automatically.
+    if dest.stat().st_size > 90_000_000:
+        print("  re-encoding (over 90 MB)...", flush=True)
+        return run("28", "scale=960:-2")
+    return True
 
 
 def poster(src: Path, dest: Path) -> bool:
