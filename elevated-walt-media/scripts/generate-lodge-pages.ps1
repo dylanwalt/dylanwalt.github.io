@@ -1,147 +1,149 @@
-param(
-
-  [string]$ConfigPath = "$PSScriptRoot\..\config\lodges.public.json",
-
-  [string]$SiteRoot = "$PSScriptRoot\.."
-
-)
-
-
-
-$utf8NoBom = New-Object System.Text.UTF8Encoding $false
-
-$config = Get-Content $ConfigPath -Raw | ConvertFrom-Json
-
-$adminHash = "023ed1285e86978de9570bbebb2871e8e9a4c7ba7596480ba76046e09dbf9460"
-
-
-
-$template = @'
-
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-
-  <meta charset="utf-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>{{NAME}} - Elevated Walt Media</title>
-
-  <link rel="icon" href="../assets/brand/elevate-walt-media/favicon.png" type="image/png">
-
-  <link rel="stylesheet" href="../assets/css/main.css">
-
-  <link rel="stylesheet" href="../assets/css/gallery.css">
-
-</head>
-
-<body class="page-gallery" data-base-path=".." data-lodge-slug="{{SLUG}}" data-admin-hash="{{ADMIN_HASH}}">
-
-  <header class="gallery-header">
-
-    <div class="gallery-header-left">
-
-      <a class="gallery-back" href="../">All properties</a>
-
-      <img id="gallery-logo" class="gallery-logo" src="{{LODGE_LOGO}}" alt="{{NAME}}" width="52" height="52">
-
-      <div class="gallery-identity">
-
-        <h1 id="exp-title">{{NAME}}</h1>
-
-        <p id="exp-location" class="loc">{{SUBTITLE}}</p>
-
-      </div>
-
-    </div>
-
-    <a id="btn-download-all" class="btn btn-primary btn-download-all" href="#">Request download</a>
-
-  </header>
-
-
-
-  <div id="main-content">
-
-    <div id="experience" class="experience hidden">
-
-      <nav class="gallery-tabs" id="gallery-tabs" aria-label="Gallery sections">
-
-        <button type="button" class="active" data-tab="general">General</button>
-
-        <button type="button" data-tab="events">Events</button>
-
-      </nav>
-
-
-
-      <div class="gallery-panels">
-
-        <div id="panel-general" class="gallery-panel active" data-panel="general" aria-label="General footage"></div>
-
-        <div id="panel-events" class="gallery-panel" data-panel="events" aria-label="Event footage"></div>
-
-      </div>
-
-
-
-      <section class="gallery-actions container actions">
-
-        <a id="btn-contact" class="btn btn-ghost" href="mailto:dylanwalt10@gmail.com">Request download</a>
-
-      </section>
-
-    </div>
-
-  </div>
-
-
-
-  <footer class="site-footer">
-
-    <div class="container">
-
-      <p>Internal review only. &copy; Elevated Walt Media</p>
-
-    </div>
-
-  </footer>
-
-
-
-  <script type="module" src="../js/lodge.js"></script>
-
-</body>
-
-</html>
-
-'@
-
-
-
-foreach ($lodge in $config.lodges) {
-
-  if ($lodge.slug -eq 'safari-plains') { continue }
-
-  $dir = Join-Path $SiteRoot $lodge.slug
-
-  New-Item -ItemType Directory -Force -Path $dir | Out-Null
-
-  $subtitle = if ($lodge.subtitle) { $lodge.subtitle } else { $lodge.location }
-
-  $logo = "../$($lodge.logo.TrimStart('/'))"
-
-  $html = $template.Replace('{{NAME}}', $lodge.name).Replace('{{SLUG}}', $lodge.slug).Replace('{{ADMIN_HASH}}', $adminHash).Replace('{{SUBTITLE}}', $subtitle).Replace('{{LODGE_LOGO}}', $logo)
-
-  [System.IO.File]::WriteAllText((Join-Path $dir 'index.html'), $html, $utf8NoBom)
-
-  Write-Host "Generated $($lodge.slug)"
-
-}
-
-
-
-Write-Host "Done."
+param(
+
+  [string]$ConfigPath = "$PSScriptRoot\..\config\lodges.public.json",
+
+  [string]$SiteRoot = "$PSScriptRoot\.."
+
+)
+
+
+
+$utf8NoBom = New-Object System.Text.UTF8Encoding $false
+
+$config = Get-Content $ConfigPath -Raw | ConvertFrom-Json
+
+$adminHash = "023ed1285e86978de9570bbebb2871e8e9a4c7ba7596480ba76046e09dbf9460"
+
+
+
+$template = @'
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{NAME}} - Elevated Walt Media</title>
+
+  <link rel="icon" href="../assets/brand/elevate-walt-media/favicon.png" type="image/png">
+
+  <link rel="stylesheet" href="../assets/css/main.css">
+
+  <link rel="stylesheet" href="../assets/css/gallery.css">
+
+</head>
+
+<body class="page-gallery" data-base-path=".." data-lodge-slug="{{SLUG}}" data-admin-hash="{{ADMIN_HASH}}">
+
+  <script src="../js/mobile-gate-init.js"></script>
+
+  <header class="gallery-header">
+
+    <div class="gallery-header-left">
+
+      <a class="gallery-back" href="../">All properties</a>
+
+      <img id="gallery-logo" class="gallery-logo" src="{{LODGE_LOGO}}" alt="{{NAME}}" width="52" height="52">
+
+      <div class="gallery-identity">
+
+        <h1 id="exp-title">{{NAME}}</h1>
+
+        <p id="exp-location" class="loc">{{SUBTITLE}}</p>
+
+      </div>
+
+    </div>
+
+    <a id="btn-download-all" class="btn btn-primary btn-download-all" href="#">Request download</a>
+
+  </header>
+
+
+
+  <div id="main-content">
+
+    <div id="experience" class="experience hidden">
+
+      <nav class="gallery-tabs" id="gallery-tabs" aria-label="Gallery sections">
+
+        <button type="button" class="active" data-tab="general">General</button>
+
+        <button type="button" data-tab="events">Events</button>
+
+      </nav>
+
+
+
+      <div class="gallery-panels">
+
+        <div id="panel-general" class="gallery-panel active" data-panel="general" aria-label="General footage"></div>
+
+        <div id="panel-events" class="gallery-panel" data-panel="events" aria-label="Event footage"></div>
+
+      </div>
+
+
+
+      <section class="gallery-actions container actions">
+
+        <a id="btn-contact" class="btn btn-ghost" href="mailto:dylanwalt10@gmail.com">Request download</a>
+
+      </section>
+
+    </div>
+
+  </div>
+
+
+
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <p>Internal review only. &copy; Elevated Walt Media</p>
+
+    </div>
+
+  </footer>
+
+
+
+  <script type="module" src="../js/lodge.js"></script>
+
+</body>
+
+</html>
+
+'@
+
+
+
+foreach ($lodge in $config.lodges) {
+
+  if ($lodge.slug -eq 'safari-plains') { continue }
+
+  $dir = Join-Path $SiteRoot $lodge.slug
+
+  New-Item -ItemType Directory -Force -Path $dir | Out-Null
+
+  $subtitle = if ($lodge.subtitle) { $lodge.subtitle } else { $lodge.location }
+
+  $logo = "../$($lodge.logo.TrimStart('/'))"
+
+  $html = $template.Replace('{{NAME}}', $lodge.name).Replace('{{SLUG}}', $lodge.slug).Replace('{{ADMIN_HASH}}', $adminHash).Replace('{{SUBTITLE}}', $subtitle).Replace('{{LODGE_LOGO}}', $logo)
+
+  [System.IO.File]::WriteAllText((Join-Path $dir 'index.html'), $html, $utf8NoBom)
+
+  Write-Host "Generated $($lodge.slug)"
+
+}
+
+
+
+Write-Host "Done."

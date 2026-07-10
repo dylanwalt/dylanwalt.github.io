@@ -132,6 +132,8 @@ function Test-Wave2 {
   if ($homeJs -notmatch 'lodge-tile') { Fail 'js/home.js must render square lodge tiles (lodge-tile class)' }
   if ($indexHtml -notmatch 'experience-loader') { Warn 'index.html missing experience loader splash' }
   if ($indexHtml -notmatch 'cinema-hero') { Warn 'index.html missing cinematic hero section' }
+  if ($indexHtml -notmatch 'mobile-gate-init\.js') { Fail 'index.html must load js/mobile-gate-init.js for desktop-only gate' }
+  if ($homeJs -notmatch 'enforceDesktopOnly') { Fail 'js/home.js must call enforceDesktopOnly()' }
 }
 
 function Test-Wave3 {
