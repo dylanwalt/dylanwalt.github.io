@@ -32,9 +32,9 @@ export async function initSafariGallery(lodge, basePath) {
   shell.className = 'safari-gallery safari-gallery--drone';
   shell.innerHTML = `
     <div class="sg-toolbar">
+      <p class="sg-footage-label">Footage</p>
       <p class="sg-intro">Numbered clips - reference by number when giving feedback.</p>
       <div class="sg-tabs" role="tablist" aria-label="Event chapters"></div>
-      <p class="sg-summary" aria-live="polite"></p>
     </div>
     <div class="sg-layout">
       <div class="sg-player-panel">
@@ -43,8 +43,6 @@ export async function initSafariGallery(lodge, basePath) {
         </div>
         <div class="sg-player-meta">
           <h2 class="sg-player-title"></h2>
-          <p class="sg-player-desc"></p>
-          <p class="sg-player-note"></p>
         </div>
       </div>
       <div class="sg-clip-list" role="listbox" aria-label="Drone clips"></div>
@@ -52,12 +50,9 @@ export async function initSafariGallery(lodge, basePath) {
   root.replaceChildren(shell);
 
   const tabsEl = shell.querySelector('.sg-tabs');
-  const summaryEl = shell.querySelector('.sg-summary');
   const listEl = shell.querySelector('.sg-clip-list');
   const player = shell.querySelector('.sg-player');
   const titleEl = shell.querySelector('.sg-player-title');
-  const descEl = shell.querySelector('.sg-player-desc');
-  const noteEl = shell.querySelector('.sg-player-note');
 
   const clipsForEvent = (eventKey) =>
     data.clips.filter((c) => c.event === eventKey).sort((a, b) => a.number - b.number);
@@ -79,10 +74,7 @@ export async function initSafariGallery(lodge, basePath) {
     if (posterUrl) player.poster = posterUrl;
     player.load();
 
-    titleEl.textContent = `${clip.label} - ${clip.subject || 'Aerial clip'}`;
-    descEl.textContent = clip.summary || '';
-    noteEl.textContent = clip.hero_notes ? clip.hero_notes : '';
-    noteEl.hidden = !clip.hero_notes;
+    titleEl.textContent = clip.label;
 
     listEl.querySelectorAll('.sg-clip-btn').forEach((btn, i) => {
       btn.classList.toggle('is-active', i === indexInList);
@@ -94,16 +86,12 @@ export async function initSafariGallery(lodge, basePath) {
 
   const renderEvent = (eventKey) => {
     const clips = clipsForEvent(eventKey);
-    const meta = data.events[eventKey] || {};
-    summaryEl.textContent = `${clips.length} drone clip${clips.length === 1 ? '' : 's'} - ${meta.description || ''}`;
 
     listEl.replaceChildren();
     if (!clips.length) {
       listEl.innerHTML = '<p class="gallery-empty">No clips assigned yet. Reference a drone number to place it here.</p>';
       player.removeAttribute('poster');
       titleEl.textContent = 'No clip selected';
-      descEl.textContent = '';
-      noteEl.hidden = true;
       return;
     }
 
@@ -118,7 +106,6 @@ export async function initSafariGallery(lodge, basePath) {
       btn.innerHTML = `
         ${posterSrc ? `<img src="${posterSrc}" alt="" loading="lazy">` : ''}
         <span class="sg-clip-num">${clip.label}</span>
-        <span class="sg-clip-sub">${clip.subject || ''}</span>
         <span class="sg-clip-dur">${formatDur(clip.duration_sec)}</span>`;
       btn.addEventListener('click', () => setActive(clip, index));
       listEl.appendChild(btn);
