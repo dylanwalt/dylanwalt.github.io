@@ -127,6 +127,17 @@ function Test-Wave2 {
   if ((Get-Content $safari -Raw) -notmatch 'safari-gallery-root') { Fail 'Safari Plains missing media gallery root' }
   if ((Get-Content $safari -Raw) -notmatch 'safari-drone-note') { Fail 'Safari Plains missing drone equipment note' }
 
+  $eventPhotos = Join-Path $SiteRoot 'assets\media\safari-plains\event-photos\event-photos-index.json'
+  if (-not (Test-Path $eventPhotos)) { Fail 'Safari Plains missing event-photos index' }
+  else {
+    try {
+      $ep = Get-Content $eventPhotos -Raw | ConvertFrom-Json
+      if (-not $ep.photos -or $ep.photos.Count -lt 1) { Fail 'event-photos index has no photos' }
+    } catch {
+      Fail "Invalid event-photos-index.json: $_"
+    }
+  }
+
   $indexHtml = [System.IO.File]::ReadAllText((Join-Path $SiteRoot 'index.html'), [System.Text.UTF8Encoding]::new($false))
   $homeJs = [System.IO.File]::ReadAllText((Join-Path $SiteRoot 'js\home.js'), [System.Text.UTF8Encoding]::new($false))
   if ($homeJs -notmatch 'lodge-tile') { Fail 'js/home.js must render square lodge tiles (lodge-tile class)' }

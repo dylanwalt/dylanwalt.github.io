@@ -1,0 +1,172 @@
+{
+  "generated_at": "2026-07-13T10:50:03",
+  "count": 12,
+  "note": "Numbered stills under the same three events as the drone clips. Sorted by capture time. Tell us the photo number if an event placement should move.",
+  "quality": {
+    "full_max_side": 4096,
+    "full_jpeg_quality": 95,
+    "thumb_max_side": 1280,
+    "thumb_jpeg_quality": 90,
+    "subsampling": "4:4:4"
+  },
+  "events": {
+    "bush-picnic": {
+      "label": "Bush Picnic",
+      "description": "Aerial coverage of bush dining, picnic decks and waterfront experiences."
+    },
+    "wine-1": {
+      "label": "Wine Tasting Event 1",
+      "description": "Main lodge aerials and deck reveals."
+    },
+    "wine-2": {
+      "label": "Wine Tasting Event 2",
+      "description": "Villa dining, estate overview and lodge savanna coverage."
+    }
+  },
+  "photos": [
+    {
+      "number": 1,
+      "label": "Photo 01",
+      "event": "wine-1",
+      "source": "IMG_4200.JPEG",
+      "note": "Deck tasting setup ~15:01",
+      "captured_at": "2026-07-06T15:01:50",
+      "width": 1536,
+      "height": 2048,
+      "thumb": "thumbs/photo-01.jpg",
+      "full": "full/photo-01.jpg"
+    },
+    {
+      "number": 2,
+      "label": "Photo 02",
+      "event": "wine-1",
+      "source": "IMG_4201.JPEG",
+      "note": "Deck tasting setup ~15:01",
+      "captured_at": "2026-07-06T15:01:53",
+      "width": 1536,
+      "height": 2048,
+      "thumb": "thumbs/photo-02.jpg",
+      "full": "full/photo-02.jpg"
+    },
+    {
+      "number": 3,
+      "label": "Photo 03",
+      "event": "wine-1",
+      "source": "IMG_4202.JPEG",
+      "note": "Deck tasting setup ~15:02",
+      "captured_at": "2026-07-06T15:02:02",
+      "width": 2048,
+      "height": 1536,
+      "thumb": "thumbs/photo-03.jpg",
+      "full": "full/photo-03.jpg"
+    },
+    {
+      "number": 4,
+      "label": "Photo 04",
+      "event": "wine-1",
+      "source": "IMG_4203.JPEG",
+      "note": "Deck tasting setup ~15:02",
+      "captured_at": "2026-07-06T15:02:04",
+      "width": 2048,
+      "height": 1536,
+      "thumb": "thumbs/photo-04.jpg",
+      "full": "full/photo-04.jpg"
+    },
+    {
+      "number": 5,
+      "label": "Photo 05",
+      "event": "wine-1",
+      "source": "IMG_4206.JPEG",
+      "note": "Pairing boards close-up ~15:02",
+      "captured_at": "2026-07-06T15:02:17",
+      "width": 1536,
+      "height": 2048,
+      "thumb": "thumbs/photo-05.jpg",
+      "full": "full/photo-05.jpg"
+    },
+    {
+      "number": 6,
+      "label": "Photo 06",
+      "event": "wine-1",
+      "source": "IMG_4207.JPEG",
+      "note": "Deck tasting setup ~15:02",
+      "captured_at": "2026-07-06T15:02:26",
+      "width": 2048,
+      "height": 1536,
+      "thumb": "thumbs/photo-06.jpg",
+      "full": "full/photo-06.jpg"
+    },
+    {
+      "number": 7,
+      "label": "Photo 07",
+      "event": "wine-2",
+      "source": "IMG_4228.JPEG",
+      "note": "Bush-field tasting ~15:25 \u2014 move to bush-picnic if preferred",
+      "captured_at": "2026-07-06T15:25:10",
+      "width": 1536,
+      "height": 2048,
+      "thumb": "thumbs/photo-07.jpg",
+      "full": "full/photo-07.jpg"
+    },
+    {
+      "number": 8,
+      "label": "Photo 08",
+      "event": "wine-2",
+      "source": "IMG_4241.JPEG",
+      "note": "Simply White/Red/Creamy pairings ~15:49",
+      "captured_at": "2026-07-06T15:49:58",
+      "width": 1536,
+      "height": 2048,
+      "thumb": "thumbs/photo-08.jpg",
+      "full": "full/photo-08.jpg"
+    },
+    {
+      "number": 9,
+      "label": "Photo 09",
+      "event": "wine-2",
+      "source": "7BDFB5E2-4B24-4A86-98E0-5E9D04DB0FD8.JPG",
+      "note": "Tasting table still ~15:51",
+      "captured_at": "2026-07-06T15:51:28",
+      "width": 2160,
+      "height": 3840,
+      "thumb": "thumbs/photo-09.jpg",
+      "full": "full/photo-09.jpg"
+    },
+    {
+      "number": 10,
+      "label": "Photo 10",
+      "event": "wine-2",
+      "source": "1C003F80-9970-40FF-A45E-D0A02371E5C6.JPG",
+      "note": "Villa dining still ~15:51",
+      "captured_at": "2026-07-06T15:51:48",
+      "width": 2160,
+      "height": 3840,
+      "thumb": "thumbs/photo-10.jpg",
+      "full": "full/photo-10.jpg"
+    },
+    {
+      "number": 11,
+      "label": "Photo 11",
+      "event": "wine-2",
+      "source": "83c8aadc-5311-47d4-993b-71ec72332cd9.jpg",
+      "note": "Vertical pairing detail (no EXIF) \u2014 placed with wine-2 by content",
+      "captured_at": null,
+      "width": 900,
+      "height": 1600,
+      "thumb": "thumbs/photo-11.jpg",
+      "full": "full/photo-11.jpg"
+    },
+    {
+      "number": 12,
+      "label": "Photo 12",
+      "event": "wine-2",
+      "source": "b0aef3de-1567-4885-a8d7-b7c724edbd37.jpg",
+      "note": "Vertical villa dining (no EXIF) \u2014 placed with wine-2 by content",
+      "captured_at": null,
+      "width": 900,
+      "height": 1600,
+      "thumb": "thumbs/photo-12.jpg",
+      "full": "full/photo-12.jpg"
+    }
+  ]
+}

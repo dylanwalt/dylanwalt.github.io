@@ -86,6 +86,7 @@ Write-Host "  clasp credentials OK" -ForegroundColor Green
 
 $writeKey = New-RandomKey
 $adminKey = New-RandomKey
+$ownerToken = New-RandomKey
 
 if (-not (Test-Path $codePath)) {
   throw "Missing $codePath"
@@ -152,7 +153,9 @@ Write-Utf8NoBom $configOut (@{
   endpointUrl = $url.Trim()
   writeKey    = $writeKey
   adminKey    = $adminKey
+  ownerToken  = $ownerToken
 } | ConvertTo-Json)
 
 Write-Host "`nSaved $configOut" -ForegroundColor Green
+Write-Host "Owner me-link: ?me=$ownerToken (bookmark on your phone/laptop)" -ForegroundColor Gray
 Write-Host "Next: .\scripts\deploy.ps1 -Message 'Add analytics config'" -ForegroundColor Cyan

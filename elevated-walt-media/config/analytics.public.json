@@ -1,10 +1,6 @@
 {
-
   "endpointUrl": "https://script.google.com/macros/s/AKfycbxe7RFmAHXjp_YFzkECJ9zpMLfAVXyLuEis0oJOjUxJwbFBvRkb2xyJBG9S80hFuDfp/exec",
-
   "writeKey": "90KDPe8f2stuASgHoy5cJWlnTzYb13Z4",
-
-  "adminKey": "1pJABqv0G86DroUwRkZSWKQs4nXebzLY"
-
+  "adminKey": "1pJABqv0G86DroUwRkZSWKQs4nXebzLY",
+  "ownerToken": "DNemIz8rthRMdOjZ4uPc3iskHFGQglL0"
 }
-

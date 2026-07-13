@@ -1070,7 +1070,7 @@ body.admin-dashboard-open {
 }
 
 .admin-toolbar select,
-.admin-toolbar input {
+.admin-toolbar input[type="text"] {
   padding: 0.65rem 0.85rem;
   border: 1px solid #3d4d5c;
   border-radius: 6px;
@@ -1079,6 +1079,40 @@ body.admin-dashboard-open {
   font-family: var(--font-body);
   font-size: 0.875rem;
   min-height: 2.5rem;
+}
+
+.admin-hide-owner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #b8c5d1;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.admin-hide-owner input {
+  accent-color: #6a8fad;
+  width: 1rem;
+  height: 1rem;
+}
+
+.admin-owner-note {
+  margin: 0 0 0.75rem;
+  font-size: 0.8125rem;
+  color: #8b959e;
+  min-height: 1.1em;
+}
+
+.admin-owner-badge {
+  display: inline-block;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #a8bdd4;
+  border: 1px solid #3d4d5c;
+  padding: 0.15rem 0.4rem;
 }
 
 .admin-overlay .btn-ghost {

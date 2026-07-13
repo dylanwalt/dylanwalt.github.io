@@ -48,6 +48,70 @@ export function getAnalyticsSessionId() {
   return id;
 }
 
+const VISITOR_KEY = 'lodge-lens-visitor-id';
+const OWNER_KEY = 'lodge-lens-analytics-owner';
+
+/** Stable visitor id across tabs; `returning` is 1 if the id already existed. */
+export function getVisitorId() {
+  let existing = null;
+  try {
+    existing = localStorage.getItem(VISITOR_KEY);
+  } catch {
+    existing = null;
+  }
+  if (existing) return { id: existing, returning: 1 };
+
+  const id =
+    (typeof crypto !== 'undefined' && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`);
+  try {
+    localStorage.setItem(VISITOR_KEY, id);
+  } catch {
+    /* private mode */
+  }
+  return { id, returning: 0 };
+}
+
+export function isAnalyticsOwner() {
+  try {
+    return localStorage.getItem(OWNER_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
+export function setAnalyticsOwner(flag = true) {
+  try {
+    if (flag) localStorage.setItem(OWNER_KEY, '1');
+    else localStorage.removeItem(OWNER_KEY);
+  } catch {
+    /* private mode */
+  }
+}
+
+/**
+ * If `?me=` matches token, mark this browser as owner, strip the param from the URL.
+ * @returns {boolean} true when the param was consumed
+ */
+export function consumeOwnerMeParam(token) {
+  if (!token) return false;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const me = params.get('me');
+    if (!me || me !== token) return false;
+
+    setAnalyticsOwner(true);
+    params.delete('me');
+    const qs = params.toString();
+    const next = `${window.location.pathname}${qs ? `?${qs}` : ''}${window.location.hash || ''}`;
+    window.history.replaceState({}, '', next);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function resolvePath(base, assetPath) {
   if (!assetPath) return '';
   if (assetPath.startsWith('http')) return assetPath;

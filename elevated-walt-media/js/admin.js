@@ -1,5 +1,32 @@
 import { sha256 } from './utils.js';
-import { getAnalyticsConfig } from './analytics.js';
+import { getAnalyticsConfig, markAnalyticsOwner } from './analytics.js';
+
+const TABLE_COLS = 10;
+const CSV_HEADERS = [
+  'timestamp',
+  'lodge_id',
+  'event',
+  'label',
+  'value',
+  'session_id',
+  'user_agent',
+  'visitor_id',
+  'is_owner',
+  'owner_match',
+  'ip',
+  'country',
+  'city',
+  'timezone',
+  'locale',
+  'referrer',
+  'page_path',
+  'landing_path',
+  'utm',
+  'device',
+  'screen',
+  'returning',
+  'meta_json',
+];
 
 export function initAdminBackdoor(adminPasswordHash) {
   if (!adminPasswordHash) return;
@@ -62,6 +89,7 @@ function showAdminModal(adminPasswordHash) {
     }
 
     overlay.classList.add('hidden');
+    markAnalyticsOwner('admin_login');
     await openDashboard();
   });
 }
@@ -85,11 +113,16 @@ async function openDashboard() {
         <div class="admin-toolbar">
           <select id="admin-filter-lodge"><option value="">All lodges</option></select>
           <input id="admin-filter-event" type="text" placeholder="Filter event..." />
+          <label class="admin-hide-owner">
+            <input type="checkbox" id="admin-hide-owner" checked />
+            Hide my traffic
+          </label>
           <button class="btn btn-ghost" id="admin-refresh">Refresh</button>
           <button class="btn btn-ghost" id="admin-export">Export CSV</button>
           <button class="btn btn-ghost" id="admin-close">Close</button>
         </div>
         <div id="admin-stats" class="admin-stats"></div>
+        <p id="admin-owner-note" class="admin-owner-note" aria-live="polite"></p>
         <p id="admin-status" class="admin-status" aria-live="polite"></p>
         <div class="admin-table-wrap">
           <table class="admin-table">
@@ -100,6 +133,10 @@ async function openDashboard() {
                 <th>Event</th>
                 <th>Label</th>
                 <th>Value</th>
+                <th>IP</th>
+                <th>Geo</th>
+                <th>Visitor</th>
+                <th>Owner</th>
                 <th>Session</th>
               </tr>
             </thead>
@@ -117,6 +154,7 @@ async function openDashboard() {
     overlay.querySelector('#admin-export').addEventListener('click', exportCsv);
     overlay.querySelector('#admin-filter-lodge').addEventListener('change', filterRows);
     overlay.querySelector('#admin-filter-event').addEventListener('input', filterRows);
+    overlay.querySelector('#admin-hide-owner').addEventListener('change', filterRows);
   }
 
   overlay.classList.remove('hidden');
@@ -144,12 +182,39 @@ function showAdminMessage(message) {
 
 let allRows = [];
 
+function isOwnerRow(row) {
+  const v = row.is_owner;
+  return v === 1 || v === '1' || v === true || v === 'true';
+}
+
+function getVisibleRows() {
+  const lodgeFilter = document.getElementById('admin-filter-lodge')?.value || '';
+  const eventFilter = (document.getElementById('admin-filter-event')?.value || '').toLowerCase();
+  const hideOwner = document.getElementById('admin-hide-owner')?.checked !== false;
+
+  let rows = allRows;
+  if (lodgeFilter) rows = rows.filter((r) => r.lodge_id === lodgeFilter);
+  if (eventFilter) rows = rows.filter((r) => (r.event || '').toLowerCase().includes(eventFilter));
+
+  let ownerHidden = 0;
+  if (hideOwner) {
+    const kept = [];
+    for (const row of rows) {
+      if (isOwnerRow(row)) ownerHidden += 1;
+      else kept.push(row);
+    }
+    rows = kept;
+  }
+
+  return { rows, ownerHidden, hideOwner };
+}
+
 async function loadRows(config) {
   const tbody = document.getElementById('admin-rows');
   const stats = document.getElementById('admin-stats');
   if (!tbody) return;
 
-  tbody.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
+  tbody.innerHTML = `<tr><td colspan="${TABLE_COLS}">Loading...</td></tr>`;
   const statusEl = document.getElementById('admin-status');
   if (statusEl) statusEl.textContent = 'Fetching activity...';
   if (stats) stats.innerHTML = '';
@@ -173,7 +238,7 @@ async function loadRows(config) {
     filterRows();
     if (statusEl) statusEl.textContent = '';
   } catch (err) {
-    tbody.innerHTML = `<tr><td colspan="6" class="admin-error">Could not load analytics. <button type="button" class="btn btn-ghost admin-retry" id="admin-retry">Retry</button></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="${TABLE_COLS}" class="admin-error">Could not load analytics. <button type="button" class="btn btn-ghost admin-retry" id="admin-retry">Retry</button></td></tr>`;
     if (stats) stats.innerHTML = '';
     if (statusEl) statusEl.textContent = `${err.message} Run scripts/authorize-analytics.ps1 once, then Refresh.`;
     document.getElementById('admin-retry')?.addEventListener('click', () => loadRows(config));
@@ -189,15 +254,27 @@ function populateLodgeFilter(rows) {
   select.value = current;
 }
 
+function formatGeo(row) {
+  const parts = [row.city, row.country].filter(Boolean);
+  return parts.join(', ');
+}
+
+function ownerBadge(row) {
+  if (!isOwnerRow(row)) return '';
+  const reason = row.owner_match ? ` (${escapeHtml(String(row.owner_match))})` : '';
+  return `<span class="admin-owner-badge">You${reason}</span>`;
+}
+
 function filterRows() {
   const tbody = document.getElementById('admin-rows');
   const stats = document.getElementById('admin-stats');
-  const lodgeFilter = document.getElementById('admin-filter-lodge')?.value || '';
-  const eventFilter = (document.getElementById('admin-filter-event')?.value || '').toLowerCase();
+  const note = document.getElementById('admin-owner-note');
+  const { rows, ownerHidden, hideOwner } = getVisibleRows();
 
-  let rows = allRows;
-  if (lodgeFilter) rows = rows.filter((r) => r.lodge_id === lodgeFilter);
-  if (eventFilter) rows = rows.filter((r) => (r.event || '').toLowerCase().includes(eventFilter));
+  if (note) {
+    note.textContent =
+      hideOwner && ownerHidden > 0 ? `Owner events hidden: ${ownerHidden}` : '';
+  }
 
   if (stats) {
     const sessions = new Set(rows.map((r) => r.session_id)).size;
@@ -210,7 +287,7 @@ function filterRows() {
 
   if (!tbody) return;
   if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="6" class="admin-empty">No events yet.</td></tr>';
+    tbody.innerHTML = `<tr><td colspan="${TABLE_COLS}" class="admin-empty">No events yet.</td></tr>`;
     return;
   }
 
@@ -224,6 +301,10 @@ function filterRows() {
       <td>${escapeHtml(r.event)}</td>
       <td>${escapeHtml(r.label)}</td>
       <td>${escapeHtml(r.value)}</td>
+      <td class="session-cell">${escapeHtml(r.ip)}</td>
+      <td>${escapeHtml(formatGeo(r))}</td>
+      <td class="session-cell">${escapeHtml(String(r.visitor_id || '').slice(0, 12))}</td>
+      <td>${ownerBadge(r)}</td>
       <td class="session-cell">${escapeHtml(String(r.session_id || '').slice(0, 12))}</td>
     </tr>`,
     )
@@ -231,17 +312,12 @@ function filterRows() {
 }
 
 function exportCsv() {
-  const lodgeFilter = document.getElementById('admin-filter-lodge')?.value || '';
-  const eventFilter = (document.getElementById('admin-filter-event')?.value || '').toLowerCase();
-  let rows = allRows;
-  if (lodgeFilter) rows = rows.filter((r) => r.lodge_id === lodgeFilter);
-  if (eventFilter) rows = rows.filter((r) => (r.event || '').toLowerCase().includes(eventFilter));
+  const { rows } = getVisibleRows();
 
-  const header = ['timestamp', 'lodge_id', 'event', 'label', 'value', 'session_id'];
-  const csv = [header.join(',')]
+  const csv = [CSV_HEADERS.join(',')]
     .concat(
       rows.map((r) =>
-        header.map((h) => `"${String(r[h] ?? '').replace(/"/g, '""')}"`).join(','),
+        CSV_HEADERS.map((h) => `"${String(r[h] ?? '').replace(/"/g, '""')}"`).join(','),
       ),
     )
     .join('\n');

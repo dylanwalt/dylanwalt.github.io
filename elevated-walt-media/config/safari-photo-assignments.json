@@ -1,0 +1,79 @@
+{
+  "_comment": "Provisional event placement by capture time + scene. Correct event keys if wrong: bush-picnic | wine-1 | wine-2",
+  "events": {
+    "bush-picnic": {
+      "label": "Bush Picnic",
+      "description": "Aerial coverage of bush dining, picnic decks and waterfront experiences."
+    },
+    "wine-1": {
+      "label": "Wine Tasting Event 1",
+      "description": "Main lodge aerials and deck reveals."
+    },
+    "wine-2": {
+      "label": "Wine Tasting Event 2",
+      "description": "Villa dining, estate overview and lodge savanna coverage."
+    }
+  },
+  "photos": [
+    {
+      "source": "IMG_4200.JPEG",
+      "event": "wine-1",
+      "note": "Deck tasting setup ~15:01"
+    },
+    {
+      "source": "IMG_4201.JPEG",
+      "event": "wine-1",
+      "note": "Deck tasting setup ~15:01"
+    },
+    {
+      "source": "IMG_4202.JPEG",
+      "event": "wine-1",
+      "note": "Deck tasting setup ~15:02"
+    },
+    {
+      "source": "IMG_4203.JPEG",
+      "event": "wine-1",
+      "note": "Deck tasting setup ~15:02"
+    },
+    {
+      "source": "IMG_4206.JPEG",
+      "event": "wine-1",
+      "note": "Pairing boards close-up ~15:02"
+    },
+    {
+      "source": "IMG_4207.JPEG",
+      "event": "wine-1",
+      "note": "Deck tasting setup ~15:02"
+    },
+    {
+      "source": "IMG_4228.JPEG",
+      "event": "wine-2",
+      "note": "Bush-field tasting ~15:25 - move to bush-picnic if preferred"
+    },
+    {
+      "source": "IMG_4241.JPEG",
+      "event": "wine-2",
+      "note": "Simply White/Red/Creamy pairings ~15:49"
+    },
+    {
+      "source": "7BDFB5E2-4B24-4A86-98E0-5E9D04DB0FD8.JPG",
+      "event": "wine-2",
+      "note": "Tasting table still ~15:51"
+    },
+    {
+      "source": "1C003F80-9970-40FF-A45E-D0A02371E5C6.JPG",
+      "event": "wine-2",
+      "note": "Villa dining still ~15:51"
+    },
+    {
+      "source": "83c8aadc-5311-47d4-993b-71ec72332cd9.jpg",
+      "event": "wine-2",
+      "note": "Vertical pairing detail (no EXIF) - placed with wine-2 by content"
+    },
+    {
+      "source": "b0aef3de-1567-4885-a8d7-b7c724edbd37.jpg",
+      "event": "wine-2",
+      "note": "Vertical villa dining (no EXIF) - placed with wine-2 by content"
+    }
+  ]
+}
