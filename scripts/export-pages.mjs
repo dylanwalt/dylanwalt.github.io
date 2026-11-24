@@ -147,4 +147,12 @@ if (await exists(siteSource)) {
   console.log(`Copied ${publishSlug} to pages-dist/${publishSlug}/ (base paths patched for GitHub Pages)`);
 }
 
+// Standalone research deck: publish only the intended HTML file.
+const researchPitch = path.join(root, "standalone", "msc-research-pitch.html");
+if (await exists(researchPitch)) {
+  const pitchRoute = path.join(dist, "msc-research-pitch");
+  await mkdir(pitchRoute, { recursive: true });
+  await cp(researchPitch, path.join(pitchRoute, "index.html"));
+}
+
 console.log(`Exported ${sites.length} sites to ${path.relative(root, dist)}.`);
