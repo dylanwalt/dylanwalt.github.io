@@ -81,6 +81,15 @@ dialog::backdrop{background:#15292f80}dialog header{display:flex;justify-content
 .evidence .slow .big small{font-size:.47em;letter-spacing:-.025em}
 @keyframes slowLoop{0%,100%{transform:scale(1)}12%{transform:scale(1.025)}22%{transform:scale(1)}}
 @media(prefers-reduced-motion:reduce){.evidence .result .big,.evidence .slow .big{animation:none}}
+.evidence .metric .mid{font-size:6.65cqw;color:#8d4328;line-height:1;white-space:nowrap;letter-spacing:-.075em;font-weight:850}
+.evidence .metric p.small{margin-top:.3cqw;font-size:1.13cqw}
+.weightlist{display:grid;gap:.55cqw;width:100%;font-size:1.14cqw;font-weight:750}
+.weightlist div{display:grid;grid-template-columns:1.28fr 1fr;gap:.6cqw;align-items:center}
+.weightlist i{display:block;border-radius:2em;height:.48cqw;background:#e8e9de;overflow:hidden}
+.weightlist b{display:block;width:var(--w);height:100%;background:var(--c);border-radius:2em;transition:width .45s}
+#weightvis{background:#c2d2bb}.visual[data-gl=yes] #weightfallback{display:none}
+@media(prefers-reduced-motion:reduce){.weightlist b{transition:none}}
+#broader{font-size:1.48cqw;color:var(--teal);line-height:1.22} #broader b{color:var(--ink)}
 </style>
 <main id="stage" aria-label="Five-slide MSc research presentation">
 <section class="slide" aria-labelledby="s1">
@@ -113,28 +122,27 @@ dialog::backdrop{background:#15292f80}dialog header{display:flex;justify-content
  </div>
 </section>
 <section class="slide" aria-labelledby="s3" hidden>
- <div class="eyebrow"><span>03 · Why go further?</span><span>Published car-to-car communication simulation</span></div>
- <h2 id="s3">A good average can hide a bad case.</h2>
- <p class="sub"><b>4 nearby cars:</b> GO, YIELD, YIELD, YIELD → <b>1 number: 25% GO</b></p>
+ <div class="eyebrow"><span>03 · What researchers tried</span><span>Published communication result · Illustrative scaling example</span></div>
+ <h2 id="s3">Send a summary, not the full list.</h2>
+ <p class="sub">Instead of giving an agent every action separately, <b>give it one summary of the actions.</b></p>
  <div class="evidence">
-  <article class="panel result metric"><span class="pill">Overall</span><div class="big">≈95%</div><p>of the more expensive method’s performance.</p></article>
-  <article class="panel metric slow"><span class="pill">One slow case</span><div class="big">≈40 <small>ms</small></div><p>to deliver one car’s message, versus around <strong>20 ms</strong> for most.</p><p class="small">Eight-car simulation. Not a driving result.</p></article>
+  <article class="panel result metric"><span class="pill">Published result</span><div class="big">≈95%</div><p>of the more expensive method’s performance, with less computation.</p><p class="small">Wireless resource allocation, not driving safety.</p></article>
+  <article class="panel metric slow"><span class="pill">If we summarise everyone</span><div class="mid">99,999</div><p>other cars to count per car in a group of 100,000.</p><p class="small">Illustrative input count. A short summary can still take work to build.</p></article>
  </div>
- <p class="caution"><b>My test:</b> can we miss fewer critical interactions without getting fewer cars through?</p>
+ <p class="caution"><b>The catch:</b> counting everyone equally can also bury the one car you need to react to.</p>
 </section>
 <section class="slide" aria-labelledby="s4" hidden>
  <div class="eyebrow"><span>04 · My research question</span><span>Influence-weighted summaries</span></div>
- <h2 id="s4">Which neighbours should count more?</h2>
+ <h2 id="s4">Which cars should count more?</h2>
  <div class="weighted">
-  <div class="textblock"><h3>Can likely conflict beat distance alone?</h3><p>Give more weight to someone likely to reach the <b>same crossing at the same time</b>. Keep the summary the same size.</p>
-   <span class="pill" id="weightlabel">Equal weights</span>
-   <div class="meter" aria-live="polite"><strong id="score">25%</strong><div><div class="meterline"><i id="scorebar"></i></div><small>weighted share of neighbours choosing GO</small></div></div>
-   <p class="small" id="calc">One GO + three YIELD. All four count once.</p>
+  <div class="textblock"><h3>Give more weight to the cars that can affect you.</h3><p>The car in front can slam on its brakes. The car three lanes over usually matters less, unless it starts moving towards you.</p>
+   <div class="weightlist" aria-label="Illustrative relative importance, not measured values"><div><span>Car in front</span><i><b id="frontBar" style="--w:95%;--c:#df672d"></b></i></div><div><span>Car changing lanes</span><i><b id="mergeBar" style="--w:44%;--c:#427fbe"></b></i></div><div><span>Far-lane car</span><i><b id="farBar" style="--w:16%;--c:#638b9e"></b></i></div></div>
+   <p class="small"><b>Same-size summary.</b> Some actions count more.</p>
   </div>
-  <div class="panel visual" id="weightvis" aria-label="Four neighbours of a focal agent, one on a conflicting route">
-   <svg class="fallback" viewBox="0 0 500 410" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="500" height="410" fill="#b1c9b5"/><path d="M0 205h500M250 0v410" stroke="#354552" stroke-width="91"/><path d="M0 205h200m100 0h200M250 0v150m0 110v150" stroke="#ebebdd" stroke-width="2" stroke-dasharray="13 14"/><rect x="121" y="218" width="54" height="24" rx="8" fill="#b4e861"/><rect x="253" y="105" width="24" height="54" rx="8" fill="#f1814f"/><g fill="#83aadd"><rect x="68" y="178" width="42" height="19" rx="7"/><rect x="337" y="173" width="42" height="19" rx="7"/><rect x="216" y="282" width="19" height="42" rx="7"/></g><path d="M175 228h92V159" fill="none" stroke="#ffda93" stroke-width="4" stroke-dasharray="8 6"/></svg>
-   <div class="tagline"><span class="pill">Green: your agent</span><span class="pill">Orange: crossing traffic</span></div>
-   <div class="cap"><span id="weightcap">All observed neighbours count equally.</span></div>
+  <div class="panel visual" id="weightvis" aria-label="Four cars driving on a four-lane highway. The orange car brakes directly ahead of the green car.">
+   <canvas id="weightfallback" aria-hidden="true"></canvas>
+   <div class="tagline"><span class="pill">Green: your agent</span><span class="pill" id="weightlabel">Four lanes · Four agents</span></div>
+   <div class="cap"><span id="weightcap">The car directly ahead matters most.</span></div>
   </div>
  </div>
 </section>
@@ -144,37 +152,31 @@ dialog::backdrop{background:#15292f80}dialog header{display:flex;justify-content
  <div class="finalgrid">
   <article class="panel scale"><h3>Bound the work per car</h3>
   <div class="counts"><div class="countcard"><strong>99,999</strong><span>Other cars to check</span></div><div class="countcard"><strong>Up to 6</strong><span>Nearby cars to check</span></div></div>
-  <p>At 100,000 cars, a local lookup gives each car at most six records to summarise. Time the lookup and the decision.</p></article>
-  <article class="panel test"><h3>See what we keep</h3><p>Train cars with equally weighted, distance-weighted and conflict-weighted summaries. Test on <b>junctions they haven’t seen</b>.</p>
-   <div class="metrics"><span>Collisions in busy junctions</span><span>Cars through per minute</span><span>Compute time</span><span>Memory</span></div>
+  <p>At 100,000 cars, a local lookup gives each car at most six records to summarise. Time the lookup as well as the decision.</p></article>
+  <article class="panel test"><h3>See what we keep</h3><p>Train cars with equally weighted, distance-weighted and conflict-weighted summaries. Test on <b>busier highways they haven’t seen</b>.</p>
+   <div class="metrics"><span>Collisions and close calls</span><span>Cars through per minute</span><span>Compute time</span><span>Memory</span></div>
    <p class="small">Find how much coordination we keep as the group grows.</p>
   </article>
  </div>
- <p class="caution"><b>Contribution:</b> find out whether upweighting the cars that matter makes limited information more useful.</p>
+ <p class="caution" id="broader"><b>Vehicles are our test case.</b> The broader goal is to help learning agents coordinate wherever some neighbours matter more than others.</p>
 </section>
 <footer class="deckbar"><div class="ui"><span id="count" aria-live="polite">1 / 5</span><div id="dots" class="progress" aria-hidden="true"></div></div><div class="ui"><button type="button" class="action" id="prev" aria-label="Previous slide">← Back</button><button type="button" class="action" id="next" aria-label="Next slide">Next →</button></div></footer>
 </main>
-<!-- Research backing: https://doi.org/10.1109/JIOT.2022.3214525 (conclusion reports about 95% relative to complete-game MARL; Section IV.B and Fig. 8(a) describe one approximately 40 ms delivery in the eight-agent unicast case, against typically around 20 ms). The paper reports multiple benchmarks; it does not define the 95% as a driving accuracy or single labelled calculation. The intersection is a proposed separate benchmark. -->
+<!-- Research: https://doi.org/10.1109/JIOT.2022.3214525. About 95% versus complete-game MARL for wireless resource allocation at lower theoretical complexity. The study uses local mean-field interactions, not a centralised network-wide pool. The 99,999 number assumes each car inspects every other car to form its own summary; it is arithmetic, not a paper result, runtime or inevitable cost for every aggregation design. The highway animation and capped-neighbour experiment are proposed and not results. -->
 <dialog id="dialog"><header><strong id="dialogtitle"></strong><button type="button" id="close">Close</button></header><div id="dialogbody"></div></dialog>
 <script>
 const q=(s)=>document.querySelector(s), qa=(s)=>Array.from(document.querySelectorAll(s)), slides=qa('.slide');
-let sIndex=0,wMode=0,start=performance.now(),motion=0,entered=performance.now(),activeMs=0,lastFrame=null;
+let sIndex=0,start=performance.now(),motion=0,entered=performance.now(),activeMs=0,lastFrame=null;
 const slideDurations=[50000,50000,45000,70000,85000]; // five-minute round
-const titles=['The field','The subfield','What Ling’s team found','My research question','The test'];
+const titles=['The field','The subfield','What researchers tried','My research question','The test'];
 const notes=[
  ['0:00–0:50',"An agent tries something, sees the result and learns which actions to repeat. Imagine these two cars. Each can go or yield. If one waits, both get through. The animation illustrates the feedback a learning car would get."],
  ['0:50–1:40',"Now each car learns while the others learn too. Four cars can track three peers each. If 100,000 cars each track every other car, that’s nearly ten billion directed records each time they make a decision. Watch those two jumps. This is a count to show the growth of an all-to-all design, not a claim about real car networks or measured time."],
- ['1:40–2:25',"Instead of feeding the car a full list, just tell it a share: 25% of nearby cars chose to go. The paper describes around 95% of its more expensive method’s overall performance at lower computational complexity. It tracks team reward and network performance, not driving accuracy, and does not give a single explicit formula for 95%. In a separate eight-car test within that study, most messages arrived in around 20 ms, but one took around 40 ms. That does not tell us whether equal weighting caused the slow case or whether weighting would fix it. It shows why I would look beyond the headline average. In our driving simulation, the corresponding question is whether the summary misses the one car whose action matters when paths cross."],
- ['2:25–3:35',"Now look at the orange car. It isn’t the nearest, but it’s the one likely to reach the same crossing. With equal weight, one GO out of four is 25%. Give the orange car three votes and the same-sized summary becomes 50%. The actual experiment would estimate whether two cars are likely to arrive at the same conflict point at about the same time, from position, speed and lane geometry. I’d compare this against plain distance as well as equal weights."],
- ['3:35–5:00',"All three tests use the same reinforcement-learning method and the same cap on neighbours. Each car decides go or yield. The team gets better feedback for getting cars through without collisions. Test on unfamiliar junctions and raise the number of cars. Compare collisions per 100 arrivals in matched busy-junction scenarios, cars through per minute, peak memory and the time to look up neighbours, build the summary and decide. The 99,999 versus six compares per-car records in two example designs; it does not promise a measured speed-up."]
+ ['1:40–2:25',"Researchers used a simple summary of other agents’ actions instead of modelling each action separately. They reported about 95% of the more costly method’s performance with lower computational complexity. This was about how vehicles share radio resources, not how they drive. Our 99,999 example asks what happens if each car still has to look at every other car to build its summary. It is not a result from the paper, which used local interactions. A short summary also does not tell you which action to pay attention to."],
+ ['2:25–3:35',"In our simplified driving simulation, every car is an agent: its controller learns to brake, keep speed or change lanes. In the published study a vehicle agent makes wireless decisions, not driving decisions. Here the orange car in the same lane can have a bigger effect than a car three lanes over. A merging car becomes more important as its path moves towards yours. The bump is an illustration of why the action matters, not a result comparing policies."],
+ ['3:35–5:00',"Compare equal weights, distance weights and influence weights with the same learner and the same local input budget. Increase highway size and traffic density separately. If distant lanes are added, the per-car input stays at most six records, but total compute still grows and discovering relevant cars can cost time, so measure it. Count collisions and close calls, throughput, runtime per decision including neighbour lookup, and memory. The goal is to keep useful coordination under a fixed local budget, not to promise unchanged performance as traffic gets denser. Vehicles give us a concrete way to test the idea. The broader question applies to cooperative multi-agent reinforcement learning beyond traffic: when many agents coordinate, can we focus a small summary on the neighbours most likely to affect the next decision? This study tests it in traffic; transfer to other settings would need separate tests."]
 ];
-const ws=[
- [25,'One GO + three YIELD. All four count once.','All observed neighbours count equally.','Equal weights'],
- [20,'The nearest YIELD car counts twice in this example.','Closest car gets more weight.','Distance weights'],
- [50,'The crossing car counts as three votes.','Shared crossing gets more weight.','Weight by likely conflict']
-];
-function show(i){sIndex=((i%slides.length)+slides.length)%slides.length;activeMs=0;lastFrame=null;entered=performance.now();slides.forEach((s,k)=>s.hidden=k!==sIndex);q('#count').textContent=(sIndex+1)+' / 5';qa('#dots span').forEach((b,k)=>{if(k===sIndex)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});if(sIndex===0){start=entered;setPhase(0)} if(sIndex===1)setScale(0);if(sIndex===3)setWeight(0)}
-function setWeight(k){wMode=k;const [score,eq,caption,label]=ws[k];q('#score').textContent=score+'%';q('#scorebar').style.width=score+'%';q('#calc').textContent=eq;q('#weightcap').textContent=caption;q('#weightlabel').textContent=label;}
+function show(i){sIndex=((i%slides.length)+slides.length)%slides.length;activeMs=0;lastFrame=null;entered=performance.now();slides.forEach((s,k)=>s.hidden=k!==sIndex);q('#count').textContent=(sIndex+1)+' / 5';qa('#dots span').forEach((b,k)=>{if(k===sIndex)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});if(sIndex===0){start=entered;setPhase(0)} if(sIndex===1)setScale(0);if(sIndex===3)updateDrive(0)}
 const scalesteps=[
  ['4 cars','12 records','Light load','Each car checks three others.'],
  ['100,000 cars','≈10 billion records','Heavy load','Each car is still checking all the others.'],
@@ -191,7 +193,7 @@ q('#close').onclick=()=>dialog.close();
 async function full(){try{if(document.fullscreenElement)await document.exitFullscreen();else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else if(document.documentElement.webkitRequestFullscreen)document.documentElement.webkitRequestFullscreen()}catch(_){}}
 window.addEventListener('keydown',e=>{if(dialog.open||e.altKey||e.ctrlKey||e.metaKey)return;if(['ArrowLeft','ArrowRight','PageUp','PageDown','Home','End'].includes(e.key))e.preventDefault();
  if(['ArrowLeft','PageUp'].includes(e.key))show(sIndex-1);if(['ArrowRight','PageDown'].includes(e.key))show(sIndex+1);if(e.key==='Home')show(0);if(e.key==='End')show(4);if(e.key.toLowerCase()==='f')full();if(e.key.toLowerCase()==='n')openNotes()});
-show(0);setWeight(0);setScale(0);
+show(0);setScale(0);
 const lowMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const tc=q('#traffic'),tx=tc.getContext('2d');
 function paintHighway(elapsed){
@@ -219,6 +221,44 @@ function paintHighway(elapsed){
  const len=w*(ph===0?.083:ph===1?.041:.021);
  cars.forEach(([x,y,d],i)=>{const ww=len,hh=len*.44;tx.fillStyle='#19283533';tx.fillRect(x-ww*.5+2,y-hh*.5+3,ww,hh);tx.fillStyle=i===0?'#c5f46e':i===1||ph!==0&&i%13===1?'#ffa15f':'#b2d4f0';tx.beginPath();tx.roundRect(x-ww*.5,y-hh*.5,ww,hh,Math.min(4,hh*.23));tx.fill();if(ph!==2){tx.fillStyle='#243b51';tx.fillRect(x-ww*.18+d*ww*.06,y-hh*.37,ww*.39,hh*.74)}});
 }
+function easing(t){t=Math.max(0,Math.min(1,t));return t*t*(3-2*t)}
+function driveScene(t){
+ const l=(a,b,u)=>a+(b-a)*easing(u);
+ const brake=t>=5.1&&t<9.6, rear=t>=7.55&&t<9.6;
+ const front=t<5.1?-.2+.29*t:t<7.55?1.279+.571*(1-(1-(t-5.1)/2.45)**2):t<9.6?1.85:1.85+(t-9.6)*2.45;
+ const ego=t<5.1?-3.62+.28*t:t<7.55?-2.192+2.612*(t-5.1)/2.45:t<9.6?.42:.42+(t-9.6)*1.75;
+ const merge=l(.85,-.85,(t-2)/2.4);
+ const fade=Math.min(1,(13-t)*1.5);
+ return {cars:[[ego,-2.55],[front,-2.55],[-4.4+.64*t,merge],[2.55+.36*t,2.55]],brake,rear,fade,merge};
+}
+function updateDrive(t){
+ const phase=t<2?0:t<5.1?1:t<7.55?2:t<9.6?3:4;
+ const labels=[['Four lanes · Four agents','The car directly ahead matters most.'],['Changing lanes','A car can matter more as its path moves towards yours.'],['Sudden braking','Same lane. Less time to react.'],['Illustrative bump','The distant car was never in the green car’s path.'],['Same-size summary','Weight by likely influence, not just distance.']];
+ if(q('#weightvis').dataset.phase===String(phase))return;
+ q('#weightvis').dataset.phase=String(phase);
+ q('#weightlabel').textContent=labels[phase][0];q('#weightcap').textContent=labels[phase][1];
+ q('#frontBar').style.setProperty('--w',phase===2||phase===3?'100%':'86%');
+ q('#mergeBar').style.setProperty('--w',phase===1?'62%':'37%');
+ q('#farBar').style.setProperty('--w','16%');
+}
+function paintDrive(t){
+ const c=q('#weightfallback');if(q('#weightvis').dataset.gl==='yes'||!c.clientWidth)return;
+ const w=c.clientWidth,h=c.clientHeight,d=Math.min(devicePixelRatio,1.5),g=c.getContext('2d');
+ if(c.width!==Math.round(w*d)||c.height!==Math.round(h*d)){c.width=Math.round(w*d);c.height=Math.round(h*d)}
+ g.setTransform(d,0,0,d,0,0);
+ const x=v=>w*.5+v*w*.077,y=v=>h*.5+v*h*.083;
+ g.fillStyle='#c3d3bb';g.fillRect(0,0,w,h);g.fillStyle='#354653';g.fillRect(0,y(-3.55),w,y(3.55)-y(-3.55));
+ g.strokeStyle='#e5e9d4';g.lineWidth=1.4;g.setLineDash([w*.046,w*.03]);g.lineDashOffset=t*w*.065;
+ for(const z of [-1.7,0,1.7]){g.beginPath();g.moveTo(0,y(z));g.lineTo(w,y(z));g.stroke()}g.setLineDash([]);
+ const st=driveScene(t);g.globalAlpha=st.fade;
+ g.lineWidth=3;g.strokeStyle='#ffb46c';g.beginPath();g.moveTo(x(st.cars[0][0]),y(-2.55));g.lineTo(x(st.cars[1][0]),y(-2.55));g.stroke();
+ st.cars.forEach(([a,b],i)=>{const xx=x(a),yy=y(b),cw=w*.107,ch=h*.063;
+  g.fillStyle='#14263166';g.beginPath();g.roundRect(xx-cw/2+2,yy-ch/2+3,cw,ch,4);g.fill();
+  g.fillStyle=['#b5e35b','#f67d45','#79a9dc','#a0b2bb'][i];g.beginPath();g.roundRect(xx-cw/2,yy-ch/2,cw,ch,4);g.fill();
+  g.fillStyle='#23394a';g.fillRect(xx-cw*.16,yy-ch*.37,cw*.45,ch*.74);
+  if(i===1&&st.brake){g.fillStyle='#ff352d';g.fillRect(xx-cw*.51,yy-ch*.48,cw*.08,ch*.22);g.fillRect(xx-cw*.51,yy+ch*.26,cw*.08,ch*.22)}
+ });g.globalAlpha=1;
+}
 function advance(now){
  const delta=lastFrame===null?0:Math.min(250,Math.max(0,now-lastFrame));
  lastFrame=now;
@@ -226,7 +266,7 @@ function advance(now){
  activeMs+=delta;
  if(activeMs>=slideDurations[sIndex])show(sIndex+1);
  if(sIndex===1)paintHighway(activeMs);
- if(sIndex===3){const target=activeMs%9200<3700?0:2;if(target!==wMode)setWeight(target);}
+ if(sIndex===3){const t=lowMotion.matches?7.7:activeMs/1000%13;updateDrive(t);paintDrive(t);}
 }
 document.addEventListener('visibilitychange',()=>{lastFrame=null;});
 function sequence(now){requestAnimationFrame(sequence);advance(now);}
@@ -296,14 +336,25 @@ function view(node,kind){
  const scene=new THREE.Scene();scene.background=new THREE.Color(0xbbd2c2);scene.add(new THREE.HemisphereLight(0xffffff,0x6f8f7f,2.0));
  const sun=new THREE.DirectionalLight(0xfff4dc,2.05);sun.position.set(-5,9,4);scene.add(sun);
  const camera=new THREE.OrthographicCamera(-8,8,6,-6,.1,70);camera.position.set(-7.2,15,10.8);camera.lookAt(-.05,0,-.1);
- const zone=road(scene);const objs=colors.slice(0,kind==='intro'?2:5).map((c,i)=>car(scene,c,[0,-Math.PI/2,Math.PI,Math.PI,0][i]));
- const strips=[];
+ const zone=kind==='intro'?road(scene):null;
+ const objs=colors.slice(0,kind==='intro'?2:4).map((c,i)=>car(scene,c,kind==='intro'?[0,-Math.PI/2][i]:0));
+ const laneMarks=[];let line,lights=[],impact;
  if(kind==='weighted'){
-  [[-3.50,.91],[.91,-3.75],[-4.15,-.73],[5.5,-.95],[6.45,1.24]].forEach(([x,z],i)=>pos(objs[i],x,z));
-  strips.push(strip(scene,colors[0],[-3.15,.09,.91],[.9,.09,.91],.075));
-  strips.push(strip(scene,colors[1],[.91,.09,-3.37],[.91,.09,.9],.085));
+  camera.position.set(0,20,6.4);camera.lookAt(0,0,0);
+  scene.background.set(0xb8d1bc);
+  box(scene,mats.grass,60,.23,31,0,-.16,0);
+  box(scene,mats.edge,50,.05,7.52,0,-.016,0);
+  box(scene,mats.road,50,.05,7.17,0,.018,0);
+  for(const z of [-3.48,3.48])box(scene,mats.dash,47,.012,.065,0,.055,z);
+  for(const z of [-1.7,0,1.7])for(let k=-14;k<=14;k++){const mark=box(scene,mats.dash,.70,.012,.043,k*1.42,.057,z);laneMarks.push([mark,k*1.42]);}
+  for(let i=-8;i<=8;i++)for(const z of [-4.35,4.46])box(scene,mats.edge,.08,.31,.11,i*1.45,.13,z);
+  const brakeMat=new THREE.MeshBasicMaterial({color:0xff272e});
+  lights=[-.24,.24].map(z=>box(objs[1],brakeMat,.047,.09,.15,-.735,.373,z));
+  line=box(scene,new THREE.MeshBasicMaterial({color:0xffb16b,transparent:true,opacity:.85,depthWrite:false}),1,.017,.085,0,.067,-2.55);
+  impact=new THREE.Mesh(new THREE.RingGeometry(.27,.36,32),new THREE.MeshBasicMaterial({color:0xffcf8a,transparent:true,side:THREE.DoubleSide,depthWrite:false}));
+  impact.rotation.x=-Math.PI/2;impact.position.set(1.135,.12,-2.55);scene.add(impact);
  }
- node.prepend(renderer.domElement);let wOld=0,hOld=0;const resize=()=>{const {clientWidth:w,clientHeight:h}=node;if(!w||!h||(w===wOld&&h===hOld))return;wOld=w;hOld=h;const a=w/h;const halfY=5.4;camera.left=-halfY*a;camera.right=halfY*a;camera.top=halfY;camera.bottom=-halfY;camera.updateProjectionMatrix();renderer.setSize(w,h,false)};
+ node.prepend(renderer.domElement);let wOld=0,hOld=0;const resize=()=>{const {clientWidth:w,clientHeight:h}=node;if(!w||!h||(w===wOld&&h===hOld))return;wOld=w;hOld=h;const a=w/h;const halfY=kind==='intro'?5.4:5.7;camera.left=-halfY*a;camera.right=halfY*a;camera.top=halfY;camera.bottom=-halfY;camera.updateProjectionMatrix();renderer.setSize(w,h,false)};
  let frames=0;const rv={paint(now){resize();if(!wOld)return;
   if(kind==='intro'){
     const t=reduce.matches?3.6:activeMs/1000%9;
@@ -313,11 +364,14 @@ function view(node,kind){
     setPhase(t<1.8?0:t<4.0?1:2);
     zone.material.opacity=t<4?.28:.13;zone.material.color.set(t<4?0xeeac52:0xa7dc61);
   }else{
-    const pulse=reduce.matches?0:.5+.5*Math.sin(now/310);
-    const winner=wMode===1?2:wMode===2?1:0;
-    objs.forEach((o,i)=>{o.userData.halo.material.opacity=i===0?.64:wMode===0?.54:i===winner?.65+.25*pulse:.22;o.userData.halo.scale.setScalar(wMode!==0&&i===winner?1.20+.15*pulse:1)});
-    strips[1].material.opacity=wMode===2?.65+.28*pulse:.35;
-    zone.material.opacity=wMode===2?.33+.18*pulse:.17;
+    const t=reduce.matches?7.7:activeMs/1000%13,st=driveScene(t);
+    laneMarks.forEach(([o,x])=>{o.position.x=x-(t*1.55%1.42)});
+    st.cars.forEach(([x,z],i)=>{pos(objs[i],x,z);objs[i].visible=st.fade>.16;objs[i].rotation.y=(i===2&&t>=2&&t<4.4)?-.11*Math.sin(Math.PI*(t-2)/2.4):0;objs[i].userData.halo.material.opacity=(i===0?.73:i===1?.79:i===2?.30:.17)*st.fade;});
+    const gap=st.cars[1][0]-st.cars[0][0];
+    line.scale.x=Math.max(0,gap-1.38);line.position.x=(st.cars[1][0]+st.cars[0][0])/2;line.material.opacity=st.fade*(st.brake?1:.54);
+    lights.forEach(o=>o.visible=st.brake);
+    const pulse=(t-7.55)/.7;impact.visible=pulse>=0&&pulse<1;
+    impact.scale.setScalar(1+2.4*Math.max(0,pulse));impact.material.opacity=Math.max(0,1-pulse);
   }
   renderer.render(scene,camera);node.dataset.gl='yes';node.dataset.frames=String(++frames);
  }};
